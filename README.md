@@ -2,7 +2,7 @@
 
 A community initiative to write a brand-new, feature-complete and easy to understand tutorial for the [Rust programming language](http://www.rust-lang.org/).
 
-[Check it out!](http://adrientetar.legtux.org/cached/rust-tuts/index.html)
+[Check it out!](http://adridu59.github.io/rust-tuts/)
 
 ## Diving in..
 
