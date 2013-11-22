@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A tutorial for the Rust programming language.">
+  <meta name="author" content="Adrien T&eacute;tar">
+  <meta name="keywords" content="rust, rustlang, rust programming language, rust tutorial">
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$">
+$endif$
+  <title>$if(title-prefix)$$title-prefix$ &middot; $endif$Rust tutorials_NG</title>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/style.css">
+$for(css)$
+  <link rel="stylesheet" href="$css$">
+$endfor$
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+$if(highlighting-css)$
+  <style type="text/css">
+$highlighting-css$
+  </style>
+$endif$
+$if(math)$
+  $math$
+$endif$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+</head>
+<body class="container">
+$for(include-before)$
+$include-before$
+$endfor$
+   <header>
+     <ul class="nav nav-pills pull-right">
+       <li><a href="../index.html">Home</a></li>
+       <li class="active"><a href="index.html">Content</a></li>
+       <li><a href="#">Contribute</a></li>
+     </ul>
+     <h3 class="text-muted">&#36; <span style="color: #333">Rust tutorials</span></h3>
+   </header>
+$if(title)$
+<header>
+<h1 class="title">$title$</h1>
+$if(subtitle)$
+<h1 class="subtitle">$subtitle$</h1>
+$endif$
+$for(author)$
+<h2 class="author">$author$</h2>
+$endfor$
+$if(date)$
+<h3 class="date">$date$</h3>
+$endif$
+</header>
+$endif$
+$if(toc)$
+<nav id="$idprefix$TOC">
+$toc$
+</nav>
+$endif$
+$body$
+$for(include-after)$
+$include-after$
+$endfor$
+<footer>
+<p>A Rust community project. [&copy;] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
+</footer>
+</body>
+</html>
