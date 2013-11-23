@@ -1,8 +1,4 @@
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
-\usepackage[T1]{fontenc}
-\usepackage[bitstream-charter]{mathdesign}
-%\usepackage{fourier}
-%\usepackage{lmodern}
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{scrartcl}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
@@ -35,8 +31,20 @@ $if(mathfont)$
     \setmathfont(Digits,Latin,Greek){$mathfont$}
 $endif$
 \fi
+\setmainfont[Path = font/,
+Ligatures = TeX,
+UprightFont = Lora-Regular,
+BoldFont = Lora-Bold,
+ItalicFont = Lora-Italic,
+BoldItalicFont = Lora-BoldItalic]{Lora}
+\setsansfont[Path = font/,
+Ligatures = TeX,
+UprightFont = texgyreheros-regular,
+BoldFont = texgyreheros-bold,
+ItalicFont = texgyreheros-italic,
+BoldItalicFont = texgyreheros-bolditalic]{Tex Gyre Heros}
 % use microtype
-\usepackage[final]{microtype}
+\usepackage{microtype}
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$

@@ -11,5 +11,5 @@ The documentation system is powered by [Pandoc](http://johnmacfarlane.net/pandoc
 Want to contribute? Fork it and start editing the Markdown (.md) files.
 
 Want to build it? Dependencies:
-- pandoc
-- lualatex (can be spoofed with minor changes)
+- WEB: `pandoc`
+- TEX: `lualatex`, [Lora](http://www.google.com/webfonts/download?kit=iwrHM7FQEcKgsUvDuXxrPg) (ttf) + [Tex Gyre Heros](http://www.gust.org.pl/projects/e-foundry/tex-gyre/heros) (otf) extracted under the font/ folder (can be spoofed with minor changes)
