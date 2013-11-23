@@ -33,6 +33,11 @@ header h3 {
   line-height: 40px;
   padding-bottom: 19px;
 }
+.jumbo-code {
+  background-color: transparent;
+  display: inline-block;
+  white-space: normal;
+}
 
 /* Custom page footer */
 footer {
