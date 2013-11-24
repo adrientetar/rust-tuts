@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A tutorial for the Rust programming language.">
+  <meta name="author" content="Adrien T&eacute;tar">
+  <meta name="keywords" content="rust, rustlang, rust programming language, rust tutorial">
+  <title>Rust tutorials_NG</title>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/rust.css">
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body class="container">
+   <header>
+     <ul class="nav nav-pills pull-right">
+       <li><a href="../index.html">Home</a></li>
+       <li class="active"><a href="index.html">Content</a></li>
+       <li><a href="https://github.com/adridu59/rust-tuts/">Contribute</a></li>
+     </ul>
+     <h3 class="text-muted">&#36; <span style="color: #333">Rust tutorials</span></h3>
+   </header>
+<header>
+<h1 class="title">Chapter 02</h1>
+</header>
+<section id="few-things-you-should-know" class="level1">
+<h1>Few things you should know</h1>
+<p>The Rust API is frequently evolving. While the use of the 0.8 release is recommended on Windows (unless you’re willing to <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build it</a>), this tutorial will be aimed at current master which has the latest language contents.<br />Note that much of the “standard” features are pretty much stabilized and shouldn’t change much. If you have any concern related to the language or its syntax, just <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">jump on IRC</a> and ask the others!</p>
+</section>
+<section id="installing-rust" class="level1">
+<h1>Installing Rust</h1>
+<section id="windows" class="level2">
+<h2>Windows</h2>
+<p>Checkout the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">building instructions</a>.<br />Note: <code>mingw-w64</code> support is incoming on latest trunk.</p>
+<p>If you’re not willing to go through these steps, just download the <a href="http://static.rust-lang.org/dist/rust-0.8-install.exe">0.8 installer</a>.</p>
+</section>
+<section id="mac-os-x" class="level2">
+<h2>Mac OS X</h2>
+<p>The installation process on Mac OS is fairly easy with the <a href="http://brew.sh/">Homebrew package manager</a>, for the latest trunk:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> install --HEAD rust</code></pre>
+<p>And to get the latest release:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> install rust</code></pre>
+</section>
+<section id="linux" class="level2">
+<h2>Linux</h2>
+<p>Okay Linux users, let’s build the beast:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> clone https://github.com/mozilla/rust.git
+<span class="kw">cd</span> rust
+<span class="kw">./configure</span>
+<span class="kw">make</span>
+<span class="kw">sudo</span> make install</code></pre>
+<p>And for the 0.8 release, use these sources:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -O http://static.rust-lang.org/dist/rust-0.8.tar.gz
+<span class="kw">tar</span> -xzf rust-0.8.tar.gz
+<span class="kw">cd</span> rust-0.8
+<span class="kw">./configure</span>
+<span class="kw">make</span>
+<span class="kw">sudo</span> make install</code></pre>
+</section>
+</section>
+<footer>
+<p>A Rust community project. [&copy;] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
+</footer>
+</body>
+</html>

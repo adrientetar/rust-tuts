@@ -1,5 +1,6 @@
 *.aux
 *.log
 *.out
+drafts/
 font/
 tutorial/*.tex

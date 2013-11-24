@@ -1,17 +1,3 @@
-@font-face {
-  font-family: 'Source Code Pro';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Source Code Pro'), local('SourceCodePro-Regular'), url(http://themes.googleusercontent.com/static/fonts/sourcecodepro/v3/mrl8jkM18OlOQN8JLgasDxM0YzuT7MdOe03otPbuUS0.woff) format('woff');
-}
-@font-face {
-  font-family: 'Source Code Pro';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Source Code Pro Bold'), local('SourceCodePro-Bold'), url(http://themes.googleusercontent.com/static/fonts/sourcecodepro/v3/leqv3v-yTsJNC7nFznSMqVkQc6VGVFSmCnC_l7QZG60.woff) format('woff');
-}
-
-
 /* Global page semantics
    ========================================================================== */
 body {
@@ -114,7 +100,7 @@ h1 small a, h2 small a, h3 small a {
 /* Code
    ========================================================================== */
 pre, code {
-	font-family: "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
+	font-family: Menlo, Monaco, Consolas, Consolas, Inconsolata, "Liberation Mono", Courier, monospace;
 	border-radius: 3px;
 }
 pre {
@@ -142,6 +128,7 @@ pre code {
 	color: inherit;
 	white-space: pre-wrap;
 	background-color: transparent;
+	border: none;
 	border-radius: 0;
 }
 
