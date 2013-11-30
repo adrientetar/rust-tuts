@@ -6,6 +6,7 @@ TEX_OPTS = $(BASE_DOC_OPTS) --to=latex --standalone --number-sections --latex-en
 EPUB_OPTS = $(BASE_DOC_OPTS) --to=epub
 WEB :=
 TEX :=
+DRAFTS :=
 
 # http://lincolnmullen.com/blog/make-and-pandoc/
 # http://stackoverflow.com/a/9934724
@@ -26,14 +27,19 @@ TEX += tutorial/tutorial.pdf
 tutorial/tutorial.pdf: tutorial/tutorial.tex
 	lualatex -output-directory=tutorial $<
 
-# Rules
+DRAFTS += $(patsubst drafts/%.md,tutorial/%.html,$(wildcard drafts/*.md))
+tutorial/%.html: drafts/%.md
+	pandoc -o $@ $(HTML_OPTS) $<
 
-docs: $(WEB)
-docs-tex: $(TEX) clean-tex
-docs-all: docs docs-tex
+# Rules
 
 .PHONY: clean
 clean:
-	rm -f $(WEB) $(TEX) tutorial/*.aux tutorial/*.log tutorial/*.out
+	rm -f $(WEB) $(TEX) $(DRAFTS) tutorial/*.aux tutorial/*.log tutorial/*.out
 clean-tex:
 	rm -f tutorial/*.aux tutorial/*.log tutorial/*.out
+
+drafts: $(DRAFTS)
+docs: $(WEB)
+docs-tex: $(TEX) clean-tex
+docs-all: docs docs-tex
