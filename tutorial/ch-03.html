@@ -60,7 +60,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>Now let’s try something funny:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
     <span class="kw">let</span> out = <span class="st">&quot;Hello World!&quot;</span>;
-    <span class="kw">for</span> c in out.iter() {
+    <span class="kw">for</span> c in out.chars() {
         <span class="co">/* spawn concurrent tasks! */</span>
         <span class="kw">do</span> spawn {
             print!(<span class="st">&quot;{}&quot;</span>, c);
@@ -70,13 +70,14 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </section>
 <section id="the-looping-point" class="level2">
 <h2>The looping point</h2>
-<p>First, notice the loop syntax: for (each) <code>element</code> in <code>container</code>, as in Python. <code>element</code> should be <code>_</code> if you are not using it (no referencing).<br />Here, we make use of Rust’s functional paradigm by using <code>.iter()</code> to iterate over a string, which means: “for each char (referenced <code>c</code>) in the string <code>out</code>, spawn a thread which will print it”. That’s possible because our iterating element will host each char of the string, so we can print those directly.<br />What if we wanted to simply iterate a said number of times? Well, for that we have a special container, the <code>range()</code> iterator.</p>
-<pre class="sourceCode rust"><code class="sourceCode rust">range(n) <span class="co">/// Creates an iterator that will do `n` times, from 0 to n-1</span>
-range(<span class="dv">1</span>,n+<span class="dv">1</span>) <span class="co">/// This one will go from 1 to n</span></code></pre>
+<p>First, notice the loop syntax: for (each) <code>element</code> in <code>container</code>, as in Python. <code>element</code> should be <code>_</code> if you are not using it (no referencing).<br />Here, we make use of Rust’s functional paradigm by using <code>.chars()</code> to iterate over the chars of our string (it used to be <code>.iter()</code>): our iterator will successively host each char of the string, so we can print those directly.<br />What if we wanted to simply iterate a said number of times? Well, for that we have a special container, the <code>range()</code> iterator.</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">for</span> i in range(n) <span class="co">/// Creates an iterator that will do `n` times, from 0 to n-1</span>
+<span class="kw">for</span> _ in range(<span class="dv">1</span>,n+<span class="dv">1</span>) <span class="co">/// This one will go from 1 to n</span>
+<span class="co">/// Notice the joker `_`, that&#39;s if we don&#39;t want to reference the iterator for use in the loop</span></code></pre>
 <p>Now, before first looking at the type syntax itself, let’s look at the output:</p>
 <pre><code>Hllo World!
 e</code></pre>
-<p>Well, we did <code>spawn</code> a few concurrent tasks. Things are done in an asynchronously, which means that one of the tasks may unpredictibly end-up before the other. Anyways, spawning threads to print out the letters of a sentence is pretty silly!</p>
+<p>Well, we did <code>spawn</code> a few concurrent tasks. Things are done asynchronously, which means that one of the tasks may unpredictibly end-up before the other. Anyways, spawning threads to print out the letters of a sentence is pretty silly!</p>
 <p>BTW, speaking of loops: <code>while</code> uses the usual syntax: <code>while &lt;condition&gt; {}</code> and the <code>loop</code> keyword is to be preferred to <code>while true {}</code>, which is essentially a hack.<br />Rust doesn’t have the <code>do {} while;</code> syntax, we just use a <code>while</code> with a condition instead.</p>
 </section>
 <section id="variables-and-types" class="level2">
@@ -128,7 +129,7 @@ h = [<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3</
 <p>Let’s go back on a similar example as with the <code>spawn</code>s before, this time using a <code>vec</code> of <code>char</code>s:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
     <span class="kw">let</span> out = [<span class="ch">&#39;H&#39;</span>, <span class="ch">&#39;e&#39;</span>, <span class="ch">&#39;l&#39;</span>, <span class="ch">&#39;l&#39;</span>, <span class="ch">&#39;o&#39;</span>];
-    <span class="kw">for</span> c in out.iter() {
+    <span class="kw">for</span> c in out.iter() { <span class="co">// iterate over `out`</span>
         print!(<span class="st">&quot;{}&quot;</span>, c);
     }
 }</code></pre>
@@ -137,14 +138,17 @@ h = [<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3</
 </section>
 <section id="appendix-going-back-on-macros" class="level2">
 <h2>Appendix: Going back on macros</h2>
+<p>About the macros: they are syntax extensions in the sense that they are like scripts, but are evaluated at compile-time. So they serve only the developer by simplifying/automating things.<br />Think about <code>#define</code> in C, but much more powerful. BTW, macros have a few syntax elements of their own, for example, variables get referenced as <code>$var</code>.</p>
+<p>Not elaborating further on it for now but you can have a look at the <a href="http://static.rust-lang.org/doc/master/tutorial-macros.html">mainline macro tutorial</a> for some code examples.</p>
 </section>
 <section id="appendix-code-comments" class="level2">
 <h2>Appendix: Code comments</h2>
 <p>You will probably start quickly adding comments to your code (well, you should anyways!) so let’s speak about that now.<br />Rust uses C-style comments: inline with <code>// yuck!</code> and multiline with <code>/* yuck! */</code>. Rust also has a built-in doc generator (librustdoc); doc comments get referenced as such with either <code>///</code> or <code>/** **/</code>; check out how it works for the <a href="http://static.rust-lang.org/doc/master/std/index.html">standard library</a>!</p>
+<p>You can learn more about rustdoc <a href="https://github.com/mozilla/rust/wiki/Doc-using-rustdoc">here</a>.</p>
 </section>
 <section id="appendix-on-functional-programming" class="level2">
 <h2>Appendix: on functional programming</h2>
-<p>The functional capatibilities of Rust are powerful. type-specific operations</p>
+<p>The functional capatibilities of Rust are powerful as it makes use of type-specific operations.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> my_vec = [-<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>];
 <span class="kw">for</span> i in my_vec.iter().invert() {
     print(i.to_str());
