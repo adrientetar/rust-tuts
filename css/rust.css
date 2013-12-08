@@ -100,7 +100,7 @@ h1 small a, h2 small a, h3 small a {
 /* Code
    ========================================================================== */
 pre, code {
-	font-family: Menlo, Monaco, Consolas, Consolas, Inconsolata, "Liberation Mono", Courier, monospace;
+	font-family: Menlo, Monaco, Consolas, Inconsolata, "Liberation Mono", Courier, monospace;
 	border-radius: 3px;
 }
 pre {

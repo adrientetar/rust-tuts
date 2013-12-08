@@ -139,6 +139,122 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>Note that there are repositories with nightly packages for <a href="http://pkgbuild.com/~thestinger/">Arch</a> and <a href="https://launchpad.net/~hansjorg/+archive/rust">Ubuntu</a>.</p>
 </section>
 </section>
+<section id="get-your-code-editor-ready" class="level1">
+<h1>Get your code editor ready</h1>
+<p>You are about to write your first Rust program; first, just create a <code>.rs</code> file with your favorite text editor. You are going to build it with <code>rustc</code>, the Rust compiler.</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># create a new file</span>
+<span class="kw">touch</span> hello.rs
+<span class="co"># now compile it...</span>
+<span class="kw">rustc</span> hello.rs
+<span class="co"># ...and run!</span>
+<span class="kw">./hello</span></code></pre>
+<p>Note: on Windows, you will have to call <code>rustc.exe</code> for now due to issue <a href="https://github.com/mozilla/rust/issues/3319">#3319</a>.</p>
+<p>BTW, you can get syntax highlighting for <a href="https://github.com/mozilla/rust/tree/master/src/etc/vim">vim</a>, <a href="https://github.com/mozilla/rust/tree/master/src/etc/gedit">gedit</a> or <a href="https://github.com/mozilla/rust/tree/master/src/etc%20%%20Chapter%2003">other highlighting solutions</a> on the main repo.</p>
+</section>
+<section id="and-so-it-begins" class="level1">
+<h1>And so it begins!</h1>
+<section id="the-starting-point" class="level2">
+<h2>The starting point</h2>
+<p>So, you are learning a programming language… you know what this means?</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    println(<span class="st">&quot;Hello World!&quot;</span>);
+}</code></pre>
+<p>Yes, it is that simple. As you can see, functions are declared using the generic <code>fn</code> keyword (for the C habitués, the return type—if any—is specified as in ML, after an ASCII arrow e.g. <code>fn random() -&gt; int { ... }</code>).</p>
+<p>To out your own, save this code snippet and call <code>rustc</code>!</p>
+<p>Now let’s try something funny:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">let</span> out = <span class="st">&quot;Hello World!&quot;</span>;
+    <span class="kw">for</span> c in out.iter() {
+        <span class="co">/* spawn concurrent tasks! */</span>
+        <span class="kw">do</span> spawn {
+            print!(<span class="st">&quot;{}&quot;</span>, c);
+        }
+    }
+}</code></pre>
+</section>
+<section id="the-looping-point" class="level2">
+<h2>The looping point</h2>
+<p>First, notice the loop syntax: for (each) <code>element</code> in <code>container</code>, as in Python. <code>element</code> should be <code>_</code> if you are not using it (no referencing).<br />Here, we make use of Rust’s functional paradigm by using <code>.iter()</code> to iterate over a string, which means: “for each char (referenced <code>c</code>) in the string <code>out</code>, spawn a thread which will print it”. That’s possible because our iterating element will host each char of the string, so we can print those directly.<br />What if we wanted to simply iterate a said number of times? Well, for that we have a special container, the <code>range()</code> iterator.</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">range(n) <span class="co">/// Creates an iterator that will do `n` times, from 0 to n-1</span>
+range(<span class="dv">1</span>,n+<span class="dv">1</span>) <span class="co">/// This one will go from 1 to n</span></code></pre>
+<p>Now, before first looking at the type syntax itself, let’s look at the output:</p>
+<pre><code>Hllo World!
+e</code></pre>
+<p>Well, we did <code>spawn</code> a few concurrent tasks. Things are done in an asynchronously, which means that one of the tasks may unpredictibly end-up before the other. Anyways, spawning threads to print out the letters of a sentence is pretty silly!</p>
+<p>BTW, speaking of loops: <code>while</code> uses the usual syntax: <code>while &lt;condition&gt; {}</code> and the <code>loop</code> keyword is to be preferred to <code>while true {}</code>, which is essentially a hack.<br />Rust doesn’t have the <code>do {} while;</code> syntax, we just use a <code>while</code> with a condition instead.</p>
+</section>
+<section id="variables-and-types" class="level2">
+<h2>Variables and types</h2>
+<p>As you can see, variables are declared via the <code>let</code> keyword and you do not need to specify the type (ML anyone?) because Rust has type inference, which means that the variable type is determined automatically at <em>compile time</em> —not to be confused with dynamic typing, as in Python, where the variable type gets determined at run-time and can be modified.<br />Let’s look at some of the primitive types:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a = <span class="dv">3</span>; <span class="co">// considered as `int` by default</span>
+<span class="kw">let</span> b = <span class="st">&quot;code&quot;</span>; <span class="co">// that would be an `str` - string</span>
+<span class="kw">let</span> c = [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]; <span class="co">// and that&#39;s a `vec` - array</span>
+<span class="kw">let</span> d = <span class="kw">true</span>; <span class="co">// bool</span></code></pre>
+<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value. The compiler will warn you if there are unused <code>mut</code>s in your code.<br />BTW: unlike C for example, Rust does not let you edit an immutable variable via its pointer.</p>
+<p>Speaking of type assignment, you can force the use of a particular type:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a: <span class="kw">uint</span> = <span class="dv">3</span>; <span class="co">// unsigned int</span>
+<span class="kw">let</span> a = <span class="dv">3u</span>; <span class="co">// same as the last line, this is a short variable suffix for convenience</span>
+
+<span class="kw">let</span> <span class="kw">mut</span> n = <span class="dv">3</span>; <span class="co">// `n` is supposedly an `int` from here...</span>
+n = <span class="dv">5u</span>; <span class="co">// but is assigned an `uint` here, so the compiler will consider `n` as an `uint`</span>
+<span class="kw">let</span> <span class="kw">mut</span> h = ~[]; <span class="co">// unknown-type `vec` - won&#39;t compile as such</span>
+h = [<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3</span>]; <span class="co">// a `vec` of `uint`s</span></code></pre>
+<p>There are other suffixes like <code>i32</code> (32-bits integer), <code>i64</code>, <code>f32</code> (32-bit float), <code>f64</code>… the empty type is called nil and annotated <code>()</code>. But remember, you cannot change the type of a variable during it’s lifetime—static typing!</p>
+<p>Functions need explicit parameters and return types. Let’s look at one:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> abs(x: <span class="kw">int</span>) -&gt; <span class="kw">uint</span> {
+    <span class="kw">if</span> x &gt; <span class="dv">0</span> { x }
+    -x
+}
+
+<span class="kw">fn</span> square(x: <span class="kw">int</span>) -&gt; <span class="kw">int</span> {
+    x*x
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> <span class="kw">mut</span> x = <span class="dv">3u</span>;
+    <span class="co">/* Now, calculate the square. */</span>
+    x = square(x);
+    println(x);
+}</code></pre>
+<p>Ok, but this code will warn because we are passing an unsigned int to a function that takes int as parameter; if we were in a situation where we cannot change the type annotation, we would have to just cast the value of <code>x</code>. Rust has 2 ways of casting: <code>x.to_targetType();</code> and <code>x as targetType;</code>. The <code>to_*</code> method is to be preferred for performance.<br />Additionally, there’s a third way of casting, <a href="https://github.com/mozilla/rust/wiki/Doc-detailed-release-notes#cast-naming-conventions">into</a>.</p>
+<p>In Rust, instructions that do not end with semicolons are expressions (not statements), meaning that they will return their value to the higher-level block.<br />This allows you no only to return from a function but—for example to allocate a value based on a test’s result. This is valid Rust code:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> hype =
+    <span class="kw">if</span> cake == <span class="st">&quot;KitKat&quot;</span> {
+        <span class="dv">10</span>
+    } <span class="kw">else</span> <span class="kw">if</span> cake == <span class="st">&quot;Jelly Bean&quot;</span> {
+        <span class="dv">7</span>
+    } <span class="kw">else</span> {
+        <span class="dv">5</span>
+    };</code></pre>
+</section>
+<section id="a-last-note-on-types-and-prints" class="level2">
+<h2>A last note on types and prints</h2>
+<p>Let’s go back on a similar example as with the <code>spawn</code>s before, this time using a <code>vec</code> of <code>char</code>s:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">let</span> out = [<span class="ch">&#39;H&#39;</span>, <span class="ch">&#39;e&#39;</span>, <span class="ch">&#39;l&#39;</span>, <span class="ch">&#39;l&#39;</span>, <span class="ch">&#39;o&#39;</span>];
+    <span class="kw">for</span> c in out.iter() {
+        print!(<span class="st">&quot;{}&quot;</span>, c);
+    }
+}</code></pre>
+<p>Strings and pack of char’s are essentially the same in memory, but strings have specific methods and are plain better at handling a bunch of <code>char</code>s.<br />FYI, there’s a small article that talks about types in Rust and has interesting facts, <a href="http://jvns.ca/blog/2013/12/02/types-in-rust/">check it out</a>!</p>
+<p>So Rust has a few printing functions, the standards <code>print</code>/<code>println</code> which want a <code>string</code> as input but also <code>print!</code>/<code>println!</code> macros (or syntax-entensions—ending with <code>!</code>) which will format-print your variables marked as <code>{}</code> and passed as arguments into strings.<br />BTW, you can <a href="http://static.rust-lang.org/doc/master/std/fmt/index.html">specify the type manually</a>, e.g. <code>{:u}</code> says this is an unsigned integer literal.</p>
+</section>
+<section id="appendix-going-back-on-macros" class="level2">
+<h2>Appendix: Going back on macros</h2>
+</section>
+<section id="appendix-code-comments" class="level2">
+<h2>Appendix: Code comments</h2>
+<p>You will probably start quickly adding comments to your code (well, you should anyways!) so let’s speak about that now.<br />Rust uses C-style comments: inline with <code>// yuck!</code> and multiline with <code>/* yuck! */</code>. Rust also has a built-in doc generator (librustdoc); doc comments get referenced as such with either <code>///</code> or <code>/** **/</code>; check out how it works for the <a href="http://static.rust-lang.org/doc/master/std/index.html">standard library</a>!</p>
+</section>
+<section id="appendix-on-functional-programming" class="level2">
+<h2>Appendix: on functional programming</h2>
+<p>The functional capatibilities of Rust are powerful. type-specific operations</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> my_vec = [-<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>];
+<span class="kw">for</span> i in my_vec.iter().invert() {
+    print(i.to_str());
+}</code></pre>
+</section>
+</section>
 <footer>
 <p>A Rust community project. [&copy;] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
 </footer>

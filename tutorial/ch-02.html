@@ -83,6 +83,18 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>Note that there are repositories with nightly packages for <a href="http://pkgbuild.com/~thestinger/">Arch</a> and <a href="https://launchpad.net/~hansjorg/+archive/rust">Ubuntu</a>.</p>
 </section>
 </section>
+<section id="get-your-code-editor-ready" class="level1">
+<h1>Get your code editor ready</h1>
+<p>You are about to write your first Rust program; first, just create a <code>.rs</code> file with your favorite text editor. You are going to build it with <code>rustc</code>, the Rust compiler.</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># create a new file</span>
+<span class="kw">touch</span> hello.rs
+<span class="co"># now compile it...</span>
+<span class="kw">rustc</span> hello.rs
+<span class="co"># ...and run!</span>
+<span class="kw">./hello</span></code></pre>
+<p>Note: on Windows, you will have to call <code>rustc.exe</code> for now due to issue <a href="https://github.com/mozilla/rust/issues/3319">#3319</a>.</p>
+<p>BTW, you can get syntax highlighting for <a href="https://github.com/mozilla/rust/tree/master/src/etc/vim">vim</a>, <a href="https://github.com/mozilla/rust/tree/master/src/etc/gedit">gedit</a> or <a href="https://github.com/mozilla/rust/tree/master/src/etc">other highlighting solutions</a> on the main repo.</p>
+</section>
 <footer>
 <p>A Rust community project. [&copy;] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
 </footer>

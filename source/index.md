@@ -5,3 +5,4 @@ If you are looking for an all-in-one version, it's [there](tutorial.html) and th
 
 Chapter 01: [Tell me more about Rust!](ch-01.html)
 Chapter 02: [Few things you should know](ch-02.html)
+Chapter 03: [And so it begins!](ch-03.html)
