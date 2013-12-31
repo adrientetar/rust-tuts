@@ -16,7 +16,7 @@ $endif$
   \else
     \usepackage{fontspec}
   \fi
-  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
   \newcommand{\euro}{€}
 $if(mainfont)$
     \setmainfont{$mainfont$}
@@ -31,18 +31,28 @@ $if(mathfont)$
     \setmathfont(Digits,Latin,Greek){$mathfont$}
 $endif$
 \fi
+
 \setmainfont[Path = font/,
 Ligatures = TeX,
-UprightFont = Lora-Regular,
-BoldFont = Lora-Bold,
-ItalicFont = Lora-Italic,
-BoldItalicFont = Lora-BoldItalic]{Lora}
+UprightFont = NoticiaText-Regular,
+BoldFont = NoticiaText-Bold,
+ItalicFont = NoticiaText-Italic,
+BoldItalicFont = NoticiaText-BoldItalic]{NoticiaText}
+
 \setsansfont[Path = font/,
 Ligatures = TeX,
 UprightFont = texgyreheros-regular,
 BoldFont = texgyreheros-bold,
 ItalicFont = texgyreheros-italic,
 BoldItalicFont = texgyreheros-bolditalic]{Tex Gyre Heros}
+
+\setmonofont[Path = font/,
+Mapping=tex-ansi,
+UprightFont = DejaVuSansMono,
+BoldFont = DejaVuSansMono-Bold,
+ItalicFont = DejaVuSansMono-Oblique,
+BoldItalicFont = DejaVuSansMono-BoldOblique]{DejaVu Sans Mono}
+
 % use microtype
 \usepackage{microtype}
 $if(geometry)$

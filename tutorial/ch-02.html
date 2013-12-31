@@ -49,24 +49,23 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </header>
 <section id="few-things-you-should-know" class="level1">
 <h1>Few things you should know</h1>
-<p>The Rust API is frequently evolving. While the use of the 0.8 release is recommended on Windows (unless you’re willing to <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build it</a>), this tutorial will be aimed at current master which has the latest language contents.<br />Note that much of the “standard” features are pretty much stabilized and shouldn’t change much. If you have any concern related to the language or its syntax, just <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">jump on IRC</a> and ask the others!</p>
+<p>The Rust API is frequently evolving. While the use of the 0.8 release is recommended on Windows (unless you are willing to <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build it</a>), this tutorial will be aimed at current master which has the latest language contents.<br />Note that most of the “standard” features are pretty much stabilized and should not change much. If you have any concern related to the language or its syntax, just <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">jump on IRC</a> and ask the others!</p>
+<section id="installing-rust" class="level2">
+<h2>Installing Rust</h2>
+<section id="windows" class="level3">
+<h3>Windows</h3>
+<p>Checkout the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">building instructions</a>.<br /><strong>Note:</strong> <code>mingw-w64</code> support is there on latest trunk, it should fix a few things compared to the regular <code>mingw</code> (it works on both 32- and 64-bit system despite the name).</p>
+<p>If you are not willing to go through these steps, just download the <a href="http://static.rust-lang.org/dist/rust-0.8-install.exe">0.8 installer</a>.</p>
 </section>
-<section id="installing-rust" class="level1">
-<h1>Installing Rust</h1>
-<section id="windows" class="level2">
-<h2>Windows</h2>
-<p>Checkout the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">building instructions</a>.<br />Note: <code>mingw-w64</code> support is incoming on latest trunk.</p>
-<p>If you’re not willing to go through these steps, just download the <a href="http://static.rust-lang.org/dist/rust-0.8-install.exe">0.8 installer</a>.</p>
-</section>
-<section id="mac-os-x" class="level2">
-<h2>Mac OS X</h2>
-<p>The installation process on Mac OS is fairly easy with the <a href="http://brew.sh/">Homebrew package manager</a>, for the latest trunk:</p>
+<section id="mac-os-x" class="level3">
+<h3>Mac OS X</h3>
+<p>The installation process on Mac OS is fairly easy using the <a href="http://brew.sh/">Homebrew package manager</a>, for the latest trunk:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> install --HEAD rust</code></pre>
 <p>And to get the latest release:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">brew</span> install rust</code></pre>
 </section>
-<section id="linux" class="level2">
-<h2>Linux</h2>
+<section id="linux" class="level3">
+<h3>Linux</h3>
 <p>Okay Linux users, let’s build the beast:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> clone https://github.com/mozilla/rust.git
 <span class="kw">cd</span> rust
@@ -80,23 +79,24 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">./configure</span>
 <span class="kw">make</span>
 <span class="kw">sudo</span> make install</code></pre>
-<p>Note that there are repositories with nightly packages for <a href="http://pkgbuild.com/~thestinger/">Arch</a> and <a href="https://launchpad.net/~hansjorg/+archive/rust">Ubuntu</a>.</p>
+<p>Note that there are repositories with nightly packages for <a href="http://pkgbuild.com/~thestinger/">Arch</a>, <a href="http://dummdida.blogspot.de/2013/05/mozillas-rust-in-fedoras-ppa-copr.html">Fedora</a> and <a href="https://launchpad.net/~hansjorg/+archive/rust">Ubuntu</a>.</p>
 </section>
 </section>
-<section id="get-your-code-editor-ready" class="level1">
-<h1>Get your code editor ready</h1>
-<p>You are about to write your first Rust program; first, just create a <code>.rs</code> file with your favorite text editor. You are going to build it with <code>rustc</code>, the Rust compiler.</p>
+<section id="get-your-code-editor-ready" class="level2">
+<h2>Get your code editor ready</h2>
+<p>You are about to write your first Rust program; just create a <code>.rs</code> file with your favorite text editor. It gets built with <code>rustc</code>, the Rust compiler.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># create a new file</span>
 <span class="kw">touch</span> hello.rs
 <span class="co"># now compile it...</span>
 <span class="kw">rustc</span> hello.rs
 <span class="co"># ...and run!</span>
 <span class="kw">./hello</span></code></pre>
-<p>Note: on Windows, you will have to call <code>rustc.exe</code> for now due to issue <a href="https://github.com/mozilla/rust/issues/3319">#3319</a>.</p>
+<p><strong>Note:</strong> on Windows, you will have to call <code>rustc.exe</code> for now due to issue <a href="https://github.com/mozilla/rust/issues/3319">#3319</a>.</p>
 <p>BTW, you can get syntax highlighting for <a href="https://github.com/mozilla/rust/tree/master/src/etc/vim">vim</a>, <a href="https://github.com/mozilla/rust/tree/master/src/etc/gedit">gedit</a> or <a href="https://github.com/mozilla/rust/tree/master/src/etc">other highlighting solutions</a> on the main repo.</p>
 </section>
+</section>
 <footer>
-<p>A Rust community project. [&copy;] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
+<p>A Rust community project. [<a href="https://github.com/adridu59/rust-tuts/graphs/contributors">&copy;</a>] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
 </footer>
 </body>
 </html>

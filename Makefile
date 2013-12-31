@@ -16,11 +16,11 @@ tutorial/%.html: source/%.md
 	pandoc -o $@ $(HTML_OPTS) $<
 
 WEB += tutorial/tutorial.html
-tutorial/tutorial.html:  $(wildcard source/ch-*.md)
+tutorial/tutorial.html: template/title.md $(wildcard source/ch-*.md)
 	pandoc -o $@ $(HTML_OPTS) $^
 
 TEX += tutorial/tutorial.tex
-tutorial/tutorial.tex: $(wildcard source/ch-*.md)
+tutorial/tutorial.tex: template/title-TeX.md $(wildcard source/ch-*.md)
 	pandoc -o $@ $(TEX_OPTS) $^
 
 TEX += tutorial/tutorial.pdf

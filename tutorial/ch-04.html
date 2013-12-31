@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A tutorial for the Rust programming language.">
+  <meta name="author" content="Adrien T&eacute;tar">
+  <meta name="keywords" content="rust, rustlang, rust programming language, rust tutorial">
+  <title>Rust tutorials_NG</title>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/rust.css">
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="shortcut icon" href="http://adridu59.github.io/rust-tuts/favicon.ico">
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="container">
+   <header>
+     <ul class="nav nav-pills pull-right">
+       <li><a href="../index.html">Home</a></li>
+       <li class="active"><a href="index.html">Content</a></li>
+       <li><a href="https://github.com/adridu59/rust-tuts/">Contribute</a></li>
+     </ul>
+     <h3 class="text-muted">&#36; <span style="color: #333">Rust tutorials</span></h3>
+   </header>
+<header>
+<h1 class="title">Chapter 04</h1>
+</header>
+<section id="testing-logging-matching-so-wirds-gemacht" class="level1">
+<h1>Testing, Logging, Matching… so wird’s gemacht!</h1>
+<p>It might seem a bit early to talk about those topics but it is a good spot for Rust because these features are often used while writing the initial code. We will also talk about error handling, which you will encounter sooner or later as it is quite different from most of today’s programming languages.</p>
+<p><small>This chapter will not discuss things like debugging running executables (e.g. with Valgrind).</small></p>
+<section id="tests-and-linkage-attributes" class="level2">
+<h2>Tests and linkage attributes</h2>
+<p>Okay so first, Rust packs a built-in testing/benching framework—an approach that might seem familiar to people coming from Ruby.</p>
+<p>In order to use it, you will need to preappend the <code>#[test]</code> compiler attribute (notice the # and brackets syntax) to a function that will serve as test.</p>
+<p>Here is one:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<span class="kw">fn</span> try_fetch() {
+    <span class="kw">if</span> external::input() == -<span class="dv">1</span> {
+        <span class="kw">fail</span>!(<span class="st">&quot;Couldn&#39;t retrieve the result!&quot;</span>);
+    }
+}</code></pre>
+<p>These functions—just like block or statements marked with the <code>#[cfg(test)]</code> compiler attribute—will not be part of the default compiled code. This way, you can keep your files tidy by placing the tests relating to a specific part of your program at the bottom of the corresponding file.</p>
+</section>
+<section id="doing-it-wrong" class="level2">
+<h2>Doing it wrong</h2>
+<p>Test functions are blackboxes: they have no arguments nor returns.<br />Besides <code>fail!</code> that halts the program and displays the error message passed as argument, tests are often made of assertions: the <code>assert!</code> macro takes a boolean expression as parameter, does nothing if it evaluates to true, fails if it proves to be false. <code>assert_eq!</code> is a variant takes 2 variables as parameters and asserts equality. There is also <code>assert_approx_eq!</code> for floats.</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::ascii::OwnedStrAsciiExt;
+
+#[test]
+<span class="kw">fn</span> lowercase_ascii() {
+    <span class="kw">let</span> tmp = ~<span class="st">&quot;ME&quot;</span>;
+    assert_eq!(~<span class="st">&quot;me&quot;</span>, tmp.into_ascii_lower());
+}</code></pre>
+<p>Now, we just have to call <code>rustc --test</code> with the name of our file, and run it.</p>
+<p>That is how the output looks like (when everything is fine, that is):</p>
+<pre class="shell"><code>running 1 test
+
+test lowercase_ascii ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
+<p>There is also <code>#[bench]</code> for benchmarking certain functions. These features are largely used in the Rust compiler itself to avoid any regression during the development process.</p>
+<p><strong>Note:</strong> if you are running your program in debugging mode (that is, with <code>RUST_LOG</code> cmdline parameter defined to level 1/2/3/4), <code>error!</code> <code>warn!</code> <code>info!</code> <code>debug!</code> will get triggered depending on the logging level.</p>
+</section>
+<section id="moving-on-about-error-handling" class="level2">
+<h2>Moving on about error handling</h2>
+<p>Rust does not have “opt-in” error handling (well, it trys to avoid opt-in safety measures when possible); that is, it works with the use of an <code>Option</code> wrapper directly in the function declaration.</p>
+<p>Here are its possible values as defined in an <code>enum</code> (C-like cases enumerator):</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> <span class="kw">Option</span>&lt;T&gt; {
+    <span class="kw">Some</span>(T),
+    <span class="kw">None</span>
+}</code></pre>
+<p><strong>Note:</strong> if you are coming from C++, you will recognize those <code>&lt;&gt;</code> which denote polymorphism, ie. a method that applies to various variable types (<code>T</code> being a lambda type). We will go back on those notions and on the <code>trait</code> concept in a later chapter.</p>
+<p>So, an <code>Option</code> type encapsulating a certain type of variable will return <code>Some()</code> if a value gets catched or <code>None</code> if nothing passes through it.</p>
+<p>Now let’s go about doing error handling, what we must do is destructuring those types so that we can make use of the value if we get one and also handle the case where we would not get anything returned.</p>
+<p>If you are a C user, you are probably thinking about the use of the <code>switch</code> pattern?<br />Well, Rust has this, but more powerful in the name of <code>match</code>, pattern matching.</p>
+<p>The mainline Rust documentation has a good example to show its most basic innards:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">match</span> my_number {
+    x <span class="kw">if</span> x &lt; <span class="dv">0</span> =&gt; println(<span class="st">&quot;something lower than zero&quot;</span>),
+    <span class="dv">0</span>          =&gt; println(<span class="st">&quot;zero&quot;</span>),
+    <span class="dv">1</span> | <span class="dv">2</span>      =&gt; println(<span class="st">&quot;one or two&quot;</span>),
+    <span class="dv">3.</span>.<span class="dv">10</span>      =&gt; println(<span class="st">&quot;three to ten&quot;</span>),
+    _          =&gt; println(<span class="st">&quot;something else&quot;</span>)
+}</code></pre>
+<p>Something that must be noted is that <code>match</code> must handle all possible cases for it to compile.<br />The wildcard <code>_</code> means: “for all (other) possible cases”, so you will often have to use it as the last option, unless you are, for example, matching over all the individual components of an <code>enum</code>.</p>
+<p>Here is how we would match against an <code>Option</code> value:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">match</span> optional_arg {
+    <span class="kw">Some</span>(val) =&gt; val,
+    <span class="kw">None</span> =&gt; () <span class="co">// `nil`, the empty type</span>
+}</code></pre>
+<p>If you remember, about assignments:</p>
+<ul>
+<li>We can assign a variable from a match statement, as shown before<br /></li>
+<li>Otherwise, the pattern above will behave as an expression, ie. as if we had written a <code>return</code> statement</li>
+</ul>
+<p>We said that <code>match</code> was not the only way to destructure an <code>Option</code> type before, and there is another way involving Rust’s functional capatibilities.</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> optional_arg: <span class="kw">Option</span>&lt;<span class="kw">int</span>&gt; = get_option_val();
+
+<span class="co">// this will remove the `Option` wrapper, ie. return the value contained in `Some()` or fail</span>
+optional_arg.unwrap();
+
+<span class="co">// this will unwrap or fail with the message passed as argument in the `None` case</span>
+optional_arg.expect(<span class="st">&quot;No value returned!&quot;</span>);
+<span class="co">// this will return the value passed as parameter in the `None` case</span>
+optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
+<p><strong>Note:</strong> as you can see, error handling is not a big deal in the sense that you can simply call an <code>.unwrap()</code> if you do not care much about the failing case.</p>
+<p>This does not give you as much possibilities as with <code>match</code> but it covers the common use case of <code>Option</code>. There <a href="http://static.rust-lang.org/doc/master/std/option/enum.Option.html">is also</a> <code>.is_some()</code> or <code>.is_none()</code> if you want to do conditionals.</p>
+</section>
+<section id="appendix-getting-decent-results" class="level2">
+<h2>Appendix: Getting decent <code>Result</code>s</h2>
+<p>There is a variant to the <code>Option</code> type, called <code>Result</code>:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> <span class="kw">Result</span>&lt;T, E&gt; {
+    <span class="kw">Ok</span>(T),
+    <span class="kw">Err</span>(E)
+}</code></pre>
+<p>It is quite different from <code>Option</code>:</p>
+<ul>
+<li>As you can see, it returns an error message when it fails, which implies differences with <code>Option</code>…<br /></li>
+<li>In fact, <code>Result</code> will handle cases when computation errors can occur (and even allow you to do different things depending on the error message) while <code>Option</code> handles cases when an argument can be missing, it’s also used to pass NULL pointers to C, and so on…</li>
+</ul>
+<p>Similarly to <code>Option</code>, <code>Result</code> <a href="http://static.rust-lang.org/doc/master/std/result/enum.Result.html">has</a> the <code>is_ok()</code> and <code>is_err()</code> methods.</p>
+</section>
+<section id="appendix-can-you-match-it" class="level2">
+<h2>Appendix: Can you <code>match</code> it?</h2>
+<p>Pattern matching is pretty powerful, noticeably when coupled with the use of tuples.<br />Like in Python, tuples are heterogenous lists of elements (that is, with different, unsequenced element types).</p>
+<p>Tuples come also in handy, for example, when returning multiple values from a function:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="co">// type is ambiguous here and needs to be annotated</span>
+    <span class="kw">let</span> f: <span class="kw">f32</span> = <span class="dv">1.0e-2</span>;
+
+    <span class="kw">let</span> (mantissa, exponent, sign) = f.integer_decode();
+    println!(<span class="st">&quot;{}&quot;</span>, mantissa);
+}</code></pre>
+<p>As an example, here is an implementation of <a href="http://en.wikipedia.org/wiki/Fizz_buzz">FizzBuzz</a> using pattern matching:</p>
+<blockquote>
+<p>Print numbers from 1 to 100, but for multiples of three print “Fizz” instead and for the multiples of five print “Buzz”; for multiples of both print “FizzBuzz”.</p>
+</blockquote>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> i in range(<span class="dv">0u</span>, <span class="dv">101</span>) {
+        <span class="kw">match</span> (i % <span class="dv">3</span> == <span class="dv">0</span>, i % <span class="dv">5</span> == <span class="dv">0</span>) {
+            (<span class="kw">true</span>, <span class="kw">true</span>)   =&gt; println(<span class="st">&quot;Fizz Buzz&quot;</span>),
+            (<span class="kw">true</span>, <span class="kw">false</span>)  =&gt; println(<span class="st">&quot;Fizz&quot;</span>),
+            (<span class="kw">false</span>, <span class="kw">true</span>)  =&gt; println(<span class="st">&quot;Buzz&quot;</span>),
+            (<span class="kw">false</span>, <span class="kw">false</span>) =&gt; println!(<span class="st">&quot;{}&quot;</span>, i)
+        }
+    }
+}</code></pre>
+<p>If you want to see more on this, there is a <a href="http://composition.al/blog/2013/03/02/fizzbuzz-revisited/">whole article</a> about various ways to implement this program in Rust.</p>
+<p><strong>Note:</strong> you can match through <code>ref x</code> instead of <code>x</code> to get a reference instead of a value (ie. get a pointer referencing <code>x</code>)—some functions will need referencing.</p>
+</section>
+</section>
+<footer>
+<p>A Rust community project. [<a href="https://github.com/adridu59/rust-tuts/graphs/contributors">&copy;</a>] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
+</footer>
+</body>
+</html>

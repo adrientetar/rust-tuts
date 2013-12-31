@@ -1,7 +1,30 @@
+@font-face {
+  font-family: 'Noticia Text';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Noticia Text'), local('NoticiaText-Regular'), url(http://themes.googleusercontent.com/static/fonts/noticiatext/v3/wdyV6x3eKpdeUPQ7BJ5uUHhCUOGz7vYGh680lGh-uXM.woff) format('woff');
+}
+@font-face {
+  font-family: 'Noticia Text';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Noticia Text Bold'), local('NoticiaText-Bold'), url(http://themes.googleusercontent.com/static/fonts/noticiatext/v3/pEko-RqEtp45bE2P80AAKXl4twXkwp3_u9ZoePkT564.woff) format('woff');
+}
+@font-face {
+  font-family: 'Noticia Text';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Noticia Text Italic'), local('NoticiaText-Italic'), url(http://themes.googleusercontent.com/static/fonts/noticiatext/v3/dAuxVpkYE_Q_IwIm6elsKHpumDtkw9GHrrDfd7ZnWpU.woff) format('woff');
+}
+
 /* Space out content a bit */
 body {
+  font-size: 17px;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+body, div.jumbotron h1 {
+  font-family: "Noticia Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -101,4 +124,23 @@ footer {
   .jumbotron {
     border-bottom: 0;
   }
+}
+
+table {
+  margin-bottom: 15px;
+}
+
+.lab {
+  background-color: #d2322d;
+  border-color: rgb(212, 63, 58);
+  border-radius: 4px;
+  color: rgb(255, 255, 255);
+  display: inline-block;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 60%;
+  margin-bottom: 2px;
+  padding: 0 2px;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
 }
