@@ -55,8 +55,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
     println(<span class="st">&quot;Hello World!&quot;</span>);
 }</code></pre>
-<p>Yes, it is that simple. As you can see, functions are declared using the generic <code>fn</code> keyword and for the C habitués, the return type—if any—is specified as in ML, after an ASCII arrow e.g. <code>fn random() -&gt; int { ... }</code>.</p>
-<p>To out your own, save this code snippet and call <code>rustc</code>!</p>
+<p>Yes, it is that simple. As you can see, functions are declared using the generic <code>fn</code> keyword and for the C habitués, the return type—if any—is specified as in ML, after an ASCII arrow, e.g., <code>fn random() -&gt; int { ... }</code>.</p>
+<p>To try it out on your own, save this code snippet and call <code>rustc</code>!</p>
 <p>Now let’s try something funny:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
     <span class="kw">let</span> out = <span class="st">&quot;Hello World!&quot;</span>;
@@ -70,11 +70,12 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </section>
 <section id="the-looping-point" class="level2">
 <h2>The looping point</h2>
-<p>First, notice the loop syntax: for (each) <code>element</code> in <code>container</code>, as in Python.<br />Here, we make use of Rust’s functional paradigm by using <code>.chars()</code> to iterate over the chars of our string (it used to be <code>.iter()</code>): our iterator will successively host each char of the string, so we can print those directly.<br />What if we wanted to simply iterate a said number of times? Well, for that we have a special container, the <code>range()</code> iterator.</p>
+<p>First, notice the loop syntax: for (each) <code>element</code> in <code>container</code>, as in Python.<br />Here, we make use of Rust’s iterator type with <code>.chars()</code> to successively host each char of the string (it used to be <code>.iter()</code>) so we can print those directly.</p>
+<p>What if we wanted to simply iterate a said number of times? Well, for that we have a special container, the <code>range()</code> iterator.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">for</span> i in range(<span class="dv">0</span>, n) <span class="co">/// Creates an iterator that will do `n` times, from 0 to n-1</span>
 <span class="kw">for</span> _ in range(<span class="dv">1</span>, n+<span class="dv">1</span>) <span class="co">/// This one will go from 1 to n</span>
 <span class="co">// Pythonists: range(n) is not possible just yet</span></code></pre>
-<p>As you can see, <code>range()</code> has exclusive upper bound, to be inline with 0-based indexing.<br />Notice the wildcard <code>_</code> in the second example, that’s if we don’t want to reference the iterator for use as a local variable in the loop.</p>
+<p>As you can see, <code>range()</code> has exclusive upper bound, to be in line with 0-based indexing.<br />Notice the wildcard <code>_</code> in the second example, which is used if we don’t want to reference the iterator for use as a local variable in the loop.</p>
 <p>BTW, let’s look at the conditional <code>while</code> loop right now:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> cake = have_my_cake();
 <span class="kw">while</span> cake &gt; <span class="dv">0</span> {
@@ -84,7 +85,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>Now, before looking at the type syntax itself, let’s look at the output:</p>
 <pre><code>Hllo World!
 e</code></pre>
-<p>Well, we did <code>spawn</code> a few concurrent tasks. Things are done asynchronously, which means that one of the tasks may unpredictibly end-up before the other. Anyways, spawning threads to print out the letters of a sentence is pretty silly!</p>
+<p>Well, we did <code>spawn</code> a few concurrent tasks. Things are done asynchronously, which means that one of the tasks may unpredictably end up before the other. Anyways, spawning threads to print out the letters of a sentence is pretty silly!</p>
 </section>
 <section id="types-and-assignment" class="level2">
 <h2>Types and assignment</h2>
@@ -95,7 +96,7 @@ e</code></pre>
 <span class="kw">let</span> b = <span class="st">&quot;code&quot;</span>; <span class="co">// that would be an `str` - string</span>
 <span class="kw">let</span> c = [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]; <span class="co">// and that&#39;s a `vec` - array (of fixed-length)</span>
 <span class="kw">let</span> d = <span class="kw">true</span>; <span class="co">// bool</span></code></pre>
-<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value—the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note:</strong> unlike C for example, Rust does not let you edit an immutable variable via its pointer.</p>
+<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value—the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note:</strong> unlike C, for example, Rust does not let you edit an immutable variable via its pointer.</p>
 <p>Speaking of type assignment, you can force the use of a particular type:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a: <span class="kw">uint</span> = <span class="dv">3</span>; <span class="co">// unsigned int</span>
 <span class="kw">let</span> a = <span class="dv">3u</span>; <span class="co">// same as the last line, this is a short variable suffix for convenience</span>
@@ -158,22 +159,23 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 }</code></pre>
 <p>Rust supports UTF-8 (Unicode) natively through the <code>u8</code> type (8-bit unsigned type); strings are essentially just arrays of it <code>~[u8]</code> with a few specific methods on top of it.</p>
 <p>FYI, there is a blog article that talks about types in Rust and has some interesting facts, <a href="http://jvns.ca/blog/2013/12/02/types-in-rust/">check it out</a>!</p>
-<p>So Rust has a few printing functions, the standards <code>print</code>, <code>println</code> which want a string as input but also <code>print!</code>, <code>println!</code> macros (or syntax-extensions, ending with <code>!</code>) which will format-print your variables marked as <code>{}</code> and passed as arguments into strings.<br />Note that you can <a href="http://static.rust-lang.org/doc/master/std/fmt/index.html">specify the type manually</a>, e.g. <code>{:u}</code> means unsigned integer literal; this will permit compiler type-checking.<br />Also, <code>{:?}</code> will conveniently raw-print any kind of variable (arrays noticeably).</p>
+<p>So Rust has a few printing functions, the standards <code>print</code>, <code>println</code> which want a string as input but also <code>print!</code>, <code>println!</code> macros (or syntax extensions, ending with <code>!</code>) which will format-print your variables marked as <code>{}</code> and passed as arguments into strings.<br />Note that you can <a href="http://static.rust-lang.org/doc/master/std/fmt/index.html">specify the type manually</a>, e.g. <code>{:u}</code> means unsigned integer literal; this will permit compiler type-checking.<br />Also, <code>{:?}</code> will conveniently raw-print any kind of variable (in particular, arrays).</p>
 </section>
 <section id="appendix-going-back-on-macros" class="level2">
 <h2>Appendix: Going back on macros</h2>
-<p>Macros are defined as syntax extensions in the sense that they are like scripts, but are evaluated at <em>compile-time</em>. So they serve only the developer by simplifying/automating things.<br />Think about <code>#define</code> in C, but much more powerful. Macros have a few syntax elements of their own, for example, variables get referenced with <code>$var</code>; so that you can differenciate macro variables—which serve “internally”—and actual, real Rust code.</p>
+<p>Macros are defined as syntax extensions in the sense that they are like scripts, but are evaluated at <em>compile-time</em>. So they serve only the developer by simplifying/automating things.<br />Think about <code>#define</code> in C, but macros are much more powerful. Macros have a few syntax elements of their own; for example, variables get referenced with <code>$var</code>, so that you can differenciate macro variables—which serve “internally”—from actual, real Rust code.</p>
 <p>Not elaborating further on it for now but you can have a look at the <a href="http://static.rust-lang.org/doc/master/tutorial-macros.html">mainline macro tutorial</a> for some code examples.</p>
 </section>
 <section id="appendix-on-functional-programming" class="level2">
 <h2>Appendix: On functional programming</h2>
-<p>The functional capatibilities of Rust are powerful as it makes use of type-specific operations.</p>
-<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> my_vec = [-<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>];
-<span class="kw">for</span> i in my_vec.iter().invert() {
-    print!(<span class="st">&quot;{}, &quot;</span>, *i); <span class="co">// 1, 0, -1</span>
-}</code></pre>
-<p>See <code>.iter()</code>, <code>.invert()</code> above?<br />To write this specific kind of functions, you need to pass <code>&amp;self</code> or <code>&amp;mut self</code> as first argument in order to manipulate directly the root variable.</p>
-<p>This approach is very practical as it keeps code concise and manages to do various kind of conversions on variables easily.</p>
+<p>Iterators <a href="http://static.rust-lang.org/doc/master/std/iter/trait.Iterator.html">have methods</a> such as <code>.map()</code>, <code>.zip()</code> and <code>.filter()</code>—a touch of functional programming which can combine and/or reuse iterator’s values in various ways. So one can write something like <code>iterator.map(...).zip(...)</code> which manages to apply a function to each of the iterator’s element (map) and append another iterator to it as a pair of elements (zip).</p>
+<p>Here is an example using <a href="http://en.wikipedia.org/wiki/Fold_%28higher-order_function%29">fold</a>, which can combine an iterator’s values:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> xs = [<span class="dv">14</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">12</span>];
+
+<span class="co">// this yields -35</span>
+<span class="kw">let</span> result = xs.iter().fold(<span class="dv">0</span>, |accumulator, item| accumulator - *item);</code></pre>
+<p>This approach is very practical as it keeps code concise and manages to do various kind of operations on variables quite easily.</p>
+<p>Check out the <a href="http://static.rust-lang.org/doc/master/tutorial-container.html#iterators">iterators tutorial</a> to find out more.</p>
 </section>
 <section id="appendix-comments-and-documentation" class="level2">
 <h2>Appendix: Comments and documentation</h2>

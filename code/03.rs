@@ -124,13 +124,11 @@ fn hello_odd() {
 // Appendix: On functional programming
 
 #[test]
-fn vec_print() {
-    let my_vec = [-1, 0, 1];
-    for i in my_vec.iter().invert() {
-        print!("{}, ", *i);
-    }
+fn iter_fold() {
+    let xs = [14, 1, 5, 3, 12];
+    let result = xs.iter().fold(0, |accumulator, item| accumulator - *item);
 
-    println("");
+    assert_eq!(result, -35);
 }
 
 #[cfg(not(test))]

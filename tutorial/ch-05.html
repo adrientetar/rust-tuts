@@ -75,7 +75,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2>Importing from the standard library</h2>
 <p>So, we will have to import the relevant <code>std::io</code> methods manually, with the <code>use</code> keyword that is just like <code>import</code> in Python or Java. <code>#include</code> in C is quite similar too althrough C works only on a per-file basis.<br />Contrariwise, Rust uses the concept of module. Similarly to Java’s packages, each file is a module, but not only: you can declare modules with the <code>mod</code> keyword within a file, and each one has a different namespace, which means that you will have to go through logical paths (<code>::</code>) of modules when importing methods.</p>
 <p>Module names are lowercase by convention.</p>
-<p><strong>Note:</strong> modules are superseeded by <code>crate</code>s, which are individual compilation units (one gets compiled at a time, e.g. one library on a project makes one crate).</p>
+<p><strong>Note:</strong> modules are superseded by <code>crate</code>s, which are individual compilation units (one gets compiled at a time, e.g., one library on a project makes one crate).</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="co">// We can select different functions with `{}`.</span>
 <span class="co">// Note: `use` must precede `mod` statement.</span>
 <span class="kw">use</span> foo::{bar, baz};
@@ -94,7 +94,7 @@ bonus::baz();</code></pre>
 <p><strong>Note:</strong> the <code>priv</code> and <code>pub</code> attributes permit to allow/disallow access to a specific module of function.</p>
 <p>So, back to the stdio things:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::stdin;</code></pre>
-<p>If you are looking for a specific function to import at some point, just do a research in <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> or <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">ask your way on IRC</a>.</p>
+<p>If you are looking for a specific function to import at some point, just look in <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> or <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">ask your way on IRC</a>.</p>
 <p><strong>Note:</strong> if you wanted to import from external libraries you would have to link to them using <code>extern mod</code>. For example, the Rust filestack has an <code>extra</code> library for non-core things, which you could link to using <code>extern mod extra;</code> before your <code>use</code> statement.</p>
 </section>
 <section id="calling-the-user-err" class="level2">
@@ -121,7 +121,7 @@ bonus::baz();</code></pre>
 
 stdout.write(<span class="st">&quot;Type something: &quot;</span>.as_bytes());
 print(reader.read_line().unwrap());</code></pre>
-<p>Now we want to get an int out of <code>stdin</code>, but looking at the empty case, the program could behave strangely depending on what we are doing with it. So instead we could: ask the user back for input (by a recursive call to our input function, for example), or stop with a specific error message.<br />Here is an example that uses a <code>loop</code>:</p>
+<p>Now we want to get an int out of <code>stdin</code>, but looking at the empty case, the program could behave strangely depending on what we are doing with it. So instead we could ask the user back for input (by a recursive call to our input function, for example) or stop with a specific error message.<br />Here is an example that uses a <code>loop</code>:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::stdin;
 <span class="kw">use</span> std::num;
 
@@ -142,7 +142,7 @@ print(reader.read_line().unwrap());</code></pre>
         }
     }
 }</code></pre>
-<p>Okay, it should be all you need. Just do it by yourself and the compiler outputs first before looking at the doc!</p>
+<p>Okay, that should be all you need. Just do it by yourself and the compiler outputs first before looking at the doc!</p>
 <p>Let’s add something to the game: we will count how many times the user tries and display it at the end.</p>
 </section>
 <section id="the-solution-well-an-implementation-of-it" class="level2">

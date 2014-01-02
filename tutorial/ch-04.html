@@ -49,8 +49,8 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </header>
 <section id="testing-logging-matching-so-wirds-gemacht" class="level1">
 <h1>Testing, Logging, Matching… so wird’s gemacht!</h1>
-<p>It might seem a bit early to talk about those topics but it is a good spot for Rust because these features are often used while writing the initial code. We will also talk about error handling, which you will encounter sooner or later as it is quite different from most of today’s programming languages.</p>
-<p><small>This chapter will not discuss things like debugging running executables (e.g. with Valgrind).</small></p>
+<p>It might seem a bit early to talk about those topics but it is a good spot for Rust because these features are often used while writing initial code. We will also talk about error handling, which you will encounter sooner or later as it is quite different from most of today’s programming languages.</p>
+<p><small>This chapter will not discuss things like debugging running executables (e.g., with Valgrind).</small></p>
 <section id="tests-and-linkage-attributes" class="level2">
 <h2>Tests and linkage attributes</h2>
 <p>Okay so first, Rust packs a built-in testing/benching framework—an approach that might seem familiar to people coming from Ruby.</p>
@@ -66,7 +66,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </section>
 <section id="doing-it-wrong" class="level2">
 <h2>Doing it wrong</h2>
-<p>Test functions are blackboxes: they have no arguments nor returns.<br />Besides <code>fail!</code> that halts the program and displays the error message passed as argument, tests are often made of assertions: the <code>assert!</code> macro takes a boolean expression as parameter, does nothing if it evaluates to true, fails if it proves to be false. <code>assert_eq!</code> is a variant takes 2 variables as parameters and asserts equality. There is also <code>assert_approx_eq!</code> for floats.</p>
+<p>Test functions are blackboxes: they have no arguments nor returns.<br />Besides <code>fail!</code> that halts the program and displays the error message passed as argument, tests are often made of assertions: the <code>assert!</code> macro takes a boolean expression as parameter; it does nothing if it evaluates to true and fails when it’s false. <code>assert_eq!</code> is a variant takes 2 variables as parameters and asserts equality. There is also <code>assert_approx_eq!</code> for floats.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::ascii::OwnedStrAsciiExt;
 
 #[test]
@@ -95,7 +95,7 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
 <p><strong>Note:</strong> if you are coming from C++, you will recognize those <code>&lt;&gt;</code> which denote polymorphism, ie. a method that applies to various variable types (<code>T</code> being a lambda type). We will go back on those notions and on the <code>trait</code> concept in a later chapter.</p>
 <p>So, an <code>Option</code> type encapsulating a certain type of variable will return <code>Some()</code> if a value gets catched or <code>None</code> if nothing passes through it.</p>
 <p>Now let’s go about doing error handling, what we must do is destructuring those types so that we can make use of the value if we get one and also handle the case where we would not get anything returned.</p>
-<p>If you are a C user, you are probably thinking about the use of the <code>switch</code> pattern?<br />Well, Rust has this, but more powerful in the name of <code>match</code>, pattern matching.</p>
+<p>If you are a C user, you are probably thinking about the use of the <code>switch</code> pattern?<br />Well, Rust has a more powerful tool called <code>match</code>, for pattern matching.</p>
 <p>The mainline Rust documentation has a good example to show its most basic innards:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">match</span> my_number {
     x <span class="kw">if</span> x &lt; <span class="dv">0</span> =&gt; println(<span class="st">&quot;something lower than zero&quot;</span>),
