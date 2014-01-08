@@ -104,12 +104,14 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </section>
 <section id="few-things-you-should-know" class="level1">
 <h1>Few things you should know</h1>
-<p>The Rust API is frequently evolving. While the use of the 0.8 release is recommended on Windows (unless you are willing to <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build it</a>), this tutorial will be aimed at current master which has the latest language contents.<br />Note that most of the “standard” features are pretty much stabilized and should not change much. If you have any concern related to the language or its syntax, just <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">jump on IRC</a> and ask the others!</p>
+<p>The Rust API is frequently evolving (read: improving), so this tutorial will be aimed at current master which has the latest language contents.<br />Note that most of the “standard” features are pretty much stabilized and should not change much. If you have any concern related to the language or its syntax, just <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">jump on IRC</a> and ask the others!</p>
 <section id="installing-rust" class="level2">
 <h2>Installing Rust</h2>
 <section id="windows" class="level3">
 <h3>Windows</h3>
-<p>Check out the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build instructions</a>.<br /><strong>Note:</strong> <code>mingw-w64</code> support exists on latest trunk, which should fix a few things compared to the regular <code>mingw</code> (it works on both 32- and 64-bit systems, despite the name).</p>
+<p>You can get <a href="https://www.nuget.org/packages/Rust/">nightly builds</a> for Windows through the NuGet <a href="http://docs.nuget.org/docs/start-here/installing-nuget#Command-Line_Utility">Package Manager console</a>:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Install-Package</span> Rust</code></pre>
+<p>Or have a look at the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build instructions</a> if you want to build it yourself.<br /><strong>Note:</strong> <code>mingw-w64</code> should fix a few things compared to the regular <code>mingw</code> (it works on both 32- and 64-bit systems, despite the name).</p>
 <p>If you are not willing to go through these steps, just download the <a href="http://static.rust-lang.org/dist/rust-0.8-install.exe">0.8 installer</a>.</p>
 </section>
 <section id="mac-os-x" class="level3">
@@ -146,7 +148,6 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">rustc</span> hello.rs
 <span class="co"># ...and run!</span>
 <span class="kw">./hello</span></code></pre>
-<p><strong>Note:</strong> on Windows, you will have to call <code>rustc.exe</code> for now due to issue <a href="https://github.com/mozilla/rust/issues/3319">#3319</a>.</p>
 <p>BTW, you can get syntax highlighting for <a href="https://github.com/mozilla/rust/tree/master/src/etc/vim">vim</a>, <a href="https://github.com/mozilla/rust/tree/master/src/etc/gedit">gedit</a> or <a href="https://github.com/mozilla/rust/tree/master/src/etc">other highlighting solutions</a> on the main repo.</p>
 </section>
 </section>
@@ -347,7 +348,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 </section>
 <section id="doing-it-wrong" class="level2">
 <h2>Doing it wrong</h2>
-<p>Test functions are blackboxes: they have no arguments nor returns.<br />Besides <code>fail!</code> that halts the program and displays the error message passed as argument, tests are often made of assertions: the <code>assert!</code> macro takes a boolean expression as parameter; it does nothing if it evaluates to true and fails when it’s false. <code>assert_eq!</code> is a variant takes 2 variables as parameters and asserts equality. There is also <code>assert_approx_eq!</code> for floats.</p>
+<p>Test functions are blackboxes: they have no arguments nor returns.<br />Besides <code>fail!</code> that halts the program and displays the error message passed as argument, tests are often made of assertions: the <code>assert!</code> macro takes a boolean expression as parameter; it does nothing if it evaluates to true and fails when it’s false. <code>assert_eq!</code> is a variant takes 2 variables as parameters and asserts equality.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::ascii::OwnedStrAsciiExt;
 
 #[test]
