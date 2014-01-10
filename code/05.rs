@@ -50,9 +50,9 @@ fn match_str() {
     // Note: input will end with `\n`
     match Some(~"Hi\n") {
         // Handle empty input too
-        Some(~"\n") => println("\nI never asked for this..."),
+        Some(~"\n") => println!("\nI never asked for this..."),
         Some(thing) => println!("\nYou typed: {}", thing),
-        None        => println("\nWell, that's unexpected!")
+        None        => println!("\nWell, that's unexpected!")
     }
 }
 
@@ -76,7 +76,7 @@ fn number_input() {
                 break;
             }
             None    => {
-                println("Yea, well... better with a number.");
+                println!("Yea, well... better with a number.");
             }
         }
     }
@@ -94,7 +94,7 @@ fn test_solution() {
         let mut _reader = BufferedReader::new(stdin());
         loop {
             match Some(~"50\n") {
-                Some(~"\n") => println("\nUhm, please type something..."),
+                Some(~"\n") => println!("\nUhm, please type something..."),
                 Some(thing) => { return thing },
                 None => continue
             }
@@ -112,7 +112,7 @@ fn test_solution() {
                     break;
                 }
                 None => {
-                    println("Yea, well... better with a number.");
+                    println!("Yea, well... better with a number.");
                 }
             }
         }
@@ -122,7 +122,7 @@ fn test_solution() {
     let nbr = 50;
     let mut cpt = 0u;
 
-    println("Can you guess it?");
+    println!("Can you guess it?");
     loop {
         cpt += 1;
         match input_number() {

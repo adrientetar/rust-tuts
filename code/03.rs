@@ -15,7 +15,7 @@
 
 #[test]
 fn hello() {
-    println("Hello World!");
+    println!("Hello World!");
 }
 
 #[test]
@@ -28,7 +28,7 @@ fn hello_alt() {
         }
     }
 
-    println("");
+    println!("");
 }
 
 // The looping point
@@ -41,10 +41,10 @@ fn looping() {
         print!("{} ", i);
     }
     for _ in range(1, n+1) {
-        print("nop ");
+        print!("nop ");
     }
 
-    println("");
+    println!("");
 }
 
 #[test]
@@ -118,7 +118,7 @@ fn hello_odd() {
         print!("{:c}", *c);
     }
 
-    println("");
+    println!("");
 }
 
 // Appendix: On functional programming

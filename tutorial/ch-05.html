@@ -104,30 +104,30 @@ bonus::baz();</code></pre>
 <span class="kw">use</span> std::io::stdin;
 
 <span class="kw">fn</span> main() {
-    println(<span class="st">&quot;Type something:&quot;</span>);
+    println!(<span class="st">&quot;Type something:&quot;</span>);
 
     <span class="kw">let</span> <span class="kw">mut</span> reader = BufferedReader::new(stdin());
 
     <span class="co">// Note: input will end with `\n`</span>
     <span class="kw">match</span> reader.read_line() {
         <span class="co">// Handle empty input too</span>
-        <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; println(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">I never asked for this...&quot;</span>),
+        <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">I never asked for this...&quot;</span>),
         <span class="kw">Some</span>(thing) =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">You typed: {}&quot;</span>, thing),
-        <span class="kw">None</span>        =&gt; println(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Well, that&#39;s unexpected!&quot;</span>)
+        <span class="kw">None</span>        =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Well, that&#39;s unexpected!&quot;</span>)
     }
 }</code></pre>
 <p>On a side note: if you want a message and an input on the same line, it will take a direct access to <code>stdout</code>.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::stdout;
 
 stdout.write(<span class="st">&quot;Type something: &quot;</span>.as_bytes());
-print(reader.read_line().unwrap());</code></pre>
+println!(reader.read_line().unwrap());</code></pre>
 <p>Now we want to get an int out of <code>stdin</code>, but looking at the empty case, the program could behave strangely depending on what we are doing with it. So instead we could ask the user back for input (by a recursive call to our input function, for example) or stop with a specific error message.<br />Here is an example that uses a <code>loop</code>:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::stdin;
 <span class="kw">use</span> std::num;
 
 <span class="kw">fn</span> number_input() {
     <span class="kw">let</span> <span class="kw">mut</span> ret;
-    println(<span class="st">&quot;Please type a number: &quot;</span>);
+    println!(<span class="st">&quot;Please type a number: &quot;</span>);
 
     <span class="kw">loop</span> {
         <span class="co">// We need to trim the EOL `\n` char to be able to convert</span>
@@ -137,7 +137,7 @@ print(reader.read_line().unwrap());</code></pre>
                 <span class="kw">break</span>;
             }
             <span class="kw">None</span> =&gt; {
-                println(<span class="st">&quot;Yea, well... better with a number.&quot;</span>);
+                println!(<span class="st">&quot;Yea, well... better with a number.&quot;</span>);
             }
         }
     }
@@ -157,7 +157,7 @@ print(reader.read_line().unwrap());</code></pre>
     <span class="kw">let</span> <span class="kw">mut</span> reader = BufferedReader::new(stdin());
     <span class="kw">loop</span> {
         <span class="kw">match</span> reader.read_line() {
-            <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; println(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Uhm, please type something...&quot;</span>),
+            <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Uhm, please type something...&quot;</span>),
             <span class="kw">Some</span>(thing) =&gt; { <span class="kw">return</span> thing },
             <span class="kw">None</span> =&gt; continue
         }
@@ -166,7 +166,7 @@ print(reader.read_line().unwrap());</code></pre>
 
 <span class="kw">fn</span> input_number() -&gt; <span class="kw">uint</span> {
     <span class="kw">let</span> <span class="kw">mut</span> ret;
-    println(<span class="st">&quot;Please type a number: &quot;</span>);
+    println!(<span class="st">&quot;Please type a number: &quot;</span>);
 
     <span class="kw">loop</span> {
         <span class="co">// it is important to allocate here for lifetime; cf. following chapter!</span>
@@ -177,7 +177,7 @@ print(reader.read_line().unwrap());</code></pre>
                 <span class="kw">break</span>;
             }
             <span class="kw">None</span> =&gt; {
-                println(<span class="st">&quot;Yea, well... better with a number.&quot;</span>);
+                println!(<span class="st">&quot;Yea, well... better with a number.&quot;</span>);
             }
         }
     }
@@ -185,21 +185,21 @@ print(reader.read_line().unwrap());</code></pre>
 }
 
 <span class="kw">fn</span> main() {
-    println(<span class="st">&quot;The computer is choosing a secret number, between 1 and 100...&quot;</span>);
+    println!(<span class="st">&quot;The computer is choosing a secret number, between 1 and 100...&quot;</span>);
     <span class="kw">let</span> nbr = task_rng().gen_range(<span class="dv">1u</span>, <span class="dv">101</span>);
     <span class="kw">let</span> <span class="kw">mut</span> cpt = <span class="dv">0u</span>;
 
-    println(<span class="st">&quot;Can you guess it?&quot;</span>);
+    println!(<span class="st">&quot;Can you guess it?&quot;</span>);
     <span class="kw">loop</span> {
         cpt += <span class="dv">1</span>;
         <span class="kw">match</span> input_number() {
-            x <span class="kw">if</span> x &lt; nbr =&gt; println(<span class="st">&quot;Too low!&quot;</span>),
-            x <span class="kw">if</span> x &gt; nbr =&gt; println(<span class="st">&quot;Too high!&quot;</span>),
+            x <span class="kw">if</span> x &lt; nbr =&gt; println!(<span class="st">&quot;Too low!&quot;</span>),
+            x <span class="kw">if</span> x &gt; nbr =&gt; println!(<span class="st">&quot;Too high!&quot;</span>),
             _ =&gt; { println!(<span class="st">&quot;Yes, you found it in {} tries!&quot;</span>, cpt); <span class="kw">break</span>; }
         }
     }
 }</code></pre>
-<p>We have <code>input_line()</code> that makes a non-empty stdin input and <code>input_number()</code> that ensures a non-empty converted number.</p>
+<p>We have <code>input_line()</code> that takes a non-empty stdin input and <code>input_number()</code> that ensures a non-empty converted number.</p>
 </section>
 </section>
 <footer>

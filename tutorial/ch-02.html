@@ -49,15 +49,16 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </header>
 <section id="few-things-you-should-know" class="level1">
 <h1>Few things you should know</h1>
-<p>The Rust API is frequently evolving (read: improving), so this tutorial will be aimed at current master which has the latest language contents.<br />Note that most of the “standard” features are pretty much stabilized and should not change much. If you have any concern related to the language or its syntax, just <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">jump on IRC</a> and ask the others!</p>
+<p>The Rust API is frequently evolving (read: improving), so this tutorial will be aimed at current master which has the latest language contents.<br />Note that most of the “standard” features are pretty much stabilized and should not change much. You can choose to use the latest release, but as it gets older, there will probably be numerous changes onto the latest trunk. If you have any concern related to the language or its syntax, just <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">jump on IRC</a> and ask the others!</p>
+<p>The latest release is Rust 0.9, released on January 9th 2014.</p>
 <section id="installing-rust" class="level2">
 <h2>Installing Rust</h2>
 <section id="windows" class="level3">
 <h3>Windows</h3>
-<p>You can get <a href="https://www.nuget.org/packages/Rust/">nightly builds</a> for Windows through the NuGet <a href="http://docs.nuget.org/docs/start-here/installing-nuget#Command-Line_Utility">Package Manager console</a>:</p>
+<p>You can get <a href="https://www.nuget.org/packages/Rust/">snapshot builds</a> for Windows through the NuGet <a href="http://docs.nuget.org/docs/start-here/installing-nuget#Command-Line_Utility">Package Manager console</a>:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Install-Package</span> Rust</code></pre>
 <p>Or have a look at the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build instructions</a> if you want to build it yourself.<br /><strong>Note:</strong> <code>mingw-w64</code> should fix a few things compared to the regular <code>mingw</code> (it works on both 32- and 64-bit systems, despite the name).</p>
-<p>If you are not willing to go through these steps, just download the <a href="http://static.rust-lang.org/dist/rust-0.8-install.exe">0.8 installer</a>.</p>
+<p>If you are not willing to go through these steps, just download the [0.9 release][win-release].</p>
 </section>
 <section id="mac-os-x" class="level3">
 <h3>Mac OS X</h3>
@@ -75,9 +76,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">make</span>
 <span class="kw">sudo</span> make install</code></pre>
 <p>And for the 0.8 release, use these sources:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -O http://static.rust-lang.org/dist/rust-0.8.tar.gz
-<span class="kw">tar</span> -xzf rust-0.8.tar.gz
-<span class="kw">cd</span> rust-0.8
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -O http://static.rust-lang.org/dist/rust-0.9.tar.gz
+<span class="kw">tar</span> -xzf rust-0.9.tar.gz
+<span class="kw">cd</span> rust-0.9
 <span class="kw">./configure</span>
 <span class="kw">make</span>
 <span class="kw">sudo</span> make install</code></pre>

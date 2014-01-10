@@ -62,7 +62,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
         <span class="kw">fail</span>!(<span class="st">&quot;Couldn&#39;t retrieve the result!&quot;</span>);
     }
 }</code></pre>
-<p>These functions—just like block or statements marked with the <code>#[cfg(test)]</code> compiler attribute—will not be part of the default compiled code. This way, you can keep your files tidy by placing the tests relating to a specific part of your program at the bottom of the corresponding file.</p>
+<p>These functions—just like blocks or statements marked with the <code>#[cfg(test)]</code> compiler attribute—will not be part of the default compiled code. This way, you can keep your files tidy by placing the tests relating to a specific part of your program at the bottom of the corresponding file.</p>
 </section>
 <section id="doing-it-wrong" class="level2">
 <h2>Doing it wrong</h2>
@@ -98,11 +98,11 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
 <p>If you are a C user, you are probably thinking about the use of the <code>switch</code> pattern?<br />Well, Rust has a more powerful tool called <code>match</code>, for pattern matching.</p>
 <p>The mainline Rust documentation has a good example to show its most basic innards:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">match</span> my_number {
-    x <span class="kw">if</span> x &lt; <span class="dv">0</span> =&gt; println(<span class="st">&quot;something lower than zero&quot;</span>),
-    <span class="dv">0</span>          =&gt; println(<span class="st">&quot;zero&quot;</span>),
-    <span class="dv">1</span> | <span class="dv">2</span>      =&gt; println(<span class="st">&quot;one or two&quot;</span>),
-    <span class="dv">3.</span>.<span class="dv">10</span>      =&gt; println(<span class="st">&quot;three to ten&quot;</span>),
-    _          =&gt; println(<span class="st">&quot;something else&quot;</span>)
+    x <span class="kw">if</span> x &lt; <span class="dv">0</span> =&gt; println!(<span class="st">&quot;something lower than zero&quot;</span>),
+    <span class="dv">0</span>          =&gt; println!(<span class="st">&quot;zero&quot;</span>),
+    <span class="dv">1</span> | <span class="dv">2</span>      =&gt; println!(<span class="st">&quot;one or two&quot;</span>),
+    <span class="dv">3.</span>.<span class="dv">10</span>      =&gt; println!(<span class="st">&quot;three to ten&quot;</span>),
+    _          =&gt; println!(<span class="st">&quot;something else&quot;</span>)
 }</code></pre>
 <p>Something that must be noted is that <code>match</code> must handle all possible cases for it to compile.<br />The wildcard <code>_</code> means: “for all (other) possible cases”, so you will often have to use it as the last option, unless you are, for example, matching over all the individual components of an <code>enum</code>.</p>
 <p>Here is how we would match against an <code>Option</code> value:</p>
@@ -160,9 +160,9 @@ optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
     <span class="kw">for</span> i in range(<span class="dv">0u</span>, <span class="dv">101</span>) {
         <span class="kw">match</span> (i % <span class="dv">3</span> == <span class="dv">0</span>, i % <span class="dv">5</span> == <span class="dv">0</span>) {
-            (<span class="kw">true</span>, <span class="kw">true</span>)   =&gt; println(<span class="st">&quot;Fizz Buzz&quot;</span>),
-            (<span class="kw">true</span>, <span class="kw">false</span>)  =&gt; println(<span class="st">&quot;Fizz&quot;</span>),
-            (<span class="kw">false</span>, <span class="kw">true</span>)  =&gt; println(<span class="st">&quot;Buzz&quot;</span>),
+            (<span class="kw">true</span>, <span class="kw">true</span>)   =&gt; println!(<span class="st">&quot;Fizz Buzz&quot;</span>),
+            (<span class="kw">true</span>, <span class="kw">false</span>)  =&gt; println!(<span class="st">&quot;Fizz&quot;</span>),
+            (<span class="kw">false</span>, <span class="kw">true</span>)  =&gt; println!(<span class="st">&quot;Buzz&quot;</span>),
             (<span class="kw">false</span>, <span class="kw">false</span>) =&gt; println!(<span class="st">&quot;{}&quot;</span>, i)
         }
     }

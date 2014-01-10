@@ -36,11 +36,11 @@ fn number_matching() {
     let my_number = 11;
 
     match my_number {
-        x if x < 0 => println("something lower than zero"),
-        0          => println("zero"),
-        1 | 2      => println("one or two"),
-        3..10      => println("three to ten"),
-        _          => println("something else")
+        x if x < 0 => println!("something lower than zero"),
+        0          => println!("zero"),
+        1 | 2      => println!("one or two"),
+        3..10      => println!("three to ten"),
+        _          => println!("something else")
     }
 }
 
@@ -91,9 +91,9 @@ fn unpack_integer() {
 fn match_fizzbuzz() {
     for i in range(0u, 101) {
         match (i % 3 == 0, i % 5 == 0) {
-            (true, true)   => println("Fizz Buzz"),
-            (true, false)  => println("Fizz"),
-            (false, true)  => println("Buzz"),
+            (true, true)   => println!("Fizz Buzz"),
+            (true, false)  => println!("Fizz"),
+            (false, true)  => println!("Buzz"),
             (false, false) => println!("{}", i)
         }
     }

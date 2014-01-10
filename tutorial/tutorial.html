@@ -104,15 +104,16 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </section>
 <section id="few-things-you-should-know" class="level1">
 <h1>Few things you should know</h1>
-<p>The Rust API is frequently evolving (read: improving), so this tutorial will be aimed at current master which has the latest language contents.<br />Note that most of the “standard” features are pretty much stabilized and should not change much. If you have any concern related to the language or its syntax, just <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">jump on IRC</a> and ask the others!</p>
+<p>The Rust API is frequently evolving (read: improving), so this tutorial will be aimed at current master which has the latest language contents.<br />Note that most of the “standard” features are pretty much stabilized and should not change much. You can choose to use the latest release, but as it gets older, there will probably be numerous changes onto the latest trunk. If you have any concern related to the language or its syntax, just <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">jump on IRC</a> and ask the others!</p>
+<p>The latest release is Rust 0.9, released on January 9th 2014.</p>
 <section id="installing-rust" class="level2">
 <h2>Installing Rust</h2>
 <section id="windows" class="level3">
 <h3>Windows</h3>
-<p>You can get <a href="https://www.nuget.org/packages/Rust/">nightly builds</a> for Windows through the NuGet <a href="http://docs.nuget.org/docs/start-here/installing-nuget#Command-Line_Utility">Package Manager console</a>:</p>
+<p>You can get <a href="https://www.nuget.org/packages/Rust/">snapshot builds</a> for Windows through the NuGet <a href="http://docs.nuget.org/docs/start-here/installing-nuget#Command-Line_Utility">Package Manager console</a>:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Install-Package</span> Rust</code></pre>
 <p>Or have a look at the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build instructions</a> if you want to build it yourself.<br /><strong>Note:</strong> <code>mingw-w64</code> should fix a few things compared to the regular <code>mingw</code> (it works on both 32- and 64-bit systems, despite the name).</p>
-<p>If you are not willing to go through these steps, just download the <a href="http://static.rust-lang.org/dist/rust-0.8-install.exe">0.8 installer</a>.</p>
+<p>If you are not willing to go through these steps, just download the [0.9 release][win-release].</p>
 </section>
 <section id="mac-os-x" class="level3">
 <h3>Mac OS X</h3>
@@ -130,9 +131,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">make</span>
 <span class="kw">sudo</span> make install</code></pre>
 <p>And for the 0.8 release, use these sources:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -O http://static.rust-lang.org/dist/rust-0.8.tar.gz
-<span class="kw">tar</span> -xzf rust-0.8.tar.gz
-<span class="kw">cd</span> rust-0.8
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> -O http://static.rust-lang.org/dist/rust-0.9.tar.gz
+<span class="kw">tar</span> -xzf rust-0.9.tar.gz
+<span class="kw">cd</span> rust-0.9
 <span class="kw">./configure</span>
 <span class="kw">make</span>
 <span class="kw">sudo</span> make install</code></pre>
@@ -157,7 +158,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2>The starting point</h2>
 <p>So, you are learning a programming language… you know what that means?</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
-    println(<span class="st">&quot;Hello World!&quot;</span>);
+    println!(<span class="st">&quot;Hello World!&quot;</span>);
 }</code></pre>
 <p>Yes, it is that simple. As you can see, functions are declared using the generic <code>fn</code> keyword and for the C habitués, the return type—if any—is specified as in ML, after an ASCII arrow, e.g., <code>fn random() -&gt; int { ... }</code>.</p>
 <p>To try it out on your own, save this code snippet and call <code>rustc</code>!</p>
@@ -185,7 +186,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">while</span> cake &gt; <span class="dv">0</span> {
     cake -= <span class="dv">1</span>; <span class="co">// eat it</span>
 }</code></pre>
-<p>Note that for infinite loops, the <code>loop</code> keyword is to be preferred to <code>while true { }</code> (which is essentially a hack).<br />Also, Rust doesn’t have the <code>do { } while;</code> syntax, we just use a <code>loop</code> with a breaking condition instead—<code>break</code> will exit a loop while <code>continue</code> will jump to the next iteration.</p>
+<p>Note that for infinite loops, the <code>loop</code> keyword is to be preferred to <code>while true { }</code> (which is essentially a hack).<br />Also, Rust doesn’t have the <code>do { } while;</code> syntax; you can just use a <code>loop</code> with a breaking condition instead—<code>break</code> will exit a loop while <code>continue</code> will jump to the next iteration.</p>
 <p>Now, before looking at the type syntax itself, let’s look at the output:</p>
 <pre><code>Hllo World!
 e</code></pre>
@@ -219,7 +220,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
     <span class="kw">let</span> x = <span class="dv">3u</span>;
     <span class="co">/* Now, calculate the square. */</span>
     <span class="kw">let</span> y = square(x);
-    println!(<span class="st">&quot;{}&quot;</span>, y);
+    println!(<span class="st">&quot;So this gives us {}.&quot;</span>, y);
 }</code></pre>
 <p>Ok, but this code will not typecheck because we are passing an unsigned int to a function that takes an int as parameter; if we were in a situation where we cannot change the type annotation, we would have to just cast the value of <code>x</code>.</p>
 <p>Rust has various ways to change variable types, and while they all share different characteristics, they are also not all possible with all type combinations. Here are the general rules:</p>
@@ -261,9 +262,8 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
         print!(<span class="st">&quot;{}&quot;</span>, *c);
     }
 }</code></pre>
-<p>Rust supports UTF-8 (Unicode) natively through the <code>u8</code> type (8-bit unsigned type); strings are essentially just arrays of it <code>~[u8]</code> with a few specific methods on top of it.</p>
-<p>FYI, there is a blog article that talks about types in Rust and has some interesting facts, <a href="http://jvns.ca/blog/2013/12/02/types-in-rust/">check it out</a>!</p>
-<p>So Rust has a few printing functions, the standards <code>print</code>, <code>println</code> which want a string as input but also <code>print!</code>, <code>println!</code> macros (or syntax extensions, ending with <code>!</code>) which will format-print your variables marked as <code>{}</code> and passed as arguments into strings.<br />Note that you can <a href="http://static.rust-lang.org/doc/master/std/fmt/index.html">specify the type manually</a>, e.g. <code>{:u}</code> means unsigned integer literal; this will permit compiler type-checking.<br />Also, <code>{:?}</code> will conveniently raw-print any kind of variable (in particular, arrays).</p>
+<p>Rust supports UTF-8 (Unicode) natively through the <code>u8</code> type (8-bit unsigned type); strings are essentially just arrays of it <code>~[u8]</code> with a few specific methods on top of it.<br />FYI, there is a blog article that talks about types in Rust and has some interesting facts, <a href="http://jvns.ca/blog/2013/12/02/types-in-rust/">check it out</a>!</p>
+<p>So Rust uses the <code>print!</code> and <code>println!</code> macros (also called syntax extensions, ending with <code>!</code>) in order to format-print your variables marked as <code>{}</code> and passed as arguments into strings.<br />Note that you can <a href="http://static.rust-lang.org/doc/master/std/fmt/index.html">specify the type manually</a>, e.g. <code>{:u}</code> means unsigned integer literal; this will permit compiler type-checking.<br />Also, <code>{:?}</code> will conveniently raw-print any kind of variable (in particular, arrays).</p>
 </section>
 <section id="appendix-going-back-on-macros" class="level2">
 <h2>Appendix: Going back on macros</h2>
@@ -344,7 +344,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
         <span class="kw">fail</span>!(<span class="st">&quot;Couldn&#39;t retrieve the result!&quot;</span>);
     }
 }</code></pre>
-<p>These functions—just like block or statements marked with the <code>#[cfg(test)]</code> compiler attribute—will not be part of the default compiled code. This way, you can keep your files tidy by placing the tests relating to a specific part of your program at the bottom of the corresponding file.</p>
+<p>These functions—just like blocks or statements marked with the <code>#[cfg(test)]</code> compiler attribute—will not be part of the default compiled code. This way, you can keep your files tidy by placing the tests relating to a specific part of your program at the bottom of the corresponding file.</p>
 </section>
 <section id="doing-it-wrong" class="level2">
 <h2>Doing it wrong</h2>
@@ -380,11 +380,11 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
 <p>If you are a C user, you are probably thinking about the use of the <code>switch</code> pattern?<br />Well, Rust has a more powerful tool called <code>match</code>, for pattern matching.</p>
 <p>The mainline Rust documentation has a good example to show its most basic innards:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">match</span> my_number {
-    x <span class="kw">if</span> x &lt; <span class="dv">0</span> =&gt; println(<span class="st">&quot;something lower than zero&quot;</span>),
-    <span class="dv">0</span>          =&gt; println(<span class="st">&quot;zero&quot;</span>),
-    <span class="dv">1</span> | <span class="dv">2</span>      =&gt; println(<span class="st">&quot;one or two&quot;</span>),
-    <span class="dv">3.</span>.<span class="dv">10</span>      =&gt; println(<span class="st">&quot;three to ten&quot;</span>),
-    _          =&gt; println(<span class="st">&quot;something else&quot;</span>)
+    x <span class="kw">if</span> x &lt; <span class="dv">0</span> =&gt; println!(<span class="st">&quot;something lower than zero&quot;</span>),
+    <span class="dv">0</span>          =&gt; println!(<span class="st">&quot;zero&quot;</span>),
+    <span class="dv">1</span> | <span class="dv">2</span>      =&gt; println!(<span class="st">&quot;one or two&quot;</span>),
+    <span class="dv">3.</span>.<span class="dv">10</span>      =&gt; println!(<span class="st">&quot;three to ten&quot;</span>),
+    _          =&gt; println!(<span class="st">&quot;something else&quot;</span>)
 }</code></pre>
 <p>Something that must be noted is that <code>match</code> must handle all possible cases for it to compile.<br />The wildcard <code>_</code> means: “for all (other) possible cases”, so you will often have to use it as the last option, unless you are, for example, matching over all the individual components of an <code>enum</code>.</p>
 <p>Here is how we would match against an <code>Option</code> value:</p>
@@ -442,9 +442,9 @@ optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
     <span class="kw">for</span> i in range(<span class="dv">0u</span>, <span class="dv">101</span>) {
         <span class="kw">match</span> (i % <span class="dv">3</span> == <span class="dv">0</span>, i % <span class="dv">5</span> == <span class="dv">0</span>) {
-            (<span class="kw">true</span>, <span class="kw">true</span>)   =&gt; println(<span class="st">&quot;Fizz Buzz&quot;</span>),
-            (<span class="kw">true</span>, <span class="kw">false</span>)  =&gt; println(<span class="st">&quot;Fizz&quot;</span>),
-            (<span class="kw">false</span>, <span class="kw">true</span>)  =&gt; println(<span class="st">&quot;Buzz&quot;</span>),
+            (<span class="kw">true</span>, <span class="kw">true</span>)   =&gt; println!(<span class="st">&quot;Fizz Buzz&quot;</span>),
+            (<span class="kw">true</span>, <span class="kw">false</span>)  =&gt; println!(<span class="st">&quot;Fizz&quot;</span>),
+            (<span class="kw">false</span>, <span class="kw">true</span>)  =&gt; println!(<span class="st">&quot;Buzz&quot;</span>),
             (<span class="kw">false</span>, <span class="kw">false</span>) =&gt; println!(<span class="st">&quot;{}&quot;</span>, i)
         }
     }
@@ -510,30 +510,30 @@ bonus::baz();</code></pre>
 <span class="kw">use</span> std::io::stdin;
 
 <span class="kw">fn</span> main() {
-    println(<span class="st">&quot;Type something:&quot;</span>);
+    println!(<span class="st">&quot;Type something:&quot;</span>);
 
     <span class="kw">let</span> <span class="kw">mut</span> reader = BufferedReader::new(stdin());
 
     <span class="co">// Note: input will end with `\n`</span>
     <span class="kw">match</span> reader.read_line() {
         <span class="co">// Handle empty input too</span>
-        <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; println(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">I never asked for this...&quot;</span>),
+        <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">I never asked for this...&quot;</span>),
         <span class="kw">Some</span>(thing) =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">You typed: {}&quot;</span>, thing),
-        <span class="kw">None</span>        =&gt; println(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Well, that&#39;s unexpected!&quot;</span>)
+        <span class="kw">None</span>        =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Well, that&#39;s unexpected!&quot;</span>)
     }
 }</code></pre>
 <p>On a side note: if you want a message and an input on the same line, it will take a direct access to <code>stdout</code>.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::stdout;
 
 stdout.write(<span class="st">&quot;Type something: &quot;</span>.as_bytes());
-print(reader.read_line().unwrap());</code></pre>
+println!(reader.read_line().unwrap());</code></pre>
 <p>Now we want to get an int out of <code>stdin</code>, but looking at the empty case, the program could behave strangely depending on what we are doing with it. So instead we could ask the user back for input (by a recursive call to our input function, for example) or stop with a specific error message.<br />Here is an example that uses a <code>loop</code>:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::stdin;
 <span class="kw">use</span> std::num;
 
 <span class="kw">fn</span> number_input() {
     <span class="kw">let</span> <span class="kw">mut</span> ret;
-    println(<span class="st">&quot;Please type a number: &quot;</span>);
+    println!(<span class="st">&quot;Please type a number: &quot;</span>);
 
     <span class="kw">loop</span> {
         <span class="co">// We need to trim the EOL `\n` char to be able to convert</span>
@@ -543,7 +543,7 @@ print(reader.read_line().unwrap());</code></pre>
                 <span class="kw">break</span>;
             }
             <span class="kw">None</span> =&gt; {
-                println(<span class="st">&quot;Yea, well... better with a number.&quot;</span>);
+                println!(<span class="st">&quot;Yea, well... better with a number.&quot;</span>);
             }
         }
     }
@@ -563,7 +563,7 @@ print(reader.read_line().unwrap());</code></pre>
     <span class="kw">let</span> <span class="kw">mut</span> reader = BufferedReader::new(stdin());
     <span class="kw">loop</span> {
         <span class="kw">match</span> reader.read_line() {
-            <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; println(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Uhm, please type something...&quot;</span>),
+            <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Uhm, please type something...&quot;</span>),
             <span class="kw">Some</span>(thing) =&gt; { <span class="kw">return</span> thing },
             <span class="kw">None</span> =&gt; continue
         }
@@ -572,7 +572,7 @@ print(reader.read_line().unwrap());</code></pre>
 
 <span class="kw">fn</span> input_number() -&gt; <span class="kw">uint</span> {
     <span class="kw">let</span> <span class="kw">mut</span> ret;
-    println(<span class="st">&quot;Please type a number: &quot;</span>);
+    println!(<span class="st">&quot;Please type a number: &quot;</span>);
 
     <span class="kw">loop</span> {
         <span class="co">// it is important to allocate here for lifetime; cf. following chapter!</span>
@@ -583,7 +583,7 @@ print(reader.read_line().unwrap());</code></pre>
                 <span class="kw">break</span>;
             }
             <span class="kw">None</span> =&gt; {
-                println(<span class="st">&quot;Yea, well... better with a number.&quot;</span>);
+                println!(<span class="st">&quot;Yea, well... better with a number.&quot;</span>);
             }
         }
     }
@@ -591,21 +591,21 @@ print(reader.read_line().unwrap());</code></pre>
 }
 
 <span class="kw">fn</span> main() {
-    println(<span class="st">&quot;The computer is choosing a secret number, between 1 and 100...&quot;</span>);
+    println!(<span class="st">&quot;The computer is choosing a secret number, between 1 and 100...&quot;</span>);
     <span class="kw">let</span> nbr = task_rng().gen_range(<span class="dv">1u</span>, <span class="dv">101</span>);
     <span class="kw">let</span> <span class="kw">mut</span> cpt = <span class="dv">0u</span>;
 
-    println(<span class="st">&quot;Can you guess it?&quot;</span>);
+    println!(<span class="st">&quot;Can you guess it?&quot;</span>);
     <span class="kw">loop</span> {
         cpt += <span class="dv">1</span>;
         <span class="kw">match</span> input_number() {
-            x <span class="kw">if</span> x &lt; nbr =&gt; println(<span class="st">&quot;Too low!&quot;</span>),
-            x <span class="kw">if</span> x &gt; nbr =&gt; println(<span class="st">&quot;Too high!&quot;</span>),
+            x <span class="kw">if</span> x &lt; nbr =&gt; println!(<span class="st">&quot;Too low!&quot;</span>),
+            x <span class="kw">if</span> x &gt; nbr =&gt; println!(<span class="st">&quot;Too high!&quot;</span>),
             _ =&gt; { println!(<span class="st">&quot;Yes, you found it in {} tries!&quot;</span>, cpt); <span class="kw">break</span>; }
         }
     }
 }</code></pre>
-<p>We have <code>input_line()</code> that makes a non-empty stdin input and <code>input_number()</code> that ensures a non-empty converted number.</p>
+<p>We have <code>input_line()</code> that takes a non-empty stdin input and <code>input_number()</code> that ensures a non-empty converted number.</p>
 </section>
 </section>
 <footer>
