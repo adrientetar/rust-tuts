@@ -59,15 +59,15 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>So what is so good about Rust? We talked about C++ right at the beginning and you might think that since Mozilla is actively leading its development, it should actually have some significant advantages compared to it.</p>
 <p>First, what are people looking for when they want to use C++?</p>
 <ul>
-<li>A <a href="http://en.wikipedia.org/wiki/System_programming_language">System programming language</a>, which means it does not compromise on performance and allows for low-level access to the available resources (pointers, manual memory management, etc.)<br /></li>
+<li>A <a href="http://en.wikipedia.org/wiki/System_programming_language">System programming language</a>, which means it does not compromise on performance and allows for low-level access to the available resources (pointers, manual memory management, etc.)</li>
 <li>A language with a fairly high-level of abstraction and a large feature-set (<a href="http://en.wikipedia.org/wiki/Object_oriented_programming">OO programming</a> is one of them) that stays fast and has broad compatibility</li>
 </ul>
 <p>Now, what are the main features that Rust brings on top of that?</p>
 <ul>
-<li>Safety (and mostly: safe pointer types thanks to a <a href="http://static.rust-lang.org/doc/master/tutorial.html#boxes">very efficient memory model</a>, no void* heresy<a href="#appendix-elaborating-on-c-and-safety"><sup>◊</sup></a>, no use-after-free, mem leaks,…)<br /></li>
-<li>Native actor-based concurrency inspired from <a href="http://www.erlang.org/">Erlang</a>. This is a big deal for today’s programming languages with the rise of multicore processors; in fact, some sort of multithreading is already there on C++11 (2011) and will probably get extended in C++14. Actually, the actor implementation of multithreading consists of explicitly sending message from a lightweight thread (<code>chan</code>) and receiving it from another (<code>port</code>); it is a great safety/efficiency compromise. Rust allows the use of either green (M:N) or native (1:1) threads.<br /></li>
-<li>Inspirations from <a href="http://www.haskell.org/">Haskell</a> and <a href="http://caml.inria.fr/ocaml/index.fr.html">OCaml</a>, not only for the functional programming paradigm but also for the type classes (<code>trait</code>, <code>impl</code>)<br /></li>
-<li>Some programmers friendly features from Python—that being said, Rust does not compromise on performance: it has static typing (with type inference!)<br /></li>
+<li>Safety (and mostly: safe pointer types thanks to a <a href="http://static.rust-lang.org/doc/master/tutorial.html#boxes">very efficient memory model</a>, no void* heresy, no use-after-free, mem leaks,…)</li>
+<li>Native actor-based concurrency inspired from <a href="http://www.erlang.org/">Erlang</a>. This is a big deal for today’s programming languages with the rise of multicore processors; in fact, some sort of multithreading is already there on C++11 (2011) and will probably get extended in C++14. Actually, the actor implementation of multithreading consists of explicitly sending message from a lightweight thread (<code>chan</code>) and receiving it from another (<code>port</code>); it is a great safety/efficiency compromise. Rust allows the use of either green (M:N) or native (1:1) threads.</li>
+<li>Inspirations from <a href="http://www.haskell.org/">Haskell</a> and <a href="http://caml.inria.fr/ocaml/index.fr.html">OCaml</a>, not only for the functional programming paradigm but also for the type classes (<code>trait</code>, <code>impl</code>)</li>
+<li>Some programmers friendly features from Python—that being said, Rust does not compromise on performance: it has static typing (with type inference!)</li>
 <li>Optional tracing-GC (WIP)—the <code>std::gc::Gc</code> type recently landed on mainline</li>
 </ul>
 <p>As you can see, Rust does not try to be a new fancy thing; rather, it builds up on top of proven useful technology and merges features from some existings languages, noticeably: Erlang’s green threads, Haskell trait system and overall functional programming elements of a few languages (it has pattern matching!), some syntax sugar from Python (the <code>range</code> iterator is one of them) and it also resurrects a few features from some American research languages developed in the 80s, amongst others.<br />As you can see, along with some features that definitely set it in today’s rollup of programming languages, Rust is also the result of a true willingness to reuse concepts from the rich history of programming languages, rather than building up the wheel over again. ;) ~ as you might have seen, that’s partly where the name “Rust” comes from!</p>
@@ -77,10 +77,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>— Graydon Hoare</p>
 </blockquote>
 <p>Actually, Mozilla is already using it in an experimental browser rendering engine that is being developed simultaneously to Rust and is at the core of the team’s pragmatic development approach, just like <a href="http://dlang.org/">D</a>’s—that is, the developers implement features and sometimes change them based on their experience with it; besides, they also take feedback (and contributions!) from the community.<br />Remember, C—today’s most successful language—has been built in concert with the UNIX OS, allowing adaptations from what happened during the OS development process. Right now, Rust is still in alpha state which means that developers can still make breaking changes to the API (but not to worry, it is converging towards a stable state which will ultimately happen in 1.0).</p>
-<p>There have been other attempts at providing such a new System programming language (e.g. <a href="http://dlang.org/">D</a>, <a href="http://nimrod-lang.org/">Nimrod</a>)—Go also gets mentioned sometimes but it has been developed for apps/webapps and is more oriented towards simplicity and fast compilation-speed.<br />Right now, it looks like Rust has a big chance to set itself apart because:</p>
+<p>There have been other attempts at providing such a new System programming language (e.g. <a href="http://dlang.org/">D</a>, <a href="http://nimrod-lang.org/">Nimrod</a>)—Go also gets mentioned sometimes but it has been developed for apps/webapps and is more oriented towards simplicity and fast compilation-speed. Right now, it looks like Rust has a big chance to set itself apart because:</p>
 <ul>
-<li>It focuses on safety without compromising performance (D requires GC for safety, and Nimrod does not ensure thread safety), it has low-level features but also lots of sugar for the developer (the syntax is modern and not overly verbose)<br /></li>
-<li>It is pretty innovative, seeing how it reuses a lot of features that have been developed independently, but make sense together<br /></li>
+<li>It focuses on safety without compromising performance (D requires GC for safety, and Nimrod does not ensure thread safety), it has low-level features but also lots of sugar for the developer (the syntax is modern and not overly verbose)</li>
+<li>It is pretty innovative, seeing how it reuses a lot of features that have been developed independently, but make sense together</li>
 <li>It is backed by Mozilla, not bad if you are trying to set a standard!</li>
 </ul>
 </section>
@@ -97,9 +97,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <section id="appendix-elaborating-on-servo" class="level2">
 <h2>Appendix: Elaborating on Servo</h2>
 <p>What is <a href="https://github.com/mozilla/servo">Servo</a>? Well—nothing to do with mechanics: it is Mozilla’s experimental browser rendering engine.</p>
-<p>So, in a way, you could say that it’s their biggest <a href="http://people.mozilla.org/~roc/Samsung/MozillaRustAndServo.pdf#10">hope</a> and biggest motivation for supporting Rust’s development. Safety. Parallelism. (And Performance.)<br />Its development started in early-2012 (they like contributions too!) and it is evolving along with Rust.</p>
+<p>So, in a way, you could say that it’s their biggest <a href="http://people.mozilla.org/~roc/Samsung/MozillaRustAndServo.pdf#10">hope</a> and biggest motivation for supporting Rust’s development. Safety. Parallelism. (And Performance.) Its development started in early-2012 (they like contributions too!) and it is evolving along with Rust.</p>
 <p>Servo is built on a modular architecture and each engine component is separated from the other in an effort to have parallelized and easy-to-maintain code. Since April 2013, Mozilla and Samsung <a href="https://blog.mozilla.org/blog/2013/04/03/mozilla-and-samsung-collaborate-on-next-generation-web-browser-engine/">are collaborating</a> in the project development.</p>
-<p>Note that right now, Mozilla has no plans to integrate Servo onto Firefox, i.e., it is as of now a research project and is still in early stages of development.<br />BTW, Servo <a href="https://github.com/mozilla/servo/issues/266">passed Acid1</a> recently!</p>
+<p>Note that right now, Mozilla has no plans to integrate Servo onto Firefox, i.e., it is as of now a research project and is still in early stages of development. BTW, Servo <a href="https://github.com/mozilla/servo/issues/266">passed Acid1</a> recently!</p>
 </section>
 </section>
 <section id="few-things-you-should-know" class="level1">
@@ -112,7 +112,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h3>Windows</h3>
 <p>You can get <a href="https://www.nuget.org/packages/Rust/">snapshot builds</a> for Windows through the NuGet <a href="http://docs.nuget.org/docs/start-here/installing-nuget#Command-Line_Utility">Package Manager console</a>:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Install-Package</span> Rust</code></pre>
-<p>Or have a look at the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build instructions</a> if you want to build it yourself.<br /><strong>Note:</strong> <code>mingw-w64</code> should fix a few things compared to the regular <code>mingw</code> (it works on both 32- and 64-bit systems, despite the name).</p>
+<p>Or have a look at the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build instructions</a> if you want to build it yourself.<br /><strong>Note: <code>mingw-w64</code> should fix a few things compared to the regular <code>mingw</code> (it</strong>works on both 32- and 64-bit systems, despite the name).</p>
 <p>If you are not willing to go through these steps, just download the <a href="https://github.com/mozilla/rust/wiki/Using-Rust-on-Windows">0.9 release</a>.</p>
 </section>
 <section id="mac-os-x" class="level3">
@@ -178,16 +178,18 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2>The looping point</h2>
 <p>First, notice the loop syntax: for (each) <code>element</code> in <code>container</code>, as in Python.<br />Here, we make use of Rust’s iterator type with <code>.chars()</code> to successively host each char of the string (it used to be <code>.iter()</code>) so we can print those directly.</p>
 <p>What if we wanted to simply iterate a said number of times? Well, for that we have a special container, the <code>range()</code> iterator.</p>
-<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">for</span> i in range(<span class="dv">0</span>, n) <span class="co">/// Creates an iterator that will do `n` times, from 0 to n-1</span>
-<span class="kw">for</span> _ in range(<span class="dv">1</span>, n+<span class="dv">1</span>) <span class="co">/// This one will go from 1 to n</span>
-<span class="co">// Pythonists: range(n) is not possible just yet</span></code></pre>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="co">// Yields an iterator that will do `n` times, from 0 to n-1</span>
+<span class="co">// Note: using just `range(n)` is not possible just yet</span>
+<span class="kw">for</span> i in range(<span class="dv">0</span>, n) {}
+<span class="co">// This one will go from 1 to n</span>
+<span class="kw">for</span> _ in range(<span class="dv">1</span>, n+<span class="dv">1</span>)</code></pre>
 <p>As you can see, <code>range()</code> has exclusive upper bound, to be in line with 0-based indexing.<br />Notice the wildcard <code>_</code> in the second example, which is used if we don’t want to reference the iterator for use as a local variable in the loop.</p>
 <p>BTW, let’s look at the conditional <code>while</code> loop right now:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> cake = have_my_cake();
 <span class="kw">while</span> cake &gt; <span class="dv">0</span> {
     cake -= <span class="dv">1</span>; <span class="co">// eat it</span>
 }</code></pre>
-<p>Note that for infinite loops, the <code>loop</code> keyword is to be preferred to <code>while true { }</code> (which is essentially a hack).<br />Also, Rust doesn’t have the <code>do { } while;</code> syntax; you can just use a <code>loop</code> with a breaking condition instead—<code>break</code> will exit a loop while <code>continue</code> will jump to the next iteration.</p>
+<p>Note that for infinite loops, the <code>loop</code> keyword is to be preferred to <code>while true { }</code> (which is essentially a hack). Also, Rust doesn’t have the <code>do { } while;</code> syntax; you can just use a <code>loop</code> with a breaking condition instead—<code>break</code> will exit a loop while <code>continue</code> will jump to the next iteration.</p>
 <p>Now, before looking at the type syntax itself, let’s look at the output:</p>
 <pre><code>Hllo World!
 e</code></pre>
@@ -196,19 +198,19 @@ e</code></pre>
 <section id="types-and-assignment" class="level2">
 <h2>Types and assignment</h2>
 <p>As you can see, variables are declared via the <code>let</code> keyword and type specification is optional (~ML) because Rust has a type inference mechanism, which means that the variable type is determined at <em>compile time</em>—not to be confused with dynamic typing, as in Python, where the variable type is managed at run-time and can be dynamically modified.</p>
-<p><strong>Note:</strong> the convention is that variables and function names <strong>are_lowercase</strong> while type names are <strong>CamelCase</strong>.</p>
+<p><strong>Note: the convention is that variables and function names are_lowercase while</strong>type names are CamelCase.</p>
 <p>Let’s have a look at some of the primitive types:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a = <span class="dv">3</span>; <span class="co">// considered as `int` by default</span>
 <span class="kw">let</span> b = <span class="st">&quot;code&quot;</span>; <span class="co">// that would be an `str` - string</span>
 <span class="kw">let</span> c = [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]; <span class="co">// and that&#39;s a `vec` - array (of fixed-length)</span>
 <span class="kw">let</span> d = <span class="kw">true</span>; <span class="co">// bool</span></code></pre>
-<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value—the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note:</strong> unlike C, for example, Rust does not let you edit an immutable variable via its pointer.</p>
+<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value—the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note: unlike C, for example, Rust does not let you edit an immutable variable</strong>via its pointer.</p>
 <p>Speaking of type assignment, you can force the use of a particular type:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a: <span class="kw">uint</span> = <span class="dv">3</span>; <span class="co">// unsigned int</span>
-<span class="kw">let</span> a = <span class="dv">3u</span>; <span class="co">// same as the last line, this is a short variable suffix for convenience</span>
+<span class="kw">let</span> a = <span class="dv">3u</span>; <span class="co">// that&#39;s the same, using a short variable suffix for convenience</span>
 
-<span class="kw">let</span> <span class="kw">mut</span> n = <span class="dv">3</span>; <span class="co">// `n` is supposedly an `int` from here...</span>
-n = <span class="dv">5u</span>; <span class="co">// but is assigned an `uint` here, so the compiler will consider `n` as an `uint`</span>
+<span class="kw">let</span> <span class="kw">mut</span> n = <span class="dv">3</span>; <span class="co">// `n` is supposedly an `int` here...</span>
+n = <span class="dv">5u</span>; <span class="co">// but the compiler will infer it as an `uint` from here</span>
 <span class="kw">let</span> <span class="kw">mut</span> h = ~[]; <span class="co">// unknown-type `vec` - won&#39;t compile as such</span>
 h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3</span>]; <span class="co">// a `vec` of `uint`s</span></code></pre>
 <p>There are other suffixes like <code>i32</code> (32-bit integer), <code>i64</code>, <code>f32</code> (32-bit float), <code>f64</code>… the empty type is called nil and annotated <code>()</code>. But remember, you cannot change the type of a variable during it’s lifetime—static typing!</p>
@@ -237,9 +239,9 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">conversion</td>
-<td style="text-align: center;"><code>.to_T()</code><br /><code>.into_T()</code><br /></td>
-<td style="text-align: center;">allocates new memory<br />“in-place” conversion, without copying<br /></td>
-<td style="text-align: center;"><code>&amp;T -&gt; ~U</code><br /><code>~T -&gt; ~U</code><br /></td>
+<td style="text-align: center;"><code>.to_T()</code> <code>.into_T()</code></td>
+<td style="text-align: center;">allocates new memory “in-place” conversion, without copying</td>
+<td style="text-align: center;"><code>&amp;T -&gt; ~U</code> <code>~T -&gt; ~U</code></td>
 </tr>
 </tbody>
 </table>
@@ -263,7 +265,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
         print!(<span class="st">&quot;{}&quot;</span>, *c);
     }
 }</code></pre>
-<p>Rust supports UTF-8 (Unicode) natively through the <code>u8</code> type (8-bit unsigned type); strings are essentially just arrays of it <code>~[u8]</code> with a few specific methods on top of it.<br />FYI, there is a blog article that talks about types in Rust and has some interesting facts, <a href="http://jvns.ca/blog/2013/12/02/types-in-rust/">check it out</a>!</p>
+<p>Rust supports UTF-8 (Unicode) natively through the <code>u8</code> type (8-bit unsigned type); strings are essentially just <code>~[u8]</code> arrays with a few specific methods on top of it.<br />FYI, there is a blog article that talks about types in Rust and has some interesting facts, <a href="http://jvns.ca/blog/2013/12/02/types-in-rust/">check it out</a>!</p>
 <p>So Rust uses the <code>print!</code> and <code>println!</code> macros (also called syntax extensions, ending with <code>!</code>) in order to format-print your variables marked as <code>{}</code> and passed as arguments into strings.<br />Note that you can <a href="http://static.rust-lang.org/doc/master/std/fmt/index.html">specify the type manually</a>, e.g. <code>{:u}</code> means unsigned integer literal; this will permit compiler type-checking.<br />Also, <code>{:?}</code> will conveniently raw-print any kind of variable (in particular, arrays).</p>
 </section>
 <section id="appendix-going-back-on-macros" class="level2">
@@ -296,10 +298,10 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">inline<br />multiline<br /></td>
-<td style="text-align: center;"><code>// yuck!</code><br /><code>/* yuck! */</code><br /></td>
-<td style="text-align: center;"><code>//! foo</code><br /><code>/*! foo */</code><br /></td>
-<td style="text-align: center;"><code>/// bar</code><br /><code>/** bar */</code><br /></td>
+<td style="text-align: left;">inline multiline</td>
+<td style="text-align: center;"><code>// yuck!</code> <code>/* yuck! */</code></td>
+<td style="text-align: center;"><code>//! foo</code> <code>/*! foo */</code></td>
+<td style="text-align: center;"><code>/// bar</code> <code>/** bar */</code></td>
 </tr>
 </tbody>
 </table>
@@ -365,7 +367,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 
 <span class="kw">test</span> result: ok. 1 passed<span class="kw">;</span> <span class="kw">0</span> failed<span class="kw">;</span> <span class="kw">0</span> ignored<span class="kw">;</span> <span class="kw">0</span> measured</code></pre>
 <p>There is also <code>#[bench]</code> for benchmarking certain functions. These features are largely used in the Rust compiler itself to avoid any regression during the development process.</p>
-<p><strong>Note:</strong> if you are running your program in debugging mode (that is, with <code>RUST_LOG</code> cmdline parameter defined to level 1/2/3/4), <code>error!</code> <code>warn!</code> <code>info!</code> <code>debug!</code> will get triggered depending on the logging level.</p>
+<p><strong>Note: if you are running your program in debugging mode (that is, with</strong><code>RUST_LOG</code> cmdline parameter defined to level 1/2/3/4), <code>error!</code> <code>warn!</code> **<code>info!</code> <code>debug!</code> will get triggered depending on the logging level.</p>
 </section>
 <section id="moving-on-about-error-handling" class="level2">
 <h2>Moving on about error handling</h2>
@@ -395,18 +397,19 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 }</code></pre>
 <p>If you remember, about assignments:</p>
 <ul>
-<li>We can assign a variable from a match statement, as shown before<br /></li>
+<li>We can assign a variable from a match statement, as shown before</li>
 <li>Otherwise, the pattern above will behave as an expression, i.e. as if we had written a <code>return</code> statement</li>
 </ul>
 <p>We said that <code>match</code> was not the only way to destructure an <code>Option</code> type before, and there is another way involving Rust’s functional capatibilities.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> optional_arg: <span class="kw">Option</span>&lt;<span class="kw">int</span>&gt; = get_option_val();
 
-<span class="co">// this will remove the `Option` wrapper, i.e. return the value contained in `Some()` or fail</span>
+<span class="co">// this will remove the `Option` wrapper,</span>
+<span class="co">// i.e. return the value contained in `Some()` or fail</span>
 optional_arg.unwrap();
 
-<span class="co">// this will unwrap or fail with the message passed as argument in the `None` case</span>
+<span class="co">// this will unwrap or fail with the specified message in the `None` case</span>
 optional_arg.expect(<span class="st">&quot;No value returned!&quot;</span>);
-<span class="co">// this will return the value passed as parameter in the `None` case</span>
+<span class="co">// this will return the value passed as parameter when encountering `None`</span>
 optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
 <p><strong>Note:</strong> as you can see, error handling is not a big deal in the sense that you can simply call an <code>.unwrap()</code> if you do not care much about the failing case.</p>
 <p>This does not give you as much possibilities as with <code>match</code> but it covers the common use case of <code>Option</code>. There <a href="http://static.rust-lang.org/doc/master/std/option/enum.Option.html">is also</a> <code>.is_some()</code> or <code>.is_none()</code> if you want to do conditionals.</p>
@@ -420,7 +423,7 @@ optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
 }</code></pre>
 <p>It is quite different from <code>Option</code>:</p>
 <ul>
-<li>As you can see, it returns an error message when it fails, which implies differences with <code>Option</code>…<br /></li>
+<li>As you can see, it returns an error message when it fails, which implies differences with <code>Option</code>…</li>
 <li>In fact, <code>Result</code> will handle cases when computation errors can occur (and even allow you to do different things depending on the error message) while <code>Option</code> handles cases when an argument can be missing, it’s also used to pass NULL pointers to C, and so on…</li>
 </ul>
 <p>Similarly to <code>Option</code>, <code>Result</code> <a href="http://static.rust-lang.org/doc/master/std/result/enum.Result.html">has</a> the <code>is_ok()</code> and <code>is_err()</code> methods.</p>

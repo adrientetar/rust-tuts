@@ -82,7 +82,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 <span class="kw">test</span> result: ok. 1 passed<span class="kw">;</span> <span class="kw">0</span> failed<span class="kw">;</span> <span class="kw">0</span> ignored<span class="kw">;</span> <span class="kw">0</span> measured</code></pre>
 <p>There is also <code>#[bench]</code> for benchmarking certain functions. These features are largely used in the Rust compiler itself to avoid any regression during the development process.</p>
-<p><strong>Note:</strong> if you are running your program in debugging mode (that is, with <code>RUST_LOG</code> cmdline parameter defined to level 1/2/3/4), <code>error!</code> <code>warn!</code> <code>info!</code> <code>debug!</code> will get triggered depending on the logging level.</p>
+<p><strong>Note: if you are running your program in debugging mode (that is, with</strong><code>RUST_LOG</code> cmdline parameter defined to level 1/2/3/4), <code>error!</code> <code>warn!</code> **<code>info!</code> <code>debug!</code> will get triggered depending on the logging level.</p>
 </section>
 <section id="moving-on-about-error-handling" class="level2">
 <h2>Moving on about error handling</h2>
@@ -112,18 +112,19 @@ code > span.er { color: #ff0000; font-weight: bold; }
 }</code></pre>
 <p>If you remember, about assignments:</p>
 <ul>
-<li>We can assign a variable from a match statement, as shown before<br /></li>
+<li>We can assign a variable from a match statement, as shown before</li>
 <li>Otherwise, the pattern above will behave as an expression, i.e. as if we had written a <code>return</code> statement</li>
 </ul>
 <p>We said that <code>match</code> was not the only way to destructure an <code>Option</code> type before, and there is another way involving Rust’s functional capatibilities.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> optional_arg: <span class="kw">Option</span>&lt;<span class="kw">int</span>&gt; = get_option_val();
 
-<span class="co">// this will remove the `Option` wrapper, i.e. return the value contained in `Some()` or fail</span>
+<span class="co">// this will remove the `Option` wrapper,</span>
+<span class="co">// i.e. return the value contained in `Some()` or fail</span>
 optional_arg.unwrap();
 
-<span class="co">// this will unwrap or fail with the message passed as argument in the `None` case</span>
+<span class="co">// this will unwrap or fail with the specified message in the `None` case</span>
 optional_arg.expect(<span class="st">&quot;No value returned!&quot;</span>);
-<span class="co">// this will return the value passed as parameter in the `None` case</span>
+<span class="co">// this will return the value passed as parameter when encountering `None`</span>
 optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
 <p><strong>Note:</strong> as you can see, error handling is not a big deal in the sense that you can simply call an <code>.unwrap()</code> if you do not care much about the failing case.</p>
 <p>This does not give you as much possibilities as with <code>match</code> but it covers the common use case of <code>Option</code>. There <a href="http://static.rust-lang.org/doc/master/std/option/enum.Option.html">is also</a> <code>.is_some()</code> or <code>.is_none()</code> if you want to do conditionals.</p>
@@ -137,7 +138,7 @@ optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
 }</code></pre>
 <p>It is quite different from <code>Option</code>:</p>
 <ul>
-<li>As you can see, it returns an error message when it fails, which implies differences with <code>Option</code>…<br /></li>
+<li>As you can see, it returns an error message when it fails, which implies differences with <code>Option</code>…</li>
 <li>In fact, <code>Result</code> will handle cases when computation errors can occur (and even allow you to do different things depending on the error message) while <code>Option</code> handles cases when an argument can be missing, it’s also used to pass NULL pointers to C, and so on…</li>
 </ul>
 <p>Similarly to <code>Option</code>, <code>Result</code> <a href="http://static.rust-lang.org/doc/master/std/result/enum.Result.html">has</a> the <code>is_ok()</code> and <code>is_err()</code> methods.</p>

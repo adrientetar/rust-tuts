@@ -1,6 +1,6 @@
 # Flags declarations
 
-BASE_DOC_OPTS := --from=markdown+hard_line_breaks --smart
+BASE_DOC_OPTS := --from=markdown --smart
 HTML_OPTS = $(BASE_DOC_OPTS) --to=html5 --css=../css/rust.css --section-divs --template=template/template.html
 TEX_OPTS = $(BASE_DOC_OPTS) --to=latex --standalone --number-sections --latex-engine=lualatex --template=template/template.tex
 EPUB_OPTS = $(BASE_DOC_OPTS) --to=epub

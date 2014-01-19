@@ -72,16 +72,18 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2>The looping point</h2>
 <p>First, notice the loop syntax: for (each) <code>element</code> in <code>container</code>, as in Python.<br />Here, we make use of Rust’s iterator type with <code>.chars()</code> to successively host each char of the string (it used to be <code>.iter()</code>) so we can print those directly.</p>
 <p>What if we wanted to simply iterate a said number of times? Well, for that we have a special container, the <code>range()</code> iterator.</p>
-<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">for</span> i in range(<span class="dv">0</span>, n) <span class="co">/// Creates an iterator that will do `n` times, from 0 to n-1</span>
-<span class="kw">for</span> _ in range(<span class="dv">1</span>, n+<span class="dv">1</span>) <span class="co">/// This one will go from 1 to n</span>
-<span class="co">// Pythonists: range(n) is not possible just yet</span></code></pre>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="co">// Yields an iterator that will do `n` times, from 0 to n-1</span>
+<span class="co">// Note: using just `range(n)` is not possible just yet</span>
+<span class="kw">for</span> i in range(<span class="dv">0</span>, n) {}
+<span class="co">// This one will go from 1 to n</span>
+<span class="kw">for</span> _ in range(<span class="dv">1</span>, n+<span class="dv">1</span>)</code></pre>
 <p>As you can see, <code>range()</code> has exclusive upper bound, to be in line with 0-based indexing.<br />Notice the wildcard <code>_</code> in the second example, which is used if we don’t want to reference the iterator for use as a local variable in the loop.</p>
 <p>BTW, let’s look at the conditional <code>while</code> loop right now:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> cake = have_my_cake();
 <span class="kw">while</span> cake &gt; <span class="dv">0</span> {
     cake -= <span class="dv">1</span>; <span class="co">// eat it</span>
 }</code></pre>
-<p>Note that for infinite loops, the <code>loop</code> keyword is to be preferred to <code>while true { }</code> (which is essentially a hack).<br />Also, Rust doesn’t have the <code>do { } while;</code> syntax; you can just use a <code>loop</code> with a breaking condition instead—<code>break</code> will exit a loop while <code>continue</code> will jump to the next iteration.</p>
+<p>Note that for infinite loops, the <code>loop</code> keyword is to be preferred to <code>while true { }</code> (which is essentially a hack). Also, Rust doesn’t have the <code>do { } while;</code> syntax; you can just use a <code>loop</code> with a breaking condition instead—<code>break</code> will exit a loop while <code>continue</code> will jump to the next iteration.</p>
 <p>Now, before looking at the type syntax itself, let’s look at the output:</p>
 <pre><code>Hllo World!
 e</code></pre>
@@ -90,19 +92,19 @@ e</code></pre>
 <section id="types-and-assignment" class="level2">
 <h2>Types and assignment</h2>
 <p>As you can see, variables are declared via the <code>let</code> keyword and type specification is optional (~ML) because Rust has a type inference mechanism, which means that the variable type is determined at <em>compile time</em>—not to be confused with dynamic typing, as in Python, where the variable type is managed at run-time and can be dynamically modified.</p>
-<p><strong>Note:</strong> the convention is that variables and function names <strong>are_lowercase</strong> while type names are <strong>CamelCase</strong>.</p>
+<p><strong>Note: the convention is that variables and function names are_lowercase while</strong>type names are CamelCase.</p>
 <p>Let’s have a look at some of the primitive types:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a = <span class="dv">3</span>; <span class="co">// considered as `int` by default</span>
 <span class="kw">let</span> b = <span class="st">&quot;code&quot;</span>; <span class="co">// that would be an `str` - string</span>
 <span class="kw">let</span> c = [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]; <span class="co">// and that&#39;s a `vec` - array (of fixed-length)</span>
 <span class="kw">let</span> d = <span class="kw">true</span>; <span class="co">// bool</span></code></pre>
-<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value—the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note:</strong> unlike C, for example, Rust does not let you edit an immutable variable via its pointer.</p>
+<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value—the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note: unlike C, for example, Rust does not let you edit an immutable variable</strong>via its pointer.</p>
 <p>Speaking of type assignment, you can force the use of a particular type:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a: <span class="kw">uint</span> = <span class="dv">3</span>; <span class="co">// unsigned int</span>
-<span class="kw">let</span> a = <span class="dv">3u</span>; <span class="co">// same as the last line, this is a short variable suffix for convenience</span>
+<span class="kw">let</span> a = <span class="dv">3u</span>; <span class="co">// that&#39;s the same, using a short variable suffix for convenience</span>
 
-<span class="kw">let</span> <span class="kw">mut</span> n = <span class="dv">3</span>; <span class="co">// `n` is supposedly an `int` from here...</span>
-n = <span class="dv">5u</span>; <span class="co">// but is assigned an `uint` here, so the compiler will consider `n` as an `uint`</span>
+<span class="kw">let</span> <span class="kw">mut</span> n = <span class="dv">3</span>; <span class="co">// `n` is supposedly an `int` here...</span>
+n = <span class="dv">5u</span>; <span class="co">// but the compiler will infer it as an `uint` from here</span>
 <span class="kw">let</span> <span class="kw">mut</span> h = ~[]; <span class="co">// unknown-type `vec` - won&#39;t compile as such</span>
 h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3</span>]; <span class="co">// a `vec` of `uint`s</span></code></pre>
 <p>There are other suffixes like <code>i32</code> (32-bit integer), <code>i64</code>, <code>f32</code> (32-bit float), <code>f64</code>… the empty type is called nil and annotated <code>()</code>. But remember, you cannot change the type of a variable during it’s lifetime—static typing!</p>
@@ -131,9 +133,9 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">conversion</td>
-<td style="text-align: center;"><code>.to_T()</code><br /><code>.into_T()</code><br /></td>
-<td style="text-align: center;">allocates new memory<br />“in-place” conversion, without copying<br /></td>
-<td style="text-align: center;"><code>&amp;T -&gt; ~U</code><br /><code>~T -&gt; ~U</code><br /></td>
+<td style="text-align: center;"><code>.to_T()</code> <code>.into_T()</code></td>
+<td style="text-align: center;">allocates new memory “in-place” conversion, without copying</td>
+<td style="text-align: center;"><code>&amp;T -&gt; ~U</code> <code>~T -&gt; ~U</code></td>
 </tr>
 </tbody>
 </table>
@@ -157,7 +159,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
         print!(<span class="st">&quot;{}&quot;</span>, *c);
     }
 }</code></pre>
-<p>Rust supports UTF-8 (Unicode) natively through the <code>u8</code> type (8-bit unsigned type); strings are essentially just arrays of it <code>~[u8]</code> with a few specific methods on top of it.<br />FYI, there is a blog article that talks about types in Rust and has some interesting facts, <a href="http://jvns.ca/blog/2013/12/02/types-in-rust/">check it out</a>!</p>
+<p>Rust supports UTF-8 (Unicode) natively through the <code>u8</code> type (8-bit unsigned type); strings are essentially just <code>~[u8]</code> arrays with a few specific methods on top of it.<br />FYI, there is a blog article that talks about types in Rust and has some interesting facts, <a href="http://jvns.ca/blog/2013/12/02/types-in-rust/">check it out</a>!</p>
 <p>So Rust uses the <code>print!</code> and <code>println!</code> macros (also called syntax extensions, ending with <code>!</code>) in order to format-print your variables marked as <code>{}</code> and passed as arguments into strings.<br />Note that you can <a href="http://static.rust-lang.org/doc/master/std/fmt/index.html">specify the type manually</a>, e.g. <code>{:u}</code> means unsigned integer literal; this will permit compiler type-checking.<br />Also, <code>{:?}</code> will conveniently raw-print any kind of variable (in particular, arrays).</p>
 </section>
 <section id="appendix-going-back-on-macros" class="level2">
@@ -190,10 +192,10 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">inline<br />multiline<br /></td>
-<td style="text-align: center;"><code>// yuck!</code><br /><code>/* yuck! */</code><br /></td>
-<td style="text-align: center;"><code>//! foo</code><br /><code>/*! foo */</code><br /></td>
-<td style="text-align: center;"><code>/// bar</code><br /><code>/** bar */</code><br /></td>
+<td style="text-align: left;">inline multiline</td>
+<td style="text-align: center;"><code>// yuck!</code> <code>/* yuck! */</code></td>
+<td style="text-align: center;"><code>//! foo</code> <code>/*! foo */</code></td>
+<td style="text-align: center;"><code>/// bar</code> <code>/** bar */</code></td>
 </tr>
 </tbody>
 </table>
