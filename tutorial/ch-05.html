@@ -65,7 +65,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
     <span class="kw">let</span> <span class="kw">mut</span> cur;
     <span class="kw">for</span> _ in range(<span class="dv">0</span>, <span class="dv">11</span>) {
         <span class="co">// nb: range upper bound is exclusive</span>
-        cur = task_rng().gen_range(<span class="dv">1</span>, <span class="dv">101</span>);
+        cur = task_rng().gen_range(<span class="dv">1u</span>, <span class="dv">101</span>);
         println!(<span class="st">&quot;{}&quot;</span>, cur);
     }
 }</code></pre>
@@ -123,22 +123,15 @@ stdout.write(<span class="st">&quot;Type something: &quot;</span>.as_bytes());
 println!(reader.read_line().unwrap());</code></pre>
 <p>Now we want to get an int out of <code>stdin</code>, but looking at the empty case, the program could behave strangely depending on what we are doing with it. So instead we could ask the user back for input (by a recursive call to our input function, for example) or stop with a specific error message.<br />Here is an example that uses a <code>loop</code>:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::stdin;
-<span class="kw">use</span> std::num;
 
 <span class="kw">fn</span> number_input() {
-    <span class="kw">let</span> <span class="kw">mut</span> ret;
     println!(<span class="st">&quot;Please type a number: &quot;</span>);
 
     <span class="kw">loop</span> {
         <span class="co">// We need to trim the EOL `\n` char to be able to convert</span>
-        <span class="kw">match</span> from_str::&lt;<span class="kw">int</span>&gt;(stdin().read_line().trim_right_chars(&amp;<span class="ch">&#39;\n&#39;</span>)) {
-            <span class="kw">Some</span>(x) =&gt; {
-                ret = num::abs(x).to_uint().unwrap();
-                <span class="kw">break</span>;
-            }
-            <span class="kw">None</span> =&gt; {
-                println!(<span class="st">&quot;Yea, well... better with a number.&quot;</span>);
-            }
+        <span class="kw">match</span> from_str::&lt;<span class="kw">uint</span>&gt;(stdin().read_line().trim_right_chars(&amp;<span class="ch">&#39;\n&#39;</span>)) {
+            <span class="kw">Some</span>(x) =&gt; <span class="kw">return</span> x,
+            <span class="kw">None</span> =&gt; println!(<span class="st">&quot;I&#39;d rather have a number.&quot;</span>)
         }
     }
 }</code></pre>
@@ -150,7 +143,6 @@ println!(reader.read_line().unwrap());</code></pre>
 <p>So here it is:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::BufferedReader;
 <span class="kw">use</span> std::io::stdin;
-<span class="kw">use</span> std::num;
 <span class="kw">use</span> std::rand::{task_rng, Rng};
 
 <span class="kw">fn</span> input_line() -&gt; ~<span class="kw">str</span> {
@@ -158,30 +150,21 @@ println!(reader.read_line().unwrap());</code></pre>
     <span class="kw">loop</span> {
         <span class="kw">match</span> reader.read_line() {
             <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Uhm, please type something...&quot;</span>),
-            <span class="kw">Some</span>(thing) =&gt; { <span class="kw">return</span> thing },
+            <span class="kw">Some</span>(thing) =&gt; <span class="kw">return</span> thing,
             <span class="kw">None</span> =&gt; continue
         }
     }
 }
 
 <span class="kw">fn</span> input_number() -&gt; <span class="kw">uint</span> {
-    <span class="kw">let</span> <span class="kw">mut</span> ret;
     println!(<span class="st">&quot;Please type a number: &quot;</span>);
 
     <span class="kw">loop</span> {
-        <span class="co">// it is important to allocate here for lifetime; cf. following chapter!</span>
-        <span class="kw">let</span> input = input_line();
-        <span class="kw">match</span> from_str::&lt;<span class="kw">int</span>&gt;(input.trim_right_chars(&amp;<span class="ch">&#39;\n&#39;</span>)) {
-            <span class="kw">Some</span>(x) =&gt; {
-                ret = num::abs(x).to_uint().unwrap();
-                <span class="kw">break</span>;
-            }
-            <span class="kw">None</span> =&gt; {
-                println!(<span class="st">&quot;Yea, well... better with a number.&quot;</span>);
-            }
+        <span class="kw">match</span> from_str::&lt;<span class="kw">uint</span>&gt;(input_line().trim_right_chars(&amp;<span class="ch">&#39;\n&#39;</span>)) {
+            <span class="kw">Some</span>(x) =&gt; <span class="kw">return</span> x,
+            <span class="kw">None</span> =&gt; println!(<span class="st">&quot;I&#39;d rather have a number.&quot;</span>)
         }
     }
-    ret
 }
 
 <span class="kw">fn</span> main() {

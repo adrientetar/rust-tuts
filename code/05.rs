@@ -65,58 +65,37 @@ fn stdout_test() {
 
 #[test]
 fn number_input() {
-    use std::num;
-
-    let mut ret;
-
     loop {
-        match from_str::<int>("123\n".trim_right_chars(&'\n')) {
-            Some(x) => {
-                ret = num::abs(x).to_uint().unwrap();
-                break;
-            }
-            None    => {
-                println!("Yea, well... better with a number.");
-            }
+        match from_str::<uint>("123\n".trim_right_chars(&'\n')) {
+            Some(x) => assert_eq!(x, 123); break,
+            None    => println!("I'd rather have a number.")
         }
     }
-
-    assert_eq!(ret, 123);
 }
 
 #[test]
 fn test_solution() {
     use std::io::BufferedReader;
     use std::io::stdin;
-    use std::num;
 
     fn input_line() -> ~str {
         let mut _reader = BufferedReader::new(stdin());
         loop {
             match Some(~"50\n") {
                 Some(~"\n") => println!("\nUhm, please type something..."),
-                Some(thing) => { return thing },
+                Some(thing) => return thing,
                 None => continue
             }
         }
     }
 
     fn input_number() -> uint {
-        let mut ret;
-
         loop {
-            let input = input_line();
-            match from_str::<int>(input.trim_right_chars(&'\n')) {
-                Some(x) => {
-                    ret = num::abs(x).to_uint().unwrap();
-                    break;
-                }
-                None => {
-                    println!("Yea, well... better with a number.");
-                }
+            match from_str::<uint>(input_line().trim_right_chars(&'\n')) {
+                Some(x) => return x,
+                None => println!("I'd rather have a number.")
             }
         }
-        ret
     }
 
     let nbr = 50;

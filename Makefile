@@ -36,10 +36,12 @@ tutorial/%.html: drafts/%.md
 .PHONY: clean
 clean:
 	rm -f tutorial/*
-clean-tex:
+tclean:
 	rm -f tutorial/*.aux tutorial/*.log tutorial/*.out
+dclean:
+	rm -f $(DRAFTS)
 
-drafts: $(DRAFTS)
 docs: $(WEB)
-docs-tex: $(TEX) clean-tex
-docs-all: docs docs-tex
+tex: $(TEX) tclean
+all: docs tex
+drafts: $(DRAFTS)
