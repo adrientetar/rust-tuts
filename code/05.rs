@@ -42,7 +42,7 @@ fn stdin_import() {
 
 #[test]
 fn match_str() {
-    use std::io::buffered::BufferedReader;
+    use std::io::BufferedReader;
     use std::io::stdin;
 
     let mut _reader = BufferedReader::new(stdin());
@@ -86,7 +86,7 @@ fn number_input() {
 
 #[test]
 fn test_solution() {
-    use std::io::buffered::BufferedReader;
+    use std::io::BufferedReader;
     use std::io::stdin;
     use std::num;
 
@@ -136,5 +136,5 @@ fn test_solution() {
 
 #[cfg(not(test))]
 fn main() {
-    fail!("This file is intended to be compiled as a test unit, ie. with `rustc --test`.");
+    fail!("This file is intended to be compiled as a test unit, i.e. with `rustc --test`.");
 }

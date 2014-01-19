@@ -124,7 +124,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 <tr class="header">
 <th style="text-align: center;">cast</th>
 <th style="text-align: center;"><code>as T</code></th>
-<th style="text-align: center;">ref change-no allocation =&gt; read-only</th>
+<th style="text-align: center;">ref change-no allocation ⇒ read-only</th>
 <th style="text-align: center;"><code>&amp;'a T -&gt; &amp;'a U</code></th>
 </tr>
 </thead>
@@ -137,7 +137,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 </tr>
 </tbody>
 </table>
-<p>You can see <code>as</code> as a sole modified reference to a value in memory, while others change the in-memory representation of the converted variable.<br />A research on the <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> will tell you which types implement which of these methods—in the present case, we would just use a <code>as</code> cast, ie. <code>x as uint</code>.</p>
+<p>You can see <code>as</code> as a sole modified reference to a value in memory, while others change the in-memory representation of the converted variable.<br />A research on the <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> will tell you which types implement which of these methods—in the present case, we would just use a <code>as</code> cast, i.e. <code>x as uint</code>.</p>
 <p>In Rust, instructions that do not end with semicolons are expressions (not statements), meaning that they will return their value to the higher-level block.<br />This allows you not only to return from a function but also—for example—to allocate a value based on a test’s result. This is valid Rust code:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> hype =
     <span class="kw">if</span> cake == <span class="st">&quot;KitKat&quot;</span> {

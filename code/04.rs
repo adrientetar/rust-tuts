@@ -101,5 +101,5 @@ fn match_fizzbuzz() {
 
 #[cfg(not(test))]
 fn main() {
-    fail!("This file is intended to be compiled as a test unit, ie. with `rustc --test`.");
+    fail!("This file is intended to be compiled as a test unit, i.e. with `rustc --test`.");
 }

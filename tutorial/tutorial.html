@@ -64,7 +64,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </ul>
 <p>Now, what are the main features that Rust brings on top of that?</p>
 <ul>
-<li>Safety (and mostly: safe pointer types thanks to a <a href="http://static.rust-lang.org/doc/master/tutorial.html#boxes">very efficient memory model</a>, no void* heresy<sup>◊</sup>, no use-after-free, mem leaks,…)<br /></li>
+<li>Safety (and mostly: safe pointer types thanks to a <a href="http://static.rust-lang.org/doc/master/tutorial.html#boxes">very efficient memory model</a>, no void* heresy<a href="#appendix-elaborating-on-c-and-safety"><sup>◊</sup></a>, no use-after-free, mem leaks,…)<br /></li>
 <li>Native actor-based concurrency inspired from <a href="http://www.erlang.org/">Erlang</a>. This is a big deal for today’s programming languages with the rise of multicore processors; in fact, some sort of multithreading is already there on C++11 (2011) and will probably get extended in C++14. Actually, the actor implementation of multithreading consists of explicitly sending message from a lightweight thread (<code>chan</code>) and receiving it from another (<code>port</code>); it is a great safety/efficiency compromise. Rust allows the use of either green (M:N) or native (1:1) threads.<br /></li>
 <li>Inspirations from <a href="http://www.haskell.org/">Haskell</a> and <a href="http://caml.inria.fr/ocaml/index.fr.html">OCaml</a>, not only for the functional programming paradigm but also for the type classes (<code>trait</code>, <code>impl</code>)<br /></li>
 <li>Some programmers friendly features from Python—that being said, Rust does not compromise on performance: it has static typing (with type inference!)<br /></li>
@@ -86,7 +86,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </section>
 <section id="appendix-elaborating-on-c-and-safety" class="level2">
 <h2>Appendix: Elaborating on C++ and safety</h2>
-<p><sup>◊</sup>You might think: why were these even allowed in the first place? To quote Tony Hoare, the <code>null_ptr</code> precursor:</p>
+<p>You might think: why were these even allowed in the first place? To quote Tony Hoare, the <code>null_ptr</code> precursor:</p>
 <blockquote>
 <p>I couldn’t resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.</p>
 <p>— Tony Hoare</p>
@@ -113,7 +113,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>You can get <a href="https://www.nuget.org/packages/Rust/">snapshot builds</a> for Windows through the NuGet <a href="http://docs.nuget.org/docs/start-here/installing-nuget#Command-Line_Utility">Package Manager console</a>:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Install-Package</span> Rust</code></pre>
 <p>Or have a look at the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build instructions</a> if you want to build it yourself.<br /><strong>Note:</strong> <code>mingw-w64</code> should fix a few things compared to the regular <code>mingw</code> (it works on both 32- and 64-bit systems, despite the name).</p>
-<p>If you are not willing to go through these steps, just download the [0.9 release][win-release].</p>
+<p>If you are not willing to go through these steps, just download the <a href="https://github.com/mozilla/rust/wiki/Using-Rust-on-Windows">0.9 release</a>.</p>
 </section>
 <section id="mac-os-x" class="level3">
 <h3>Mac OS X</h3>
@@ -149,6 +149,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">rustc</span> hello.rs
 <span class="co"># ...and run!</span>
 <span class="kw">./hello</span></code></pre>
+<p>Using the <code>-O</code> switch will add the default optimization level to the code.</p>
 <p>BTW, you can get syntax highlighting for <a href="https://github.com/mozilla/rust/tree/master/src/etc/vim">vim</a>, <a href="https://github.com/mozilla/rust/tree/master/src/etc/gedit">gedit</a> or <a href="https://github.com/mozilla/rust/tree/master/src/etc">other highlighting solutions</a> on the main repo.</p>
 </section>
 </section>
@@ -229,7 +230,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 <tr class="header">
 <th style="text-align: center;">cast</th>
 <th style="text-align: center;"><code>as T</code></th>
-<th style="text-align: center;">ref change-no allocation =&gt; read-only</th>
+<th style="text-align: center;">ref change-no allocation ⇒ read-only</th>
 <th style="text-align: center;"><code>&amp;'a T -&gt; &amp;'a U</code></th>
 </tr>
 </thead>
@@ -242,7 +243,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 </tr>
 </tbody>
 </table>
-<p>You can see <code>as</code> as a sole modified reference to a value in memory, while others change the in-memory representation of the converted variable.<br />A research on the <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> will tell you which types implement which of these methods—in the present case, we would just use a <code>as</code> cast, ie. <code>x as uint</code>.</p>
+<p>You can see <code>as</code> as a sole modified reference to a value in memory, while others change the in-memory representation of the converted variable.<br />A research on the <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> will tell you which types implement which of these methods—in the present case, we would just use a <code>as</code> cast, i.e. <code>x as uint</code>.</p>
 <p>In Rust, instructions that do not end with semicolons are expressions (not statements), meaning that they will return their value to the higher-level block.<br />This allows you not only to return from a function but also—for example—to allocate a value based on a test’s result. This is valid Rust code:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> hype =
     <span class="kw">if</span> cake == <span class="st">&quot;KitKat&quot;</span> {
@@ -358,11 +359,11 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 }</code></pre>
 <p>Now, we just have to call <code>rustc --test</code> with the name of our file, and run it.</p>
 <p>That is how the output looks like (when everything is fine, that is):</p>
-<pre class="shell"><code>running 1 test
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">running</span> 1 test
 
-test lowercase_ascii ... ok
+<span class="kw">test</span> lowercase_ascii ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
+<span class="kw">test</span> result: ok. 1 passed<span class="kw">;</span> <span class="kw">0</span> failed<span class="kw">;</span> <span class="kw">0</span> ignored<span class="kw">;</span> <span class="kw">0</span> measured</code></pre>
 <p>There is also <code>#[bench]</code> for benchmarking certain functions. These features are largely used in the Rust compiler itself to avoid any regression during the development process.</p>
 <p><strong>Note:</strong> if you are running your program in debugging mode (that is, with <code>RUST_LOG</code> cmdline parameter defined to level 1/2/3/4), <code>error!</code> <code>warn!</code> <code>info!</code> <code>debug!</code> will get triggered depending on the logging level.</p>
 </section>
@@ -374,7 +375,7 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
     <span class="kw">Some</span>(T),
     <span class="kw">None</span>
 }</code></pre>
-<p><strong>Note:</strong> if you are coming from C++, you will recognize those <code>&lt;&gt;</code> which denote polymorphism, ie. a method that applies to various variable types (<code>T</code> being a lambda type). We will go back on those notions and on the <code>trait</code> concept in a later chapter.</p>
+<p><strong>Note:</strong> if you are coming from C++, you will recognize those <code>&lt;&gt;</code> which denote polymorphism, i.e. a method that applies to various variable types (<code>T</code> being a lambda type). We will go back on those notions and on the <code>trait</code> concept in a later chapter.</p>
 <p>So, an <code>Option</code> type encapsulating a certain type of variable will return <code>Some()</code> if a value gets catched or <code>None</code> if nothing passes through it.</p>
 <p>Now let’s go about doing error handling, what we must do is destructuring those types so that we can make use of the value if we get one and also handle the case where we would not get anything returned.</p>
 <p>If you are a C user, you are probably thinking about the use of the <code>switch</code> pattern?<br />Well, Rust has a more powerful tool called <code>match</code>, for pattern matching.</p>
@@ -395,12 +396,12 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
 <p>If you remember, about assignments:</p>
 <ul>
 <li>We can assign a variable from a match statement, as shown before<br /></li>
-<li>Otherwise, the pattern above will behave as an expression, ie. as if we had written a <code>return</code> statement</li>
+<li>Otherwise, the pattern above will behave as an expression, i.e. as if we had written a <code>return</code> statement</li>
 </ul>
 <p>We said that <code>match</code> was not the only way to destructure an <code>Option</code> type before, and there is another way involving Rust’s functional capatibilities.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> optional_arg: <span class="kw">Option</span>&lt;<span class="kw">int</span>&gt; = get_option_val();
 
-<span class="co">// this will remove the `Option` wrapper, ie. return the value contained in `Some()` or fail</span>
+<span class="co">// this will remove the `Option` wrapper, i.e. return the value contained in `Some()` or fail</span>
 optional_arg.unwrap();
 
 <span class="co">// this will unwrap or fail with the message passed as argument in the `None` case</span>
@@ -450,7 +451,7 @@ optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
     }
 }</code></pre>
 <p>If you want to see more on this, there is a <a href="http://composition.al/blog/2013/03/02/fizzbuzz-revisited/">whole article</a> about various ways to implement this program in Rust.</p>
-<p><strong>Note:</strong> you can match through <code>ref x</code> instead of <code>x</code> to get a reference instead of a value (ie. get a pointer referencing <code>x</code>)—some functions will need referencing.</p>
+<p><strong>Note:</strong> you can match through <code>ref x</code> instead of <code>x</code> to get a reference instead of a value (i.e. get a pointer referencing <code>x</code>)—some functions will need referencing.</p>
 </section>
 </section>
 <section id="guess-what" class="level1">
@@ -475,7 +476,7 @@ optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
         println!(<span class="st">&quot;{}&quot;</span>, cur);
     }
 }</code></pre>
-<p>Then, we will have to get input from the user. Unlike <code>print</code> and friends, input methods are not built in Rust programs by default, ie. they are not in the prelude.</p>
+<p>Then, we will have to get input from the user. Unlike <code>print</code> and friends, input methods are not built in Rust programs by default, i.e. they are not in the prelude.</p>
 </section>
 <section id="importing-from-the-standard-library" class="level2">
 <h2>Importing from the standard library</h2>
@@ -506,7 +507,7 @@ bonus::baz();</code></pre>
 <section id="calling-the-user-err" class="level2">
 <h2>Calling the user… err?</h2>
 <p>Alright, now let’s call <code>read_line()</code> to get input from the user. This method makes use of the <code>Option</code> type we just saw.</p>
-<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::buffered::BufferedReader;
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::BufferedReader;
 <span class="kw">use</span> std::io::stdin;
 
 <span class="kw">fn</span> main() {
@@ -554,7 +555,7 @@ println!(reader.read_line().unwrap());</code></pre>
 <section id="the-solution-well-an-implementation-of-it" class="level2">
 <h2>The Solution (well, an implementation of it)</h2>
 <p>So here it is:</p>
-<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::buffered::BufferedReader;
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::BufferedReader;
 <span class="kw">use</span> std::io::stdin;
 <span class="kw">use</span> std::num;
 <span class="kw">use</span> std::rand::{task_rng, Rng};

@@ -76,11 +76,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
 }</code></pre>
 <p>Now, we just have to call <code>rustc --test</code> with the name of our file, and run it.</p>
 <p>That is how the output looks like (when everything is fine, that is):</p>
-<pre class="shell"><code>running 1 test
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">running</span> 1 test
 
-test lowercase_ascii ... ok
+<span class="kw">test</span> lowercase_ascii ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
+<span class="kw">test</span> result: ok. 1 passed<span class="kw">;</span> <span class="kw">0</span> failed<span class="kw">;</span> <span class="kw">0</span> ignored<span class="kw">;</span> <span class="kw">0</span> measured</code></pre>
 <p>There is also <code>#[bench]</code> for benchmarking certain functions. These features are largely used in the Rust compiler itself to avoid any regression during the development process.</p>
 <p><strong>Note:</strong> if you are running your program in debugging mode (that is, with <code>RUST_LOG</code> cmdline parameter defined to level 1/2/3/4), <code>error!</code> <code>warn!</code> <code>info!</code> <code>debug!</code> will get triggered depending on the logging level.</p>
 </section>
@@ -92,7 +92,7 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
     <span class="kw">Some</span>(T),
     <span class="kw">None</span>
 }</code></pre>
-<p><strong>Note:</strong> if you are coming from C++, you will recognize those <code>&lt;&gt;</code> which denote polymorphism, ie. a method that applies to various variable types (<code>T</code> being a lambda type). We will go back on those notions and on the <code>trait</code> concept in a later chapter.</p>
+<p><strong>Note:</strong> if you are coming from C++, you will recognize those <code>&lt;&gt;</code> which denote polymorphism, i.e. a method that applies to various variable types (<code>T</code> being a lambda type). We will go back on those notions and on the <code>trait</code> concept in a later chapter.</p>
 <p>So, an <code>Option</code> type encapsulating a certain type of variable will return <code>Some()</code> if a value gets catched or <code>None</code> if nothing passes through it.</p>
 <p>Now let’s go about doing error handling, what we must do is destructuring those types so that we can make use of the value if we get one and also handle the case where we would not get anything returned.</p>
 <p>If you are a C user, you are probably thinking about the use of the <code>switch</code> pattern?<br />Well, Rust has a more powerful tool called <code>match</code>, for pattern matching.</p>
@@ -113,12 +113,12 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
 <p>If you remember, about assignments:</p>
 <ul>
 <li>We can assign a variable from a match statement, as shown before<br /></li>
-<li>Otherwise, the pattern above will behave as an expression, ie. as if we had written a <code>return</code> statement</li>
+<li>Otherwise, the pattern above will behave as an expression, i.e. as if we had written a <code>return</code> statement</li>
 </ul>
 <p>We said that <code>match</code> was not the only way to destructure an <code>Option</code> type before, and there is another way involving Rust’s functional capatibilities.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> optional_arg: <span class="kw">Option</span>&lt;<span class="kw">int</span>&gt; = get_option_val();
 
-<span class="co">// this will remove the `Option` wrapper, ie. return the value contained in `Some()` or fail</span>
+<span class="co">// this will remove the `Option` wrapper, i.e. return the value contained in `Some()` or fail</span>
 optional_arg.unwrap();
 
 <span class="co">// this will unwrap or fail with the message passed as argument in the `None` case</span>
@@ -168,7 +168,7 @@ optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
     }
 }</code></pre>
 <p>If you want to see more on this, there is a <a href="http://composition.al/blog/2013/03/02/fizzbuzz-revisited/">whole article</a> about various ways to implement this program in Rust.</p>
-<p><strong>Note:</strong> you can match through <code>ref x</code> instead of <code>x</code> to get a reference instead of a value (ie. get a pointer referencing <code>x</code>)—some functions will need referencing.</p>
+<p><strong>Note:</strong> you can match through <code>ref x</code> instead of <code>x</code> to get a reference instead of a value (i.e. get a pointer referencing <code>x</code>)—some functions will need referencing.</p>
 </section>
 </section>
 <footer>

@@ -45,7 +45,7 @@
 </ul>
 <p>Now, what are the main features that Rust brings on top of that?</p>
 <ul>
-<li>Safety (and mostly: safe pointer types thanks to a <a href="http://static.rust-lang.org/doc/master/tutorial.html#boxes">very efficient memory model</a>, no void* heresy<sup>◊</sup>, no use-after-free, mem leaks,…)<br /></li>
+<li>Safety (and mostly: safe pointer types thanks to a <a href="http://static.rust-lang.org/doc/master/tutorial.html#boxes">very efficient memory model</a>, no void* heresy<a href="#appendix-elaborating-on-c-and-safety"><sup>◊</sup></a>, no use-after-free, mem leaks,…)<br /></li>
 <li>Native actor-based concurrency inspired from <a href="http://www.erlang.org/">Erlang</a>. This is a big deal for today’s programming languages with the rise of multicore processors; in fact, some sort of multithreading is already there on C++11 (2011) and will probably get extended in C++14. Actually, the actor implementation of multithreading consists of explicitly sending message from a lightweight thread (<code>chan</code>) and receiving it from another (<code>port</code>); it is a great safety/efficiency compromise. Rust allows the use of either green (M:N) or native (1:1) threads.<br /></li>
 <li>Inspirations from <a href="http://www.haskell.org/">Haskell</a> and <a href="http://caml.inria.fr/ocaml/index.fr.html">OCaml</a>, not only for the functional programming paradigm but also for the type classes (<code>trait</code>, <code>impl</code>)<br /></li>
 <li>Some programmers friendly features from Python—that being said, Rust does not compromise on performance: it has static typing (with type inference!)<br /></li>
@@ -67,7 +67,7 @@
 </section>
 <section id="appendix-elaborating-on-c-and-safety" class="level2">
 <h2>Appendix: Elaborating on C++ and safety</h2>
-<p><sup>◊</sup>You might think: why were these even allowed in the first place? To quote Tony Hoare, the <code>null_ptr</code> precursor:</p>
+<p>You might think: why were these even allowed in the first place? To quote Tony Hoare, the <code>null_ptr</code> precursor:</p>
 <blockquote>
 <p>I couldn’t resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.</p>
 <p>— Tony Hoare</p>

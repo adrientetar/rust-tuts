@@ -69,7 +69,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
         println!(<span class="st">&quot;{}&quot;</span>, cur);
     }
 }</code></pre>
-<p>Then, we will have to get input from the user. Unlike <code>print</code> and friends, input methods are not built in Rust programs by default, ie. they are not in the prelude.</p>
+<p>Then, we will have to get input from the user. Unlike <code>print</code> and friends, input methods are not built in Rust programs by default, i.e. they are not in the prelude.</p>
 </section>
 <section id="importing-from-the-standard-library" class="level2">
 <h2>Importing from the standard library</h2>
@@ -100,7 +100,7 @@ bonus::baz();</code></pre>
 <section id="calling-the-user-err" class="level2">
 <h2>Calling the user… err?</h2>
 <p>Alright, now let’s call <code>read_line()</code> to get input from the user. This method makes use of the <code>Option</code> type we just saw.</p>
-<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::buffered::BufferedReader;
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::BufferedReader;
 <span class="kw">use</span> std::io::stdin;
 
 <span class="kw">fn</span> main() {
@@ -148,7 +148,7 @@ println!(reader.read_line().unwrap());</code></pre>
 <section id="the-solution-well-an-implementation-of-it" class="level2">
 <h2>The Solution (well, an implementation of it)</h2>
 <p>So here it is:</p>
-<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::buffered::BufferedReader;
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::BufferedReader;
 <span class="kw">use</span> std::io::stdin;
 <span class="kw">use</span> std::num;
 <span class="kw">use</span> std::rand::{task_rng, Rng};
