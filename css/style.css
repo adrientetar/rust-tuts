@@ -130,9 +130,7 @@ table {
   margin-bottom: 15px;
 }
 
-.lab {
-  background-color: #d2322d;
-  border-color: rgb(212, 63, 58);
+.lbl {
   border-radius: 4px;
   color: rgb(255, 255, 255);
   display: inline-block;
@@ -143,4 +141,12 @@ table {
   text-align: center;
   text-transform: uppercase;
   vertical-align: middle;
+}
+.lab {
+  background-color: #d2322d;
+  border-color: rgb(212, 63, 58);
+}
+.wip {
+  background-color: #f0a04e;
+  border-color: rgb(238, 162, 54);
 }

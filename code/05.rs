@@ -22,16 +22,15 @@ fn get_rng() {
 // Importing from the standard library
 
 #[test]
-#[cfg(not(test))]
 fn module_import() {
-    use foo::{bar, baz};
+    // use foo::{bar, baz};
     mod foo {
         pub fn bar() -> bool { true }
         pub fn baz() -> bool { true }
     }
 
-    assert!(bar());
-    assert!(baz());
+    assert!(foo::bar());
+    assert!(foo::baz());
 }
 
 #[test]
@@ -39,6 +38,8 @@ fn stdin_import() {
     use std::io::stdin;
     stdin();
 }
+
+// Calling the user... err?
 
 #[test]
 fn match_str() {
@@ -67,11 +68,13 @@ fn stdout_test() {
 fn number_input() {
     loop {
         match from_str::<uint>("123\n".trim_right_chars(&'\n')) {
-            Some(x) => assert_eq!(x, 123); break,
+            Some(x) => { assert_eq!(x, 123); break; },
             None    => println!("I'd rather have a number.")
         }
     }
 }
+
+// The Solution (well, an implementation of it)
 
 #[test]
 fn test_solution() {

@@ -595,6 +595,71 @@ println!(reader.read_line().unwrap());</code></pre>
 <p>We have <code>input_line()</code> that takes a non-empty stdin input and <code>input_number()</code> that ensures a non-empty converted number.</p>
 </section>
 </section>
+<section id="getting-some-pointers" class="level1">
+<h1>Getting some pointers</h1>
+<p>Rust is quite particular when it comes to pointers: it keeps a high-performance scheme while ensuring safety use patterns (no dangling pointers, etc.).</p>
+<p>We will also talk about <em>ownership</em> and <em>lifetimes</em> in this chapter.</p>
+<section id="introduction" class="level2">
+<h2>Introduction</h2>
+<p>First, let’s look for a second at how things are laid out in memory. There are two important <a href="http://stackoverflow.com/a/1213360">memory pools</a>, the <strong>stack</strong> and the <strong>heap</strong>.</p>
+<section id="simply-put" class="level3">
+<h3>Simply put</h3>
+<p>Functions are individual, reusable pieces of code. If we want to directly edit a variable from the originating (caller) namespace, we need to pass its memory address, i.e. a pointer to the said variable so that the function knows where to find it and access it.</p>
+<p><small>Also, when passing huge structures of data you might want to pass a pointer to it to save on memory copies but that is a quite sparse use-case as we will see.</small></p>
+</section>
+<section id="on-stack-and-heap" class="level3">
+<h3>On stack, and heap</h3>
+<p>Each application uses a pool of memory called the <strong>stack</strong>, of fixed-size, allocated when a task starts up. There are various mechanisms occuring inside the stack but it is mostly hosting all <em>local variables</em> and parameters used along the execution. When a function is called, the existing registers are saved on memory and the program jumps to the function and creates a new stack frame for it. The stack also traces the order in which functions are called so that function returns occur correctly. The default stack size of a Rust task is 2 MiB.<br />So, we need to pass a memory address in order to be able to edit a variable from the caller’s namespace—that is the main reason why we use pointers.</p>
+<p>A program can also dynamically request memory with the unused memory in the computer, managed by the OS: this is called the <strong>heap</strong>. All dynamically-sized types (DST) are stored on the heap with an OS allocation.<br />The heap can only be accessed via a pointer located on the stack since it is not the default memory pool, these pointers create a <strong>box</strong>.</p>
+<p>So, an <code>int</code> has a fixed-size in memory and is stack-allocated. A dynamic-array <code>~[]</code>, a string <code>~str</code> or anything <code>~</code> is allocated on the heap (that is where you would use <code>malloc</code> in C or <code>new</code> in C++).</p>
+</section>
+</section>
+<section id="give-me-pointers" class="level2">
+<h2>Give me pointers</h2>
+<p>Rust has two primary pointer types: the borrowed reference (using the <code>&amp;</code> symbol) and the owned pointer (indicated by <code>~</code>).</p>
+<section id="referencing" class="level3">
+<h3>Referencing</h3>
+<p>Referencing is also called borrowing because creating a reference freezes the target variable, i.e. it cannot be freed nor transfered (so no use-after-free). When the reference gets out of scope and freed, it is available again to the caller. References use the <code>&amp;</code> operator, just like C pointers; or <code>&amp;mut</code> with mutability, which need to point to uniquely referenced, mutable data—everything is statically checked.</p>
+<p>This would be the most basic example:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x = <span class="dv">3</span>;
+{
+    y = &amp;x; <span class="co">// `x` is now frozen and cannot be modified</span>
+    <span class="co">// ...but it can be read since the borrow is immutable</span>
+}
+<span class="co">// `x` can be accessed again (`y` is out of scope)</span></code></pre>
+<p>A borrow cannot outlive the variable it originates from: it has a <strong>lifetime</strong>, meaning that you will have to change your allocation pattern if a reference outlives its lifetime, like here:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> x = &amp;<span class="dv">3</span>;
+{
+    <span class="kw">let</span> <span class="kw">mut</span> y = <span class="dv">4</span>;
+    x = &amp;y;
+} <span class="co">// `y` is freed here, but `x` still lives...</span></code></pre>
+<p>This pattern will be rejected, since <code>y</code> has a shorter lifetime than <code>x</code>.<br />The compiler enforces valid references and yields:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">error</span>: borrowed value does not live long enough</code></pre>
+<p><strong>Note:</strong> there are a few cases through like when returning a reference passed to a function where you will need to add a lifetime annotation, so that it is inferred from the caller; more on that a bit later.</p>
+<p>Referencing is the default choice as a pointer: all checks are performed at compile-time (by the borrow checker) so its footprint is that of a C pointer (which is also available in Rust as <code>unsafe</code>, <code>*</code> pointer).<br />The unary star operator <code>*</code> also serves for dereferencing, like in C.</p>
+</section>
+<section id="unique-ownership" class="level3">
+<h3>Unique ownership</h3>
+<p>An owned pointer owns a certain (dynamically allocated) part of the heap, i.e. the owner is the only one who can access the data—unless it transfers ownership, at which point the compiler will free the memory automatically (pointer is copied, but not the value).</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> take&lt;T&gt;(ptr: ~T) { <span class="co">// works for any type, `T`</span>
+    ...
+}
+
+<span class="kw">let</span> m = ~<span class="st">&quot;Hello!&quot;</span>;
+take(m);
+take_again(m); <span class="co">// ERROR: `m` is moved</span></code></pre>
+<p>Note that owned pointers can, like most objects, be borrowed. You can also copy a unique pointer using <code>.clone()</code>, but this is an expensive operation.</p>
+</section>
+<section id="shared-pointers" class="level3">
+<h3>Shared pointers</h3>
+<p>“Shared” may evoke Garbage Collection to you. Well, this is partly the case.</p>
+<p>Using only owned and borrowed pointers, ownership forms a <a href="http://en.wikipedia.org/wiki/Directed_acyclic_graph">DAG</a>, while shared pointers allow multiple pointers to the same object and cycles. There are few of them, either GC-managed (with immutability to prevent data races), or Reference counted with specific types that allow thread-sharing or mutability, for instance. Note that Rust also has, of course, mutable shared pointer types.</p>
+<p><strong>Note:</strong> As you can see, these pointers serve a particular purpose. You should not have to look at them until they are needed in one of your programs.</p>
+<p>First and foremost, please note that the new tracing, task-local Garbage Collection algorithm that will be introduced into the standard library is being worked on right now.<br />So, there used to be an <code>@</code> managed pointer type, but it has been phased out in favor of <code>std::rc::Rc</code> and <code>std::gc::Gc</code>; which are standard library types. Right now, <code>Gc</code> is just a wrapper around <code>Rc</code>, which manually counts references, meaning less overhead than a GC algorithm (which periodically checks for pointer references) but it has a few limitations, e.g. it will leak memory on cycles (recursive data structures and the likes).</p>
+<p><strong>Note:</strong> task-local (or per-thread) GC is an important part of the deal because it means that you can have a task which handles low-latency jobs and is manually managed and another that can just run GC; task local also means that you can’t pass these pointers between tasks, which can be desired in some cases.</p>
+</section>
+</section>
+</section>
 <footer>
 <p>A Rust community project. [<a href="https://github.com/adridu59/rust-tuts/graphs/contributors">&copy;</a>] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
 </footer>
