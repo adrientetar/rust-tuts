@@ -23,9 +23,9 @@ fn hello_alt() {
     let out = "Hello World!";
     for c in out.chars() {
         /* spawn concurrent tasks! */
-        do spawn {
+        spawn(proc() {
             print!("{}", c);
-        }
+        });
     }
 
     println!("");

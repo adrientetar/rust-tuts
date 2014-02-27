@@ -29,7 +29,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="shortcut icon" href="http://adridu59.github.io/rust-tuts/favicon.ico">
+  <link rel="shortcut icon" href="http://adrientetar.github.io/rust-tuts/favicon.ico">
   <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -40,7 +40,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
      <ul class="nav nav-pills pull-right">
        <li><a href="../index.html">Home</a></li>
        <li class="active"><a href="index.html">Content</a></li>
-       <li><a href="https://github.com/adridu59/rust-tuts/">Contribute</a></li>
+       <li><a href="https://github.com/adrientetar/rust-tuts/">Contribute</a></li>
      </ul>
      <h3 class="text-muted">&#36; <span style="color: #333">Rust tutorials</span></h3>
    </header>
@@ -53,18 +53,18 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2>The starting point</h2>
 <p>So, you are learning a programming language… you know what that means?</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
-    println!(<span class="st">&quot;Hello World!&quot;</span>);
+    <span class="ot">println!</span>(<span class="st">&quot;Hello World!&quot;</span>);
 }</code></pre>
-<p>Yes, it is that simple. As you can see, functions are declared using the generic <code>fn</code> keyword and for the C habitués, the return type—if any—is specified as in ML, after an ASCII arrow, e.g., <code>fn random() -&gt; int { ... }</code>.</p>
+<p>Yes, it is that simple. As you can see, functions are declared using the generic <code>fn</code> keyword and for the C habitués, the return type – if any – is specified as in ML, after an ASCII arrow, e.g., <code>fn random() -&gt; int { ... }</code>.</p>
 <p>To try it out on your own, save this code snippet and call <code>rustc</code>!</p>
 <p>Now let’s try something funny:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
     <span class="kw">let</span> out = <span class="st">&quot;Hello World!&quot;</span>;
     <span class="kw">for</span> c in out.chars() {
         <span class="co">/* spawn concurrent tasks! */</span>
-        <span class="kw">do</span> spawn {
-            print!(<span class="st">&quot;{}&quot;</span>, c);
-        }
+        spawn(proc() {
+            <span class="ot">print!</span>(<span class="st">&quot;{}&quot;</span>, c);
+        });
     }
 }</code></pre>
 </section>
@@ -83,22 +83,23 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <span class="kw">while</span> cake &gt; <span class="dv">0</span> {
     cake -= <span class="dv">1</span>; <span class="co">// eat it</span>
 }</code></pre>
-<p>Note that for infinite loops, the <code>loop</code> keyword is to be preferred to <code>while true { }</code> (which is essentially a hack). Also, Rust doesn’t have the <code>do { } while;</code> syntax; you can just use a <code>loop</code> with a breaking condition instead—<code>break</code> will exit a loop while <code>continue</code> will jump to the next iteration.</p>
+<p>Note that for infinite loops, the <code>loop</code> keyword is to be preferred to <code>while true { }</code> (which is essentially a hack). Also, Rust doesn’t have the <code>do { } while;</code> syntax; you can just use a <code>loop</code> with a breaking condition instead – <code>break</code> will exit a loop while <code>continue</code> will jump to the next iteration.</p>
 <p>Now, before looking at the type syntax itself, let’s look at the output:</p>
 <pre><code>Hllo World!
 e</code></pre>
 <p>Well, we did <code>spawn</code> a few concurrent tasks. Things are done asynchronously, which means that one of the tasks may unpredictably end up before the other. Anyways, spawning threads to print out the letters of a sentence is pretty silly!</p>
+<p><strong>Note:</strong> <code>proc()</code> is a one-shot closure, the latter being a nested function that captures its surrounding environment (i.e. one can access the variables of the containing namespace).</p>
 </section>
 <section id="types-and-assignment" class="level2">
 <h2>Types and assignment</h2>
-<p>As you can see, variables are declared via the <code>let</code> keyword and type specification is optional (~ML) because Rust has a type inference mechanism, which means that the variable type is determined at <em>compile time</em>—not to be confused with dynamic typing, as in Python, where the variable type is managed at run-time and can be dynamically modified.</p>
-<p><strong>Note: the convention is that variables and function names are_lowercase while</strong>type names are CamelCase.</p>
+<p>As you can see, variables are declared via the <code>let</code> keyword and type specification is optional (~ML) because Rust has a type inference mechanism, which means that the variable type is determined at <em>compile time</em> – not to be confused with dynamic typing, as in Python, where the variable type is managed at run-time and can be dynamically modified.</p>
+<p><strong>Note: the convention is that variables and function names are_lowercase while </strong>type names are CamelCase.</p>
 <p>Let’s have a look at some of the primitive types:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a = <span class="dv">3</span>; <span class="co">// considered as `int` by default</span>
 <span class="kw">let</span> b = <span class="st">&quot;code&quot;</span>; <span class="co">// that would be an `str` - string</span>
 <span class="kw">let</span> c = [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]; <span class="co">// and that&#39;s a `vec` - array (of fixed-length)</span>
 <span class="kw">let</span> d = <span class="kw">true</span>; <span class="co">// bool</span></code></pre>
-<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value—the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note: unlike C, for example, Rust does not let you edit an immutable variable</strong>via its pointer.</p>
+<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value – the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note: unlike C, for example, Rust does not let you edit an immutable variable </strong>via its pointer.</p>
 <p>Speaking of type assignment, you can force the use of a particular type:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a: <span class="kw">uint</span> = <span class="dv">3</span>; <span class="co">// unsigned int</span>
 <span class="kw">let</span> a = <span class="dv">3u</span>; <span class="co">// that&#39;s the same, using a short variable suffix for convenience</span>
@@ -107,7 +108,7 @@ e</code></pre>
 n = <span class="dv">5u</span>; <span class="co">// but the compiler will infer it as an `uint` from here</span>
 <span class="kw">let</span> <span class="kw">mut</span> h = ~[]; <span class="co">// unknown-type `vec` - won&#39;t compile as such</span>
 h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3</span>]; <span class="co">// a `vec` of `uint`s</span></code></pre>
-<p>There are other suffixes like <code>i32</code> (32-bit integer), <code>i64</code>, <code>f32</code> (32-bit float), <code>f64</code>… the empty type is called nil and annotated <code>()</code>. But remember, you cannot change the type of a variable during it’s lifetime—static typing!</p>
+<p>There are other suffixes like <code>i32</code> (32-bit integer), <code>i64</code>, <code>f32</code> (32-bit float), <code>f64</code>… the empty type is called nil and annotated <code>()</code>. But remember, you cannot change the type of a variable during it’s lifetime – static typing!</p>
 <p>Functions will need explicit parameters and return types through. Let’s look at one:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> square(x: <span class="kw">int</span>) -&gt; <span class="kw">int</span> {
     x*x
@@ -117,7 +118,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
     <span class="kw">let</span> x = <span class="dv">3u</span>;
     <span class="co">/* Now, calculate the square. */</span>
     <span class="kw">let</span> y = square(x);
-    println!(<span class="st">&quot;So this gives us {}.&quot;</span>, y);
+    <span class="ot">println!</span>(<span class="st">&quot;So this gives us {}.&quot;</span>, y);
 }</code></pre>
 <p>Ok, but this code will not typecheck because we are passing an unsigned int to a function that takes an int as parameter; if we were in a situation where we cannot change the type annotation, we would have to just cast the value of <code>x</code>.</p>
 <p>Rust has various ways to change variable types, and while they all share different characteristics, they are also not all possible with all type combinations. Here are the general rules:</p>
@@ -139,8 +140,8 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 </tr>
 </tbody>
 </table>
-<p>You can see <code>as</code> as a sole modified reference to a value in memory, while others change the in-memory representation of the converted variable.<br />A research on the <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> will tell you which types implement which of these methods—in the present case, we would just use a <code>as</code> cast, i.e. <code>x as uint</code>.</p>
-<p>In Rust, instructions that do not end with semicolons are expressions (not statements), meaning that they will return their value to the higher-level block.<br />This allows you not only to return from a function but also—for example—to allocate a value based on a test’s result. This is valid Rust code:</p>
+<p>You can see <code>as</code> as a sole modified reference to a value in memory, while others change the in-memory representation of the converted variable.<br />A research on the <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> will tell you which types implement which of these methods – in the present case, we would just use a <code>as</code> cast, i.e. <code>x as uint</code>.</p>
+<p>In Rust, instructions that do not end with semicolons are expressions (not statements), meaning that they will return their value to the higher-level block.<br />This allows you not only to return from a function but also – for example – to allocate a value based on a test’s result. This is valid Rust code:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> hype =
     <span class="kw">if</span> cake == <span class="st">&quot;KitKat&quot;</span> {
         <span class="dv">10</span>
@@ -156,7 +157,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
     <span class="kw">let</span> out = [<span class="ch">&#39;H&#39;</span>, <span class="ch">&#39;e&#39;</span>, <span class="ch">&#39;l&#39;</span>, <span class="ch">&#39;l&#39;</span>, <span class="ch">&#39;o&#39;</span>];
     <span class="kw">for</span> c in out.iter() { <span class="co">// iterate over `out`</span>
-        print!(<span class="st">&quot;{}&quot;</span>, *c);
+        <span class="ot">print!</span>(<span class="st">&quot;{}&quot;</span>, *c);
     }
 }</code></pre>
 <p>Rust supports UTF-8 (Unicode) natively through the <code>u8</code> type (8-bit unsigned type); strings are essentially just <code>~[u8]</code> arrays with a few specific methods on top of it.<br />FYI, there is a blog article that talks about types in Rust and has some interesting facts, <a href="http://jvns.ca/blog/2013/12/02/types-in-rust/">check it out</a>!</p>
@@ -164,12 +165,12 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 </section>
 <section id="appendix-going-back-on-macros" class="level2">
 <h2>Appendix: Going back on macros</h2>
-<p>Macros are defined as syntax extensions in the sense that they are like scripts, but are evaluated at <em>compile-time</em>. So they serve only the developer by simplifying/automating things.<br />Think about <code>#define</code> in C, but macros are much more powerful. Macros have a few syntax elements of their own; for example, variables get referenced with <code>$var</code>, so that you can differenciate macro variables—which serve “internally”—from actual, real Rust code.</p>
+<p>Macros are defined as syntax extensions in the sense that they are like scripts, but are evaluated at <em>compile-time</em>. So they serve only the developer by simplifying/automating things.<br />Think about <code>#define</code> in C, but macros are much more powerful. Macros have a few syntax elements of their own; for example, variables get referenced with <code>$var</code>, so that you can differenciate macro variables – which serve “internally” – from actual, real Rust code.</p>
 <p>Not elaborating further on it for now but you can have a look at the <a href="http://static.rust-lang.org/doc/master/tutorial-macros.html">mainline macro tutorial</a> for some code examples.</p>
 </section>
 <section id="appendix-on-functional-programming" class="level2">
 <h2>Appendix: On functional programming</h2>
-<p>Iterators <a href="http://static.rust-lang.org/doc/master/std/iter/trait.Iterator.html">have methods</a> such as <code>.map()</code>, <code>.zip()</code> and <code>.filter()</code>—a touch of functional programming which can combine and/or reuse iterator’s values in various ways. So one can write something like <code>iterator.map(...).zip(...)</code> which manages to apply a function to each of the iterator’s element (map) and append another iterator to it as a pair of elements (zip).</p>
+<p>Iterators <a href="http://static.rust-lang.org/doc/master/std/iter/trait.Iterator.html">have methods</a> such as <code>.map()</code>, <code>.zip()</code> and <code>.filter()</code> – a touch of functional programming which can combine and/or reuse iterator’s values in various ways. So one can write something like <code>iterator.map(...).zip(...)</code> which manages to apply a function to each of the iterator’s element (map) and append another iterator to it as a pair of elements (zip).</p>
 <p>Here is an example using <a href="http://en.wikipedia.org/wiki/Fold_%28higher-order_function%29">fold</a>, which can combine an iterator’s values:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> xs = [<span class="dv">14</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">12</span>];
 
@@ -227,7 +228,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 </section>
 </section>
 <footer>
-<p>A Rust community project. [<a href="https://github.com/adridu59/rust-tuts/graphs/contributors">&copy;</a>] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
+<p>A Rust community project. [<a href="https://github.com/adrientetar/rust-tuts/graphs/contributors">&copy;</a>] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
 </footer>
 </body>
 </html>

@@ -29,7 +29,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="shortcut icon" href="http://adridu59.github.io/rust-tuts/favicon.ico">
+  <link rel="shortcut icon" href="http://adrientetar.github.io/rust-tuts/favicon.ico">
   <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -40,7 +40,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
      <ul class="nav nav-pills pull-right">
        <li><a href="../index.html">Home</a></li>
        <li class="active"><a href="index.html">Content</a></li>
-       <li><a href="https://github.com/adridu59/rust-tuts/">Contribute</a></li>
+       <li><a href="https://github.com/adrientetar/rust-tuts/">Contribute</a></li>
      </ul>
      <h3 class="text-muted">&#36; <span style="color: #333">Rust tutorials</span></h3>
    </header>
@@ -66,7 +66,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
     <span class="kw">for</span> _ in range(<span class="dv">0</span>, <span class="dv">11</span>) {
         <span class="co">// nb: range upper bound is exclusive</span>
         cur = task_rng().gen_range(<span class="dv">1u</span>, <span class="dv">101</span>);
-        println!(<span class="st">&quot;{}&quot;</span>, cur);
+        <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, cur);
     }
 }</code></pre>
 <p>Then, we will have to get input from the user. Unlike <code>print</code> and friends, input methods are not built in Rust programs by default, i.e. they are not in the prelude.</p>
@@ -95,7 +95,7 @@ bonus::baz();</code></pre>
 <p>So, back to the stdio things:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::stdin;</code></pre>
 <p>If you are looking for a specific function to import at some point, just look in <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> or <a href="http://client01.chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">ask your way on IRC</a>.</p>
-<p><strong>Note:</strong> if you wanted to import from external libraries you would have to link to them using <code>extern mod</code>. For example, the Rust filestack has an <code>extra</code> library for non-core things, which you could link to using <code>extern mod extra;</code> before your <code>use</code> statement.</p>
+<p><strong>Note:</strong> if you wanted to import from external libraries you would have to link to them using <code>extern crate</code>. For example, the Rust filestack has an <code>extra</code> library for non-core things, which you could link to using <code>extern crate extra;</code> before your <code>use</code> statement.</p>
 </section>
 <section id="calling-the-user-err" class="level2">
 <h2>Calling the user… err?</h2>
@@ -104,34 +104,34 @@ bonus::baz();</code></pre>
 <span class="kw">use</span> std::io::stdin;
 
 <span class="kw">fn</span> main() {
-    println!(<span class="st">&quot;Type something:&quot;</span>);
+    <span class="ot">println!</span>(<span class="st">&quot;Type something:&quot;</span>);
 
     <span class="kw">let</span> <span class="kw">mut</span> reader = BufferedReader::new(stdin());
 
     <span class="co">// Note: input will end with `\n`</span>
     <span class="kw">match</span> reader.read_line() {
         <span class="co">// Handle empty input too</span>
-        <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">I never asked for this...&quot;</span>),
-        <span class="kw">Some</span>(thing) =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">You typed: {}&quot;</span>, thing),
-        <span class="kw">None</span>        =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Well, that&#39;s unexpected!&quot;</span>)
+        <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; <span class="ot">println!</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">I never asked for this...&quot;</span>),
+        <span class="kw">Some</span>(thing) =&gt; <span class="ot">println!</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">You typed: {}&quot;</span>, thing),
+        <span class="kw">None</span>        =&gt; <span class="ot">println!</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Well, that&#39;s unexpected!&quot;</span>)
     }
 }</code></pre>
 <p>On a side note: if you want a message and an input on the same line, it will take a direct access to <code>stdout</code>.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::stdout;
 
 stdout.write(<span class="st">&quot;Type something: &quot;</span>.as_bytes());
-println!(reader.read_line().unwrap());</code></pre>
+<span class="ot">println!</span>(reader.read_line().unwrap());</code></pre>
 <p>Now we want to get an int out of <code>stdin</code>, but looking at the empty case, the program could behave strangely depending on what we are doing with it. So instead we could ask the user back for input (by a recursive call to our input function, for example) or stop with a specific error message.<br />Here is an example that uses a <code>loop</code>:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io::stdin;
 
 <span class="kw">fn</span> number_input() {
-    println!(<span class="st">&quot;Please type a number: &quot;</span>);
+    <span class="ot">println!</span>(<span class="st">&quot;Please type a number: &quot;</span>);
 
     <span class="kw">loop</span> {
         <span class="co">// We need to trim the EOL `\n` char to be able to convert</span>
         <span class="kw">match</span> from_str::&lt;<span class="kw">uint</span>&gt;(stdin().read_line().trim_right_chars(&amp;<span class="ch">&#39;\n&#39;</span>)) {
             <span class="kw">Some</span>(x) =&gt; <span class="kw">return</span> x,
-            <span class="kw">None</span> =&gt; println!(<span class="st">&quot;I&#39;d rather have a number.&quot;</span>)
+            <span class="kw">None</span> =&gt; <span class="ot">println!</span>(<span class="st">&quot;I&#39;d rather have a number.&quot;</span>)
         }
     }
 }</code></pre>
@@ -149,36 +149,36 @@ println!(reader.read_line().unwrap());</code></pre>
     <span class="kw">let</span> <span class="kw">mut</span> reader = BufferedReader::new(stdin());
     <span class="kw">loop</span> {
         <span class="kw">match</span> reader.read_line() {
-            <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; println!(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Uhm, please type something...&quot;</span>),
+            <span class="kw">Some</span>(~<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) =&gt; <span class="ot">println!</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Uhm, please type something...&quot;</span>),
             <span class="kw">Some</span>(thing) =&gt; <span class="kw">return</span> thing,
-            <span class="kw">None</span> =&gt; continue
+            <span class="kw">None</span> =&gt; <span class="kw">continue</span>
         }
     }
 }
 
 <span class="kw">fn</span> input_number() -&gt; <span class="kw">uint</span> {
-    println!(<span class="st">&quot;Please type a number: &quot;</span>);
+    <span class="ot">println!</span>(<span class="st">&quot;Please type a number: &quot;</span>);
 
     <span class="kw">loop</span> {
         <span class="kw">match</span> from_str::&lt;<span class="kw">uint</span>&gt;(input_line().trim_right_chars(&amp;<span class="ch">&#39;\n&#39;</span>)) {
             <span class="kw">Some</span>(x) =&gt; <span class="kw">return</span> x,
-            <span class="kw">None</span> =&gt; println!(<span class="st">&quot;I&#39;d rather have a number.&quot;</span>)
+            <span class="kw">None</span> =&gt; <span class="ot">println!</span>(<span class="st">&quot;I&#39;d rather have a number.&quot;</span>)
         }
     }
 }
 
 <span class="kw">fn</span> main() {
-    println!(<span class="st">&quot;The computer is choosing a secret number, between 1 and 100...&quot;</span>);
+    <span class="ot">println!</span>(<span class="st">&quot;The computer is choosing a secret number, between 1 and 100...&quot;</span>);
     <span class="kw">let</span> nbr = task_rng().gen_range(<span class="dv">1u</span>, <span class="dv">101</span>);
     <span class="kw">let</span> <span class="kw">mut</span> cpt = <span class="dv">0u</span>;
 
-    println!(<span class="st">&quot;Can you guess it?&quot;</span>);
+    <span class="ot">println!</span>(<span class="st">&quot;Can you guess it?&quot;</span>);
     <span class="kw">loop</span> {
         cpt += <span class="dv">1</span>;
         <span class="kw">match</span> input_number() {
-            x <span class="kw">if</span> x &lt; nbr =&gt; println!(<span class="st">&quot;Too low!&quot;</span>),
-            x <span class="kw">if</span> x &gt; nbr =&gt; println!(<span class="st">&quot;Too high!&quot;</span>),
-            _ =&gt; { println!(<span class="st">&quot;Yes, you found it in {} tries!&quot;</span>, cpt); <span class="kw">break</span>; }
+            x <span class="kw">if</span> x &lt; nbr =&gt; <span class="ot">println!</span>(<span class="st">&quot;Too low!&quot;</span>),
+            x <span class="kw">if</span> x &gt; nbr =&gt; <span class="ot">println!</span>(<span class="st">&quot;Too high!&quot;</span>),
+            _ =&gt; { <span class="ot">println!</span>(<span class="st">&quot;Yes, you found it in {} tries!&quot;</span>, cpt); <span class="kw">break</span>; }
         }
     }
 }</code></pre>
@@ -186,7 +186,7 @@ println!(reader.read_line().unwrap());</code></pre>
 </section>
 </section>
 <footer>
-<p>A Rust community project. [<a href="https://github.com/adridu59/rust-tuts/graphs/contributors">&copy;</a>] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
+<p>A Rust community project. [<a href="https://github.com/adrientetar/rust-tuts/graphs/contributors">&copy;</a>] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
 </footer>
 </body>
 </html>

@@ -58,6 +58,7 @@ fn match_str() {
 }
 
 #[test]
+#[allow(unused_must_use)]
 fn stdout_test() {
     use std::io::stdout;
 

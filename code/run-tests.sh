@@ -30,7 +30,7 @@ do
     cat "$CUR" >> "$LOG"
 
     # Abort if compilation fails
-    if grep -Fq "^error: " "$CUR"
+    if grep -Fq "error: " "$CUR"
     then
         echo "$f compilation failed! $ERR"
         rm -r bin "$CUR"
@@ -40,7 +40,7 @@ do
     # If a test did not pass, warn about it but keep going
     ./bin/"$f" >"$CUR" 2>&1
     cat "$CUR" >> "$LOG"
-    if grep -Fq "test result: FAILED" "$CUR" || grep -Fq "^error: " "$CUR"
+    if grep -Fq "test result: FAILED" "$CUR" || grep -Fq "error: " "$CUR"
     then
         echo "WARN: $f execution failed\n"
         FAIL=true

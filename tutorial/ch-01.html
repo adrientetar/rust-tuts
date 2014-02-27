@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../css/bootstrap.css">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/rust.css">
-  <link rel="shortcut icon" href="http://adridu59.github.io/rust-tuts/favicon.ico">
+  <link rel="shortcut icon" href="http://adrientetar.github.io/rust-tuts/favicon.ico">
   <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -21,7 +21,7 @@
      <ul class="nav nav-pills pull-right">
        <li><a href="../index.html">Home</a></li>
        <li class="active"><a href="index.html">Content</a></li>
-       <li><a href="https://github.com/adridu59/rust-tuts/">Contribute</a></li>
+       <li><a href="https://github.com/adrientetar/rust-tuts/">Contribute</a></li>
      </ul>
      <h3 class="text-muted">&#36; <span style="color: #333">Rust tutorials</span></h3>
    </header>
@@ -32,7 +32,7 @@
 <h1>Tell me more about Rust!</h1>
 <section id="a-bit-of-history" class="level2">
 <h2>A bit of history</h2>
-<p>Initially, <a href="http://www.rust-lang.org/">Rust</a> started out in 2006 as a personal project from Graydon Hoare—a language designer “by trade” to quote his own words. Developed in his free time during the first three years, Rust was then presented to his employers at Mozilla, which went on and started to actively support it. Indeed, Mozilla Research caught interest in it as something which could do away in the future with various recurrent bugs found in Gecko, Firefox’s rendering engine written in C++.</p>
+<p>Initially, <a href="http://www.rust-lang.org/">Rust</a> started out in 2006 as a personal project from Graydon Hoare – a language designer “by trade” to quote his own words. Developed in his free time during the first three years, Rust was then presented to his employers at Mozilla, which went on and started to actively support it. Indeed, Mozilla Research caught interest in it as something which could do away in the future with various recurrent bugs found in Gecko, Firefox’s rendering engine written in C++.</p>
 <p>An original compiler has been written in <a href="http://caml.inria.fr/ocaml/index.fr.html">OCaml</a> until a bootstrapped compiler written in Rust itself could take over, in 2010. Right now the compilation process uses an <a href="http://llvm.org/">LLVM</a> backend (which you might have seen in action inside <a href="http://clang.llvm.org/">Clang</a>).</p>
 </section>
 <section id="the-goodness" class="level2">
@@ -48,8 +48,8 @@
 <li>Safety (and mostly: safe pointer types thanks to a <a href="http://static.rust-lang.org/doc/master/tutorial.html#boxes">very efficient memory model</a>, no void* heresy, no use-after-free, mem leaks,…)</li>
 <li>Native actor-based concurrency inspired from <a href="http://www.erlang.org/">Erlang</a>. This is a big deal for today’s programming languages with the rise of multicore processors; in fact, some sort of multithreading is already there on C++11 (2011) and will probably get extended in C++14. Actually, the actor implementation of multithreading consists of explicitly sending message from a lightweight thread (<code>chan</code>) and receiving it from another (<code>port</code>); it is a great safety/efficiency compromise. Rust allows the use of either green (M:N) or native (1:1) threads.</li>
 <li>Inspirations from <a href="http://www.haskell.org/">Haskell</a> and <a href="http://caml.inria.fr/ocaml/index.fr.html">OCaml</a>, not only for the functional programming paradigm but also for the type classes (<code>trait</code>, <code>impl</code>)</li>
-<li>Some programmers friendly features from Python—that being said, Rust does not compromise on performance: it has static typing (with type inference!)</li>
-<li>Optional tracing-GC (WIP)—the <code>std::gc::Gc</code> type recently landed on mainline</li>
+<li>Some programmers friendly features from Python – that being said, Rust does not compromise on performance: it has static typing (with type inference!)</li>
+<li>Optional tracing-GC (WIP) – the <code>std::gc::Gc</code> type recently landed on mainline</li>
 </ul>
 <p>As you can see, Rust does not try to be a new fancy thing; rather, it builds up on top of proven useful technology and merges features from some existings languages, noticeably: Erlang’s green threads, Haskell trait system and overall functional programming elements of a few languages (it has pattern matching!), some syntax sugar from Python (the <code>range</code> iterator is one of them) and it also resurrects a few features from some American research languages developed in the 80s, amongst others.<br />As you can see, along with some features that definitely set it in today’s rollup of programming languages, Rust is also the result of a true willingness to reuse concepts from the rich history of programming languages, rather than building up the wheel over again. ;) ~ as you might have seen, that’s partly where the name “Rust” comes from!</p>
 <blockquote>
@@ -57,8 +57,8 @@
 <p>But the name “rust” has other nice features. It fits with our theme of being “close to the metal” and “using old well-worn language technology”. It’s also a substring of “trust” and “robust”. What’s not to like?</p>
 <p>— Graydon Hoare</p>
 </blockquote>
-<p>Actually, Mozilla is already using it in an experimental browser rendering engine that is being developed simultaneously to Rust and is at the core of the team’s pragmatic development approach, just like <a href="http://dlang.org/">D</a>’s—that is, the developers implement features and sometimes change them based on their experience with it; besides, they also take feedback (and contributions!) from the community.<br />Remember, C—today’s most successful language—has been built in concert with the UNIX OS, allowing adaptations from what happened during the OS development process. Right now, Rust is still in alpha state which means that developers can still make breaking changes to the API (but not to worry, it is converging towards a stable state which will ultimately happen in 1.0).</p>
-<p>There have been other attempts at providing such a new System programming language (e.g. <a href="http://dlang.org/">D</a>, <a href="http://nimrod-lang.org/">Nimrod</a>)—Go also gets mentioned sometimes but it has been developed for apps/webapps and is more oriented towards simplicity and fast compilation-speed. Right now, it looks like Rust has a big chance to set itself apart because:</p>
+<p>Actually, Mozilla is already using it in an experimental browser rendering engine that is being developed simultaneously to Rust and is at the core of the team’s pragmatic development approach, just like <a href="http://dlang.org/">D</a>’s – that is, the developers implement features and sometimes change them based on their experience with it; besides, they also take feedback (and contributions!) from the community.<br />Remember, C – today’s most successful language – has been built in concert with the UNIX OS, allowing adaptations from what happened during the OS development process. Right now, Rust is still in alpha state which means that developers can still make breaking changes to the API (but not to worry, it is converging towards a stable state which will ultimately happen in 1.0).</p>
+<p>There have been other attempts at providing such a new System programming language (e.g. <a href="http://dlang.org/">D</a>, <a href="http://nimrod-lang.org/">Nimrod</a>) – Go also gets mentioned sometimes but it has been developed for apps/webapps and is more oriented towards simplicity and fast compilation-speed. Right now, it looks like Rust has a big chance to set itself apart because:</p>
 <ul>
 <li>It focuses on safety without compromising performance (D requires GC for safety, and Nimrod does not ensure thread safety), it has low-level features but also lots of sugar for the developer (the syntax is modern and not overly verbose)</li>
 <li>It is pretty innovative, seeing how it reuses a lot of features that have been developed independently, but make sense together</li>
@@ -72,19 +72,19 @@
 <p>I couldn’t resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.</p>
 <p>— Tony Hoare</p>
 </blockquote>
-<p>C++ is a mixed breed: it has been developed from the beginning to build up on top of C with new features that were emerging in the field of programming. Today, it is one of the <a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">Top Five languages</a> because it has been fast at a higher level of abstraction (also complexity!) than the others.<br />Looking back, we realized that the time spared by relaxed programming APIs was often creating much bigger problems down the road—because it is always less time consuming and more convenient to just avoid these programming derps than debugging your program afterwards.</p>
-<p>Rust tries to ensure safety with some additional syntax markup (which actually makes you to think unambiguously about your desired behavior) that allows for a way more fine-grained static analysis by the compiler and can lead to additional compiler optimizations—indeed, some unsafe code that would pass as valid in most of today’s most-used languages would get caught at compile-time in Rust. Instructions that are not safe or cannot be statically checked will have to be located inside an <code>unsafe</code> code block (that is mostly for the FFI, which allows you to link your programs to C).</p>
+<p>C++ is a mixed breed: it has been developed from the beginning to build up on top of C with new features that were emerging in the field of programming. Today, it is one of the <a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">Top Five languages</a> because it has been fast at a higher level of abstraction (also complexity!) than the others.<br />Looking back, we realized that the time spared by relaxed programming APIs was often creating much bigger problems down the road – because it is always less time consuming and more convenient to just avoid these programming derps than debugging your program afterwards.</p>
+<p>Rust tries to ensure safety with some additional syntax markup (which actually makes you to think unambiguously about your desired behavior) that allows for a way more fine-grained static analysis by the compiler and can lead to additional compiler optimizations – indeed, some unsafe code that would pass as valid in most of today’s most-used languages would get caught at compile-time in Rust. Instructions that are not safe or cannot be statically checked will have to be located inside an <code>unsafe</code> code block (that is mostly for the FFI, which allows you to link your programs to C).</p>
 </section>
 <section id="appendix-elaborating-on-servo" class="level2">
 <h2>Appendix: Elaborating on Servo</h2>
-<p>What is <a href="https://github.com/mozilla/servo">Servo</a>? Well—nothing to do with mechanics: it is Mozilla’s experimental browser rendering engine.</p>
+<p>What is <a href="https://github.com/mozilla/servo">Servo</a>? Well – nothing to do with mechanics: it is Mozilla’s experimental browser rendering engine.</p>
 <p>So, in a way, you could say that it’s their biggest <a href="http://people.mozilla.org/~roc/Samsung/MozillaRustAndServo.pdf#10">hope</a> and biggest motivation for supporting Rust’s development. Safety. Parallelism. (And Performance.) Its development started in early-2012 (they like contributions too!) and it is evolving along with Rust.</p>
 <p>Servo is built on a modular architecture and each engine component is separated from the other in an effort to have parallelized and easy-to-maintain code. Since April 2013, Mozilla and Samsung <a href="https://blog.mozilla.org/blog/2013/04/03/mozilla-and-samsung-collaborate-on-next-generation-web-browser-engine/">are collaborating</a> in the project development.</p>
 <p>Note that right now, Mozilla has no plans to integrate Servo onto Firefox, i.e., it is as of now a research project and is still in early stages of development. BTW, Servo <a href="https://github.com/mozilla/servo/issues/266">passed Acid1</a> recently!</p>
 </section>
 </section>
 <footer>
-<p>A Rust community project. [<a href="https://github.com/adridu59/rust-tuts/graphs/contributors">&copy;</a>] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
+<p>A Rust community project. [<a href="https://github.com/adrientetar/rust-tuts/graphs/contributors">&copy;</a>] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
 </footer>
 </body>
 </html>

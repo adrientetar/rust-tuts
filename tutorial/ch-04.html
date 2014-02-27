@@ -29,7 +29,7 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <link rel="shortcut icon" href="http://adridu59.github.io/rust-tuts/favicon.ico">
+  <link rel="shortcut icon" href="http://adrientetar.github.io/rust-tuts/favicon.ico">
   <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -40,7 +40,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
      <ul class="nav nav-pills pull-right">
        <li><a href="../index.html">Home</a></li>
        <li class="active"><a href="index.html">Content</a></li>
-       <li><a href="https://github.com/adridu59/rust-tuts/">Contribute</a></li>
+       <li><a href="https://github.com/adrientetar/rust-tuts/">Contribute</a></li>
      </ul>
      <h3 class="text-muted">&#36; <span style="color: #333">Rust tutorials</span></h3>
    </header>
@@ -53,26 +53,26 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p><small>This chapter will not discuss things like debugging running executables (e.g., with Valgrind).</small></p>
 <section id="tests-and-linkage-attributes" class="level2">
 <h2>Tests and linkage attributes</h2>
-<p>Okay so first, Rust packs a built-in testing/benching framework—an approach that might seem familiar to people coming from Ruby.</p>
+<p>Okay so first, Rust packs a built-in testing/benching framework – an approach that might seem familiar to people coming from Ruby.</p>
 <p>In order to use it, you will need to preappend the <code>#[test]</code> compiler attribute (notice the # and brackets syntax) to a function that will serve as test.</p>
 <p>Here is one:</p>
-<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>test<span class="ot">]</span>
 <span class="kw">fn</span> try_fetch() {
     <span class="kw">if</span> external::input() == -<span class="dv">1</span> {
-        <span class="kw">fail</span>!(<span class="st">&quot;Couldn&#39;t retrieve the result!&quot;</span>);
+        <span class="ot">fail!</span>(<span class="st">&quot;Couldn&#39;t retrieve the result!&quot;</span>);
     }
 }</code></pre>
-<p>These functions—just like blocks or statements marked with the <code>#[cfg(test)]</code> compiler attribute—will not be part of the default compiled code. This way, you can keep your files tidy by placing the tests relating to a specific part of your program at the bottom of the corresponding file.</p>
+<p>These functions – just like blocks or statements marked with the <code>#[cfg(test)]</code> compiler attribute – will not be part of the default compiled code. This way, you can keep your files tidy by placing the tests relating to a specific part of your program at the bottom of the corresponding file.</p>
 </section>
 <section id="doing-it-wrong" class="level2">
 <h2>Doing it wrong</h2>
 <p>Test functions are blackboxes: they have no arguments nor returns.<br />Besides <code>fail!</code> that halts the program and displays the error message passed as argument, tests are often made of assertions: the <code>assert!</code> macro takes a boolean expression as parameter; it does nothing if it evaluates to true and fails when it’s false. <code>assert_eq!</code> is a variant takes 2 variables as parameters and asserts equality.</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::ascii::OwnedStrAsciiExt;
 
-#[test]
+<span class="ot">#[</span>test<span class="ot">]</span>
 <span class="kw">fn</span> lowercase_ascii() {
     <span class="kw">let</span> tmp = ~<span class="st">&quot;ME&quot;</span>;
-    assert_eq!(~<span class="st">&quot;me&quot;</span>, tmp.into_ascii_lower());
+    <span class="ot">assert_eq!</span>(~<span class="st">&quot;me&quot;</span>, tmp.into_ascii_lower());
 }</code></pre>
 <p>Now, we just have to call <code>rustc --test</code> with the name of our file, and run it.</p>
 <p>That is how the output looks like (when everything is fine, that is):</p>
@@ -82,7 +82,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 <span class="kw">test</span> result: ok. 1 passed<span class="kw">;</span> <span class="kw">0</span> failed<span class="kw">;</span> <span class="kw">0</span> ignored<span class="kw">;</span> <span class="kw">0</span> measured</code></pre>
 <p>There is also <code>#[bench]</code> for benchmarking certain functions. These features are largely used in the Rust compiler itself to avoid any regression during the development process.</p>
-<p><strong>Note: if you are running your program in debugging mode (that is, with</strong><code>RUST_LOG</code> cmdline parameter defined to level 1/2/3/4), <code>error!</code> <code>warn!</code> **<code>info!</code> <code>debug!</code> will get triggered depending on the logging level.</p>
+<p><strong>Note:</strong> if you are running your program in debugging mode (that is, with <code>RUST_LOG</code> cmdline parameter defined to level 1/2/3/4), <code>error!</code> <code>warn!</code> <code>info!</code> <code>debug!</code> will get triggered depending on the logging level.</p>
 </section>
 <section id="moving-on-about-error-handling" class="level2">
 <h2>Moving on about error handling</h2>
@@ -98,11 +98,11 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>If you are a C user, you are probably thinking about the use of the <code>switch</code> pattern?<br />Well, Rust has a more powerful tool called <code>match</code>, for pattern matching.</p>
 <p>The mainline Rust documentation has a good example to show its most basic innards:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">match</span> my_number {
-    x <span class="kw">if</span> x &lt; <span class="dv">0</span> =&gt; println!(<span class="st">&quot;something lower than zero&quot;</span>),
-    <span class="dv">0</span>          =&gt; println!(<span class="st">&quot;zero&quot;</span>),
-    <span class="dv">1</span> | <span class="dv">2</span>      =&gt; println!(<span class="st">&quot;one or two&quot;</span>),
-    <span class="dv">3.</span>.<span class="dv">10</span>      =&gt; println!(<span class="st">&quot;three to ten&quot;</span>),
-    _          =&gt; println!(<span class="st">&quot;something else&quot;</span>)
+    x <span class="kw">if</span> x &lt; <span class="dv">0</span> =&gt; <span class="ot">println!</span>(<span class="st">&quot;something lower than zero&quot;</span>),
+    <span class="dv">0</span>          =&gt; <span class="ot">println!</span>(<span class="st">&quot;zero&quot;</span>),
+    <span class="dv">1</span> | <span class="dv">2</span>      =&gt; <span class="ot">println!</span>(<span class="st">&quot;one or two&quot;</span>),
+    <span class="dv">3.</span>.<span class="dv">10</span>      =&gt; <span class="ot">println!</span>(<span class="st">&quot;three to ten&quot;</span>),
+    _          =&gt; <span class="ot">println!</span>(<span class="st">&quot;something else&quot;</span>)
 }</code></pre>
 <p>Something that must be noted is that <code>match</code> must handle all possible cases for it to compile.<br />The wildcard <code>_</code> means: “for all (other) possible cases”, so you will often have to use it as the last option, unless you are, for example, matching over all the individual components of an <code>enum</code>.</p>
 <p>Here is how we would match against an <code>Option</code> value:</p>
@@ -152,7 +152,7 @@ optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
     <span class="kw">let</span> f: <span class="kw">f32</span> = <span class="dv">1.0e-2</span>;
 
     <span class="kw">let</span> (mantissa, exponent, sign) = f.integer_decode();
-    println!(<span class="st">&quot;{}&quot;</span>, mantissa);
+    <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, mantissa);
 }</code></pre>
 <p>As an example, here is an implementation of <a href="http://en.wikipedia.org/wiki/Fizz_buzz">FizzBuzz</a> using pattern matching:</p>
 <blockquote>
@@ -161,19 +161,19 @@ optional_arg.unwrap_or(<span class="dv">3</span>);</code></pre>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
     <span class="kw">for</span> i in range(<span class="dv">0u</span>, <span class="dv">101</span>) {
         <span class="kw">match</span> (i % <span class="dv">3</span> == <span class="dv">0</span>, i % <span class="dv">5</span> == <span class="dv">0</span>) {
-            (<span class="kw">true</span>, <span class="kw">true</span>)   =&gt; println!(<span class="st">&quot;Fizz Buzz&quot;</span>),
-            (<span class="kw">true</span>, <span class="kw">false</span>)  =&gt; println!(<span class="st">&quot;Fizz&quot;</span>),
-            (<span class="kw">false</span>, <span class="kw">true</span>)  =&gt; println!(<span class="st">&quot;Buzz&quot;</span>),
-            (<span class="kw">false</span>, <span class="kw">false</span>) =&gt; println!(<span class="st">&quot;{}&quot;</span>, i)
+            (<span class="kw">true</span>, <span class="kw">true</span>)   =&gt; <span class="ot">println!</span>(<span class="st">&quot;Fizz Buzz&quot;</span>),
+            (<span class="kw">true</span>, <span class="kw">false</span>)  =&gt; <span class="ot">println!</span>(<span class="st">&quot;Fizz&quot;</span>),
+            (<span class="kw">false</span>, <span class="kw">true</span>)  =&gt; <span class="ot">println!</span>(<span class="st">&quot;Buzz&quot;</span>),
+            (<span class="kw">false</span>, <span class="kw">false</span>) =&gt; <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, i)
         }
     }
 }</code></pre>
 <p>If you want to see more on this, there is a <a href="http://composition.al/blog/2013/03/02/fizzbuzz-revisited/">whole article</a> about various ways to implement this program in Rust.</p>
-<p><strong>Note:</strong> you can match through <code>ref x</code> instead of <code>x</code> to get a reference instead of a value (i.e. get a pointer referencing <code>x</code>)—some functions will need referencing.</p>
+<p><strong>Note:</strong> you can match through <code>ref x</code> instead of <code>x</code> to get a reference instead of a value (i.e. get a pointer referencing <code>x</code>) – some functions will need referencing.</p>
 </section>
 </section>
 <footer>
-<p>A Rust community project. [<a href="https://github.com/adridu59/rust-tuts/graphs/contributors">&copy;</a>] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
+<p>A Rust community project. [<a href="https://github.com/adrientetar/rust-tuts/graphs/contributors">&copy;</a>] <span class="pull-right"><a href="http://www.reddit.com/r/rust">Reddit</a> &middot; <a href="http://www.rust-lang.org/">Rustlang</a></span></p>
 </footer>
 </body>
 </html>
