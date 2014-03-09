@@ -68,7 +68,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <li>Native actor-based concurrency inspired from <a href="http://www.erlang.org/">Erlang</a>. This is a big deal for today’s programming languages with the rise of multicore processors; in fact, some sort of multithreading is already there on C++11 (2011) and will probably get extended in C++14. Actually, the actor implementation of multithreading consists of explicitly sending message from a lightweight thread (<code>chan</code>) and receiving it from another (<code>port</code>); it is a great safety/efficiency compromise. Rust allows the use of either green (M:N) or native (1:1) threads.</li>
 <li>Inspirations from <a href="http://www.haskell.org/">Haskell</a> and <a href="http://caml.inria.fr/ocaml/index.fr.html">OCaml</a>, not only for the functional programming paradigm but also for the type classes (<code>trait</code>, <code>impl</code>)</li>
 <li>Some programmers friendly features from Python – that being said, Rust does not compromise on performance: it has static typing (with type inference!)</li>
-<li>Optional tracing-GC (WIP) – the <code>std::gc::Gc</code> type recently landed on mainline</li>
+<li>As mentioned before, Rust has a precise-caliber typesystem ensuring its memory safety at compile-time, allowing programmers to abandon the overhead of GC in most cases.<br /> However, Rust will pack an optional tracing-GC (WIP) upon release, which will allow to run it isolated inside a thread (so that both low-latency uses and a garbage collector can be combined on different threads). Note that right now, the <a href="http://static.rust-lang.org/doc/master/std/gc/struct.Gc.html"><code>Gc</code> type</a> in the language is just a wrapper around a reference counting pointer</li>
 </ul>
 <p>As you can see, Rust does not try to be a new fancy thing; rather, it builds up on top of proven useful technology and merges features from some existings languages, noticeably: Erlang’s green threads, Haskell trait system and overall functional programming elements of a few languages (it has pattern matching!), some syntax sugar from Python (the <code>range</code> iterator is one of them) and it also resurrects a few features from some American research languages developed in the 80s, amongst others.<br />As you can see, along with some features that definitely set it in today’s rollup of programming languages, Rust is also the result of a true willingness to reuse concepts from the rich history of programming languages, rather than building up the wheel over again. ;) ~ as you might have seen, that’s partly where the name “Rust” comes from!</p>
 <blockquote>
@@ -227,12 +227,12 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
     <span class="ot">println!</span>(<span class="st">&quot;So this gives us {}.&quot;</span>, y);
 }</code></pre>
 <p>Ok, but this code will not typecheck because we are passing an unsigned int to a function that takes an int as parameter; if we were in a situation where we cannot change the type annotation, we would have to just cast the value of <code>x</code>.</p>
-<p>Rust has various ways to change variable types, and while they all share different characteristics, they are also not all possible with all type combinations. Here are the general rules:</p>
+<p>Rust has various ways to change variable types, and while they all share different characteristics, they are also not all possible with all type combinations. Here is the general convention:</p>
 <table>
-<col style="width: 14%" /><col style="width: 15%" /><col style="width: 51%" /><col style="width: 19%" /><thead>
+<col style="width: 14%" /><col style="width: 15%" /><col style="width: 49%" /><col style="width: 20%" /><thead>
 <tr class="header">
 <th style="text-align: center;">cast</th>
-<th style="text-align: center;"><code>as T</code></th>
+<th style="text-align: center;"><code>.as_T()</code></th>
 <th style="text-align: center;">ref change-no allocation ⇒ read-only</th>
 <th style="text-align: center;"><code>&amp;'a T -&gt; &amp;'a U</code></th>
 </tr>
@@ -246,7 +246,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 </tr>
 </tbody>
 </table>
-<p>You can see <code>as</code> as a sole modified reference to a value in memory, while others change the in-memory representation of the converted variable.<br />A research on the <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> will tell you which types implement which of these methods – in the present case, we would just use a <code>as</code> cast, i.e. <code>x as uint</code>.</p>
+<p>As you can see, <code>.as_T()</code> is normally just casting a reference so that it is treating the original data as if it were a different type (for example, the <code>.as_bytes method allows the contents of a &amp;str to be viewed as a sequence of bytes, &amp;[u8]). A research on the [libstd documentation] will tell you which types implement which of these methods &amp;ndash; in the present case, we would just use a</code>x as y<code>to cast between primitive types, in this case</code>x as uint`.</p>
 <p>In Rust, instructions that do not end with semicolons are expressions (not statements), meaning that they will return their value to the higher-level block.<br />This allows you not only to return from a function but also – for example – to allocate a value based on a test’s result. This is valid Rust code:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> hype =
     <span class="kw">if</span> cake == <span class="st">&quot;KitKat&quot;</span> {

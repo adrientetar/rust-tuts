@@ -121,12 +121,12 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
     <span class="ot">println!</span>(<span class="st">&quot;So this gives us {}.&quot;</span>, y);
 }</code></pre>
 <p>Ok, but this code will not typecheck because we are passing an unsigned int to a function that takes an int as parameter; if we were in a situation where we cannot change the type annotation, we would have to just cast the value of <code>x</code>.</p>
-<p>Rust has various ways to change variable types, and while they all share different characteristics, they are also not all possible with all type combinations. Here are the general rules:</p>
+<p>Rust has various ways to change variable types, and while they all share different characteristics, they are also not all possible with all type combinations. Here is the general convention:</p>
 <table>
-<col style="width: 14%" /><col style="width: 15%" /><col style="width: 51%" /><col style="width: 19%" /><thead>
+<col style="width: 14%" /><col style="width: 15%" /><col style="width: 49%" /><col style="width: 20%" /><thead>
 <tr class="header">
 <th style="text-align: center;">cast</th>
-<th style="text-align: center;"><code>as T</code></th>
+<th style="text-align: center;"><code>.as_T()</code></th>
 <th style="text-align: center;">ref change-no allocation ⇒ read-only</th>
 <th style="text-align: center;"><code>&amp;'a T -&gt; &amp;'a U</code></th>
 </tr>
@@ -140,7 +140,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 </tr>
 </tbody>
 </table>
-<p>You can see <code>as</code> as a sole modified reference to a value in memory, while others change the in-memory representation of the converted variable.<br />A research on the <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> will tell you which types implement which of these methods – in the present case, we would just use a <code>as</code> cast, i.e. <code>x as uint</code>.</p>
+<p>As you can see, <code>.as_T()</code> is normally just casting a reference so that it is treating the original data as if it were a different type (for example, the <code>.as_bytes method allows the contents of a &amp;str to be viewed as a sequence of bytes, &amp;[u8]). A research on the [libstd documentation] will tell you which types implement which of these methods &amp;ndash; in the present case, we would just use a</code>x as y<code>to cast between primitive types, in this case</code>x as uint`.</p>
 <p>In Rust, instructions that do not end with semicolons are expressions (not statements), meaning that they will return their value to the higher-level block.<br />This allows you not only to return from a function but also – for example – to allocate a value based on a test’s result. This is valid Rust code:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> hype =
     <span class="kw">if</span> cake == <span class="st">&quot;KitKat&quot;</span> {
