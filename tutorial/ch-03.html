@@ -140,7 +140,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 </tr>
 </tbody>
 </table>
-<p>As you can see, <code>.as_T()</code> is normally just casting a reference so that it is treating the original data as if it were a different type (for example, the <code>.as_bytes method allows the contents of a &amp;str to be viewed as a sequence of bytes, &amp;[u8]). A research on the [libstd documentation] will tell you which types implement which of these methods &amp;ndash; in the present case, we would just use a</code>x as y<code>to cast between primitive types, in this case</code>x as uint`.</p>
+<p>As you can see, <code>.as_T()</code> is normally just casting a reference so that it is treating the original data as if it were a different type (for example, the <code>.as_bytes</code> method allows the contents of a &amp;str to be viewed as a sequence of bytes, &amp;[u8]). A research on the <a href="http://static.rust-lang.org/doc/master/std/index.html">libstd documentation</a> will tell you which types implement which of these methods – in the present case, we would just use a <code>x as y</code> to cast between primitive types, in this case <code>x as uint</code>.</p>
 <p>In Rust, instructions that do not end with semicolons are expressions (not statements), meaning that they will return their value to the higher-level block.<br />This allows you not only to return from a function but also – for example – to allocate a value based on a test’s result. This is valid Rust code:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> hype =
     <span class="kw">if</span> cake == <span class="st">&quot;KitKat&quot;</span> {
