@@ -53,7 +53,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2>The starting point</h2>
 <p>So, you are learning a programming language… you know what that means?</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
-    println!(<span class="st">&quot;Hello World!&quot;</span>);
+    <span class="ot">println!</span>(<span class="st">&quot;Hello World!&quot;</span>);
 }</code></pre>
 <p>Yes, it is that simple. As you can see, functions are declared using the generic <code>fn</code> keyword and for the C habitués, the return type – if any – is specified as in ML, after an ASCII arrow, e.g., <code>fn random() -&gt; int { ... }</code>.</p>
 <p>To try it out on your own, save this code snippet and call <code>rustc</code>!</p>
@@ -63,7 +63,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
     <span class="kw">for</span> c in out.chars() {
         <span class="co">/* spawn concurrent tasks! */</span>
         spawn(proc() {
-            print!(<span class="st">&quot;{}&quot;</span>, c);
+            <span class="ot">print!</span>(<span class="st">&quot;{}&quot;</span>, c);
         });
     }
 }</code></pre>
@@ -93,13 +93,13 @@ e</code></pre>
 <section id="types-and-assignment" class="level2">
 <h2>Types and assignment</h2>
 <p>As you can see, variables are declared via the <code>let</code> keyword and type specification is optional (~ML) because Rust has a type inference mechanism, which means that the variable type is determined at <em>compile time</em> – not to be confused with dynamic typing, as in Python, where the variable type is managed at run-time and can be dynamically modified.</p>
-<p><strong>Note: the convention is that variables and function names are_lowercase while</strong>type names are CamelCase.</p>
+<p><strong>Note:</strong> the convention is that variables and function names are_lowercase while type names are CamelCase.</p>
 <p>Let’s have a look at some of the primitive types:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a = <span class="dv">3</span>; <span class="co">// considered as `int` by default</span>
 <span class="kw">let</span> b = <span class="st">&quot;code&quot;</span>; <span class="co">// that would be an `str` - string</span>
 <span class="kw">let</span> c = [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]; <span class="co">// and that&#39;s a `vec` - array (of fixed-length)</span>
 <span class="kw">let</span> d = <span class="kw">true</span>; <span class="co">// bool</span></code></pre>
-<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value – the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note: unlike C, for example, Rust does not let you edit an immutable variable</strong>via its pointer.</p>
+<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value – the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note:</strong> unlike C, for example, Rust does not let you edit an immutable variable via its pointer.</p>
 <p>Speaking of type assignment, you can force the use of a particular type:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a: <span class="kw">uint</span> = <span class="dv">3</span>; <span class="co">// unsigned int</span>
 <span class="kw">let</span> a = <span class="dv">3u</span>; <span class="co">// that&#39;s the same, using a short variable suffix for convenience</span>
@@ -118,7 +118,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
     <span class="kw">let</span> x = <span class="dv">3u</span>;
     <span class="co">/* Now, calculate the square. */</span>
     <span class="kw">let</span> y = square(x);
-    println!(<span class="st">&quot;So this gives us {}.&quot;</span>, y);
+    <span class="ot">println!</span>(<span class="st">&quot;So this gives us {}.&quot;</span>, y);
 }</code></pre>
 <p>Ok, but this code will not typecheck because we are passing an unsigned int to a function that takes an int as parameter; if we were in a situation where we cannot change the type annotation, we would have to just cast the value of <code>x</code>.</p>
 <p>Rust has various ways to change variable types, and while they all share different characteristics, they are also not all possible with all type combinations. Here is the general convention:</p>
@@ -157,7 +157,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
     <span class="kw">let</span> out = [<span class="ch">&#39;H&#39;</span>, <span class="ch">&#39;e&#39;</span>, <span class="ch">&#39;l&#39;</span>, <span class="ch">&#39;l&#39;</span>, <span class="ch">&#39;o&#39;</span>];
     <span class="kw">for</span> c in out.iter() { <span class="co">// iterate over `out`</span>
-        print!(<span class="st">&quot;{}&quot;</span>, *c);
+        <span class="ot">print!</span>(<span class="st">&quot;{}&quot;</span>, *c);
     }
 }</code></pre>
 <p>Rust supports UTF-8 (Unicode) natively through the <code>u8</code> type (8-bit unsigned type); strings are essentially just <code>~[u8]</code> arrays with a few specific methods on top of it.<br />FYI, there is a blog article that talks about types in Rust and has some interesting facts, <a href="http://jvns.ca/blog/2013/12/02/types-in-rust/">check it out</a>!</p>
@@ -183,7 +183,7 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 <h2>Appendix: Comments and documentation</h2>
 <p>You will probably start quickly adding comments to your code (well, you should anyways!) so let’s speak about that now: Rust uses C-style comments and also has a doc comments system (librustdoc) that’s quite similar to <a href="http://en.wikipedia.org/wiki/Javadoc">Javadoc</a>, for example.</p>
 <table>
-<col style="width: 13%" /><col style="width: 25%" /><col style="width: 28%" /><col style="width: 32%" /><thead>
+<col style="width: 15%" /><col style="width: 21%" /><col style="width: 28%" /><col style="width: 34%" /><thead>
 <tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: center;">Code comments</th>

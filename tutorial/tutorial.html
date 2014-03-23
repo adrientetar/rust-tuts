@@ -112,7 +112,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h3>Windows</h3>
 <p>You can get <a href="https://www.nuget.org/packages/Rust/">snapshot builds</a> for Windows through the NuGet <a href="http://docs.nuget.org/docs/start-here/installing-nuget#Command-Line_Utility">Package Manager console</a>:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Install-Package</span> Rust</code></pre>
-<p>Or have a look at the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build instructions</a> if you want to build it yourself.<br /><strong>Note: <code>mingw-w64</code> should fix a few things compared to the regular <code>mingw</code> (it </strong>works on both 32- and 64-bit systems, despite the name).</p>
+<p>Or have a look at the <a href="https://github.com/mozilla/rust/wiki/Note-getting-started-developing-Rust#quick-steps-for-windows-environment-setup)">build instructions</a> if you want to build it yourself.<br /><strong>Note:</strong> <code>mingw-w64</code> should fix a few things compared to the regular <code>mingw</code> (it works on both 32- and 64-bit systems, despite the name).</p>
 <p>If you are not willing to go through these steps, just download the <a href="https://github.com/mozilla/rust/wiki/Using-Rust-on-Windows">0.9 release</a>.</p>
 </section>
 <section id="mac-os-x" class="level3">
@@ -199,13 +199,13 @@ e</code></pre>
 <section id="types-and-assignment" class="level2">
 <h2>Types and assignment</h2>
 <p>As you can see, variables are declared via the <code>let</code> keyword and type specification is optional (~ML) because Rust has a type inference mechanism, which means that the variable type is determined at <em>compile time</em> – not to be confused with dynamic typing, as in Python, where the variable type is managed at run-time and can be dynamically modified.</p>
-<p><strong>Note: the convention is that variables and function names are_lowercase while </strong>type names are CamelCase.</p>
+<p><strong>Note:</strong> the convention is that variables and function names are_lowercase while type names are CamelCase.</p>
 <p>Let’s have a look at some of the primitive types:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a = <span class="dv">3</span>; <span class="co">// considered as `int` by default</span>
 <span class="kw">let</span> b = <span class="st">&quot;code&quot;</span>; <span class="co">// that would be an `str` - string</span>
 <span class="kw">let</span> c = [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]; <span class="co">// and that&#39;s a `vec` - array (of fixed-length)</span>
 <span class="kw">let</span> d = <span class="kw">true</span>; <span class="co">// bool</span></code></pre>
-<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value – the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note: unlike C, for example, Rust does not let you edit an immutable variable </strong>via its pointer.</p>
+<p>Rust variables are immutable by default in order to avoid some common errors, so you need to append the mutable <code>mut</code> keyword to <code>let</code> in order to reassign a value – the compiler will warn you if there are unused <code>mut</code>s in your code.<br /><strong>Note:</strong> unlike C, for example, Rust does not let you edit an immutable variable via its pointer.</p>
 <p>Speaking of type assignment, you can force the use of a particular type:</p>
 <pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> a: <span class="kw">uint</span> = <span class="dv">3</span>; <span class="co">// unsigned int</span>
 <span class="kw">let</span> a = <span class="dv">3u</span>; <span class="co">// that&#39;s the same, using a short variable suffix for convenience</span>
@@ -283,13 +283,13 @@ h = ~[<span class="dv">1u</span>, <span class="dv">2</span>, <span class="dv">3<
 <span class="co">// this yields -35</span>
 <span class="kw">let</span> result = xs.iter().fold(<span class="dv">0</span>, |accumulator, item| accumulator - *item);</code></pre>
 <p>This approach is very practical as it keeps code concise and manages to do various kind of operations on variables quite easily.</p>
-<p>Check out the <a href="http://static.rust-lang.org/doc/master/tutorial-container.html#iterators">iterators tutorial</a> to find out more.</p>
+<p>Check out the <a href="http://static.rust-lang.org/doc/master/guide-container.html#iterators">iterators tutorial</a> to find out more.</p>
 </section>
 <section id="appendix-comments-and-documentation" class="level2">
 <h2>Appendix: Comments and documentation</h2>
 <p>You will probably start quickly adding comments to your code (well, you should anyways!) so let’s speak about that now: Rust uses C-style comments and also has a doc comments system (librustdoc) that’s quite similar to <a href="http://en.wikipedia.org/wiki/Javadoc">Javadoc</a>, for example.</p>
 <table>
-<col style="width: 13%" /><col style="width: 25%" /><col style="width: 28%" /><col style="width: 32%" /><thead>
+<col style="width: 15%" /><col style="width: 21%" /><col style="width: 28%" /><col style="width: 34%" /><thead>
 <tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: center;">Code comments</th>
